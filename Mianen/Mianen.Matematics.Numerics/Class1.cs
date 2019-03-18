@@ -4,9 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mianen
+namespace Mianen.Matematics.Numerics
 {
-    public class Class1
+    public class ModuloNumbers
     {
+
+
+
     }
+
+	public struct ModuleNumber
+	{
+
+	}
 }
