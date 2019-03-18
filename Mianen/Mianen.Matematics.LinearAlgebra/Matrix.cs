@@ -286,7 +286,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <exception cref="ArgumentNullException">Sourse is null</exception>
 		/// <exception cref="NotAllowedOperationException">Operation +, -, * or /  is not defined for this object</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> GetREF(Matrix<T> Sourse, T Zero)
+		public static Matrix<T> GetREF(Matrix<T> Sourse)
 		{
 			if (Sourse == null)
 				throw new ArgumentNullException();
@@ -297,6 +297,8 @@ namespace Mianen.Matematics.LinearAlgebra
 			Console.WriteLine("...");
 #endif
 
+			dynamic z = Sourse[0, 0];
+			T Zero = z - z;
 			try
 			{
 
@@ -384,7 +386,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <exception cref="ArgumentNullException">Sourse is null</exception>
 		/// <exception cref="NotAllowedOperationException">Operation +, -, * or /  is not defined for this object</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> GetRREF(Matrix<T> Sourse, T Zero)
+		public static Matrix<T> GetRREF(Matrix<T> Sourse)
 		{
 #if DEBUG
 			Console.WriteLine("Begin of RREF:");
@@ -392,7 +394,10 @@ namespace Mianen.Matematics.LinearAlgebra
 			if (Sourse == null)
 				throw new ArgumentNullException();
 
-			Matrix<T> newMatrix = Matrix<T>.GetREF(Sourse, Zero);
+			dynamic z = Sourse[0, 0];
+			T Zero = z - z;
+
+			Matrix<T> newMatrix = Matrix<T>.GetREF(Sourse);
 #if DEBUG
 			Console.WriteLine(newMatrix);
 #endif
@@ -476,14 +481,16 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <exception cref="ArgumentException">Sourse is not regular</exception>
 		/// <exception cref="NotAllowedOperationException">Operation +, -, * or /  is not defined for this object</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> GetInvert(Matrix<T> Sourse, T Zero, T One)
+		public static Matrix<T> GetInvert(Matrix<T> Sourse)
 		{
 			if (Sourse == null)
 				throw new ArgumentNullException();
 			if (Sourse.ColumnCount != Sourse.RowCount)
 				throw new ArgumentException();
 
-
+			dynamic z = Sourse[0, 0];
+			T Zero = z - z;
+			T One = z / z;
 #if DEBUG
 			Console.WriteLine("Begin of Inverting");
 #endif
@@ -505,7 +512,7 @@ namespace Mianen.Matematics.LinearAlgebra
 #if DEBUG
 			Console.WriteLine(newMatrix);
 #endif
-			Matrix<T> red = Matrix<T>.GetRREF(newMatrix, Zero);
+			Matrix<T> red = Matrix<T>.GetRREF(newMatrix);
 #if DEBUG
 			Console.WriteLine(red);
 #endif

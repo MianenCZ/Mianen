@@ -24,7 +24,7 @@ namespace Mianen.Matematics.LinearAlgebra
 				Console.WriteLine("A^T * A");
 				Console.WriteLine(A_tA);
 #endif
-			Matrix<T> I__A_tA__ = Matrix<T>.GetInvert(A_tA, Zero, One);
+			Matrix<T> I__A_tA__ = Matrix<T>.GetInvert(A_tA);
 #if DEBUG
 				Console.WriteLine("I__A_tA__");
 				Console.WriteLine(I__A_tA__);
@@ -49,7 +49,7 @@ namespace Mianen.Matematics.LinearAlgebra
 			if (Sourse.ColumnCount != Sourse.RowCount)
 				throw new ArgumentException();
 
-			Matrix<T> newMatrix = Matrix<T>.GetREF(Sourse, Zero);
+			Matrix<T> newMatrix = Matrix<T>.GetREF(Sourse);
 
 			dynamic a = newMatrix[0, 0];
 			for (int i = 1; i < Sourse.ColumnCount; i++)
