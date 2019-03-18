@@ -8,8 +8,7 @@ namespace Mianen.Matematics.Numerics
 {
     public class ModuloNumbers
     {
-
-
+	
 
     }
 
