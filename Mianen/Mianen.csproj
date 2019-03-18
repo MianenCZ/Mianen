@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="Mianen.FileAccess.Serialization\Serializer.cs" />
     <Compile Include="Mianen.Matematics.Numerics\BigInteger.cs" />
-    <Compile Include="Mianen.Matematics.Numerics\Class1.cs" />
     <Compile Include="Mianen.DataStructures\ArrayAmortizer.cs" />
     <Compile Include="Mianen.DataStructures\Deque.cs" />
     <Compile Include="Mianen.DataStructures\JsonReader.cs" />
