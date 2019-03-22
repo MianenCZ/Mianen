@@ -44,21 +44,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mianen.FileAccess.Serialization\Serializer.cs" />
-    <Compile Include="Mianen.Matematics.Numerics\BigInteger.cs" />
-    <Compile Include="Mianen.DataStructures\ArrayAmortizer.cs" />
-    <Compile Include="Mianen.DataStructures\Deque.cs" />
-    <Compile Include="Mianen.DataStructures\JsonReader.cs" />
-    <Compile Include="Mianen.DataStructures\Map.cs" />
-    <Compile Include="Mianen.Matematics.LinearAlgebra\LinearFunction.cs" />
-    <Compile Include="Mianen.Matematics.LinearAlgebra\Matrix.cs" />
-    <Compile Include="Mianen.Matematics.LinearAlgebra\Vector.cs" />
+    <Compile Include="FileAccess.Serialization\Serializer.cs" />
+    <Compile Include="Matematics.LinearAlgebra\Aproximation2D.cs" />
+    <Compile Include="Matematics.Numerics\BigInteger.cs" />
+    <Compile Include="DataStructures\ArrayAmortizer.cs" />
+    <Compile Include="DataStructures\Deque.cs" />
+    <Compile Include="DataStructures\JsonReader.cs" />
+    <Compile Include="DataStructures\Map.cs" />
+    <Compile Include="Matematics.LinearAlgebra\LinearFunction.cs" />
+    <Compile Include="Matematics.LinearAlgebra\Matrix.cs" />
+    <Compile Include="Matematics.LinearAlgebra\Vector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Mianen.DataStructures\SerializableDictionary.cs" />
+    <Compile Include="DataStructures\SerializableDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mianen.FileAccess\" />
-    <Folder Include="Mianen.Matematics\" />
+    <Folder Include="FileAccess\" />
+    <Folder Include="Matematics\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

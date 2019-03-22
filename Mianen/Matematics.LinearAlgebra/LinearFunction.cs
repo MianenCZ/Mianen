@@ -8,7 +8,7 @@ namespace Mianen.Matematics.LinearAlgebra
 {
 	public static class FunctionLib<T>
 	{
-		public static Vector<T> LeastSquers(Matrix<T> A, Vector<T> y, T Zero, T One)
+		public static Vector<T> LeastSquers(Matrix<T> A, Vector<T> y)
 		{
 #if DEBUG
 				Console.WriteLine("A");
@@ -42,7 +42,7 @@ namespace Mianen.Matematics.LinearAlgebra
 			return res;
 		}
 
-		public static T GetDeterminant(Matrix<T> Sourse, T Zero)
+		public static T GetDeterminant(Matrix<T> Sourse)
 		{
 			if (Sourse == null)
 				throw new ArgumentNullException();

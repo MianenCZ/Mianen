@@ -52,8 +52,10 @@ namespace Mianen.Matematics.LinearAlgebra
 					dynamic b1 = B[k];
 					Sum += a1 * b1;
 				}
+
 				newVector[i] = Sum;
 			}
+
 			return newVector;
 		}
 
@@ -102,11 +104,12 @@ namespace Mianen.Matematics.LinearAlgebra
 			for (int i = 0; i < this.Dimension; i++)
 			{
 				bld.Append(this[i].ToString());
-				bld.Append((i == this.Dimension - 1)?"":" ");
+				bld.Append((i == this.Dimension - 1) ? "" : " ");
 			}
+
 			bld.Append(")");
 			return bld.ToString();
 		}
 
-	}
+	};
 }
