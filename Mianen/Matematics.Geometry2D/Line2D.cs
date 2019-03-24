@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mianen.Matematics.LinearAlgebra
+namespace Mianen.Matematics.Geometry2D
 {
-	class Aproximation2D<Q>
+	class Line2D
 	{
-		public static Vector<Q> ()
 	}
-
 }

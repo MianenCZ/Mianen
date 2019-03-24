@@ -97,6 +97,24 @@ namespace Mianen.Matematics.LinearAlgebra
 			return newVector;
 		}
 
+		public static T GetNorm(Vector<T> Input)
+		{
+			try
+			{
+				T Norm = Input[0];
+				for (int i = 1; i < Input.Dimension; i++)
+				{
+					Norm *= (dynamic) Input[i];
+				}
+
+				return Norm;
+			}
+			catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException ex)
+			{
+				throw new NotAllowedOperationException($"Operation * is not define on {typeof(T)}", ex);
+			}
+		}
+
 		public override string ToString()
 		{
 			StringBuilder bld = new StringBuilder();

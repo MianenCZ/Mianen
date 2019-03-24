@@ -131,8 +131,6 @@ namespace Mianen.Matematics.LinearAlgebra
 			}
 			return newMatrix;
 
-
-			return null;
 		}
 
 		/// <summary>
@@ -538,6 +536,25 @@ namespace Mianen.Matematics.LinearAlgebra
 			}
 
 			return Matrix<T>.GetSubMatrix(red, 0, Sourse.ColumnCount, Sourse.RowCount, Sourse.ColumnCount);
+		}
+
+		public static T GetDeterminant(Matrix<T> Sourse)
+		{
+			if (Sourse == null)
+				throw new ArgumentNullException();
+			if (Sourse.ColumnCount != Sourse.RowCount)
+				throw new ArgumentException();
+
+			Matrix<T> newMatrix = Matrix<T>.GetREF(Sourse);
+
+			dynamic a = newMatrix[0, 0];
+			for (int i = 1; i < Sourse.ColumnCount; i++)
+			{
+				dynamic b = newMatrix[i, i];
+				a *= b;
+			}
+
+			return a;
 		}
 
 		#region Aritmetic operations

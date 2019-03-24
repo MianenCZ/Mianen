@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mianen.Matematics.LinearAlgebra
 {
-	public static class FunctionLib<T>
+	public static class LinerarMath<T>
 	{
 		public static Vector<T> LeastSquers(Matrix<T> A, Vector<T> y)
 		{
@@ -42,24 +42,34 @@ namespace Mianen.Matematics.LinearAlgebra
 			return res;
 		}
 
-		public static T GetDeterminant(Matrix<T> Sourse)
+		/*
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="Input"></param>
+		/// <exception cref="ArgumentNullException">Input vector array is null</exception>
+		/// <exception cref="ArgumentException">Vector in input are not same dimension</exception>
+		/// <returns></returns>
+		public static Vector<T>[] GrammSchmitOrtogonalization(Vector<T>[] Input)
 		{
-			if (Sourse == null)
+			if(Input == null)
 				throw new ArgumentNullException();
-			if (Sourse.ColumnCount != Sourse.RowCount)
-				throw new ArgumentException();
-
-			Matrix<T> newMatrix = Matrix<T>.GetREF(Sourse);
-
-			dynamic a = newMatrix[0, 0];
-			for (int i = 1; i < Sourse.ColumnCount; i++)
+			if(Input.Length == 0)
+				return new Vector<T>[0];
+			try
 			{
-				dynamic b = newMatrix[i, i];
-				a *= b;
+				for (int i = 0; i < Input[0].Dimension; i++)
+				{
+					Vector<T> y = 
+				}
 			}
-
-			return a;
+			catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException ex)
+			{
+				throw new NotAllowedOperationException($"Operation * is not define on {typeof(T)}", ex);
+			}
 		}
+		*/
 
 	}
+
 }

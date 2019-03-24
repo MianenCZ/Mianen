@@ -45,7 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileAccess.Serialization\Serializer.cs" />
-    <Compile Include="Matematics.LinearAlgebra\Aproximation2D.cs" />
+    <Compile Include="Matematics.Geometry2D\Circle2D.cs" />
+    <Compile Include="Matematics.Geometry2D\Line2D.cs" />
+    <Compile Include="Matematics.Geometry2D\Point2D.cs" />
+    <Compile Include="Matematics.Geometry2D\Polynom.cs" />
     <Compile Include="Matematics.Numerics\BigInteger.cs" />
     <Compile Include="DataStructures\ArrayAmortizer.cs" />
     <Compile Include="DataStructures\Deque.cs" />
