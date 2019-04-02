@@ -115,6 +115,17 @@ namespace Mianen.Matematics.LinearAlgebra
 			}
 		}
 
+		public static Vector<T> GetReverse(Vector<T> Input)
+		{
+			Vector<T> newVector = new Vector<T>(Input.Dimension);
+			for (int i = 0; i < newVector.Dimension; i++)
+			{
+				newVector[i] = Input[Input.Dimension - i - 1];
+			}
+
+			return newVector;
+		}
+
 		public override string ToString()
 		{
 			StringBuilder bld = new StringBuilder();

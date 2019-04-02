@@ -57,12 +57,12 @@
     <Compile Include="Matematics.LinearAlgebra\LinearFunction.cs" />
     <Compile Include="Matematics.LinearAlgebra\Matrix.cs" />
     <Compile Include="Matematics.LinearAlgebra\Vector.cs" />
+    <Compile Include="Matematics\Misc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataStructures\SerializableDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FileAccess\" />
-    <Folder Include="Matematics\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

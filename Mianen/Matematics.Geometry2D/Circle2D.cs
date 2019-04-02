@@ -1,10 +1,12 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mianen.Matematics.LinearAlgebra;
 using Newtonsoft.Json.Serialization;
+using Mianen.Matematics;
 
 namespace Mianen.Matematics.Geometry2D
 {
@@ -70,7 +72,7 @@ namespace Mianen.Matematics.Geometry2D
 			Vector<T> Res = LinerarMath<T>.LeastSquers(A, Vector);
 			Circle2D<T> res = new Circle2D<T>
 			{
-				Radius = Math.Pow((dynamic)Res[2] + (dynamic)Res[1] * (dynamic)Res[1] + (dynamic)Res[0] * (dynamic)Res[0], 0.5),
+				Radius = (T)Math.Pow((dynamic)Res[2] + (dynamic)Res[1] * (dynamic)Res[1] + (dynamic)Res[0] * (dynamic)Res[0], 0.5),
 				Center = new Point2D<T>(Res[0], Res[1]),
 			};
 

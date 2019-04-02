@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Mianen.Matematics;
 
 
 [assembly: InternalsVisibleTo("MianenTests")]
@@ -312,7 +313,7 @@ namespace Mianen.Matematics.LinearAlgebra
 						if (a != b)
 						{
 #if DEBUG
-							Console.WriteLine("Pivot Found: {0}:{1} - {2}", i, j, newMatrix[i,j]);
+							Console.WriteLine("Pivot Found: {0}:{1} - {2}", i, j, newMatrix[i, j]);
 #endif
 							//We find nonzero value
 							if (i != RankREF)
@@ -322,7 +323,7 @@ namespace Mianen.Matematics.LinearAlgebra
 #if DEBUG
 								Console.WriteLine("Swaping");
 #endif
-								newMatrix = Matrix<T>.SwapRows(newMatrix,i, RankREF);
+								newMatrix = Matrix<T>.SwapRows(newMatrix, i, RankREF);
 #if DEBUG
 								Console.WriteLine(newMatrix);
 #endif
@@ -347,17 +348,6 @@ namespace Mianen.Matematics.LinearAlgebra
 									dynamic f = newMatrix[RankREF, q];
 									newMatrix[sub, q] = e - constant * f;
 								}
-								//*/
-
-								/*Mathematicaly correct
-
-								for (int q = j; q < newMatrix.ColumnCount; q++)
-								{
-									dynamic e = newMatrix[sub, q];
-									dynamic f = newMatrix[RankREF, q];
-									newMatrix[sub, q] = e - constant * f;
-								}
-								//*/
 							}
 #if DEBUG
 							Console.WriteLine("After Subtraction");
@@ -368,7 +358,8 @@ namespace Mianen.Matematics.LinearAlgebra
 						}
 					}
 				}
-			} catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException ex)
+			}
+			catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException ex)
 			{
 				throw new NotAllowedOperationException($"Operation != is not define for {Zero.GetType()} class", ex);
 			}
@@ -542,19 +533,88 @@ namespace Mianen.Matematics.LinearAlgebra
 		{
 			if (Sourse == null)
 				throw new ArgumentNullException();
-			if (Sourse.ColumnCount != Sourse.RowCount)
-				throw new ArgumentException();
-
-			Matrix<T> newMatrix = Matrix<T>.GetREF(Sourse);
-
-			dynamic a = newMatrix[0, 0];
-			for (int i = 1; i < Sourse.ColumnCount; i++)
+			Matrix<T> newMatrix = Matrix<T>.GetCopy(Sourse);
+		#if DEBUG
+			Console.WriteLine("Begin of GetDeterminant:");
+			Console.WriteLine(newMatrix);
+			Console.WriteLine("...");
+		#endif
+			int One = 1;
+			dynamic z = Sourse[0, 0];
+			T Zero = z - z;
+			try
 			{
-				dynamic b = newMatrix[i, i];
-				a *= b;
-			}
 
-			return a;
+				int RankREF = 0;
+				for (int j = 0; j < newMatrix.ColumnCount; j++)
+				{
+					//Find first nonzero value in j-column and swith that row on RankRef level (pivot level)
+					for (int i = RankREF; i < newMatrix.RowCount; i++)
+					{
+						dynamic a = newMatrix[i, j];
+						dynamic b = Zero;
+						if (a != b)
+						{
+						#if DEBUG
+							Console.WriteLine("Pivot Found: {0}:{1} - {2}", i, j, newMatrix[i, j]);
+						#endif
+							//We find nonzero value
+							if (i != RankREF)
+							{
+								//RankREF row in zero in column
+								//Swap two rows to get nonzero value to RankREF level
+							#if DEBUG
+								One *= -1;
+								Console.WriteLine("Swaping");
+							#endif
+								newMatrix = Matrix<T>.SwapRows(newMatrix, i, RankREF);
+							#if DEBUG
+								Console.WriteLine(newMatrix);
+							#endif
+							}
+							//Now we have pivot in RankREF row in column
+
+							//Subtraction from below to get pivot column
+						#if DEBUG
+							Console.WriteLine("Subtraction");
+						#endif
+							for (int sub = RankREF + 1; sub < newMatrix.RowCount; sub++)
+							{
+								dynamic c = newMatrix[sub, j];
+								dynamic d = newMatrix[RankREF, j];
+								dynamic constant = c / d;
+
+								//* Change
+								newMatrix[sub, j] = Zero;
+								for (int q = j + 1; q < newMatrix.ColumnCount; q++)
+								{
+									dynamic e = newMatrix[sub, q];
+									dynamic f = newMatrix[RankREF, q];
+									newMatrix[sub, q] = e - constant * f;
+								}
+							}
+						#if DEBUG
+							Console.WriteLine("After Subtraction");
+							Console.WriteLine(newMatrix);
+						#endif
+							RankREF++;
+							break;
+						}
+					}
+				}
+
+				T det = (One == -1) ? -(dynamic) newMatrix[0, 0] : newMatrix[0, 0];
+				for (int i = 0; i < newMatrix.ColumnCount; i++)
+				{
+					det *= (dynamic)newMatrix[i, i];
+				}
+
+				return det;
+			}
+			catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException ex)
+			{
+				throw new NotAllowedOperationException($"Operation != is not define for {Zero.GetType()} class", ex);
+			}
 		}
 
 		#region Aritmetic operations
@@ -781,13 +841,5 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// </summary>
 		ColumnMajor = 102,
 
-	}
-
-	public class NotAllowedOperationException : Exception
-	{
-		public NotAllowedOperationException() : base() { }
-		public NotAllowedOperationException(string Mes) : base(Mes) { }
-		public NotAllowedOperationException(string Mes, Exception ex) : base(Mes, ex) { }
-		public NotAllowedOperationException(Exception ex) : base("", ex) { }
 	}
 }

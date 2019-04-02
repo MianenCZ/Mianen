@@ -3,6 +3,8 @@ using Mianen.Matematics.Geometry2D;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Mianen.Matematics.LinearAlgebra;
@@ -96,7 +98,15 @@ namespace Mianen.Matematics.Geometry2D.Tests
 			Points[34] = new Point2D<double>(195, 88 );
 			Points[35] = new Point2D<double>(167, 63 );
 			Points[36] = new Point2D<double>(195, 79 );
-			Points[37] = new Point2D<double>(185, 110);
+			Points[37] = new Point2D<double>(177, 80);
+
+
+			for (int i = 0; i < Points.Length; i++)
+			{
+				Console.WriteLine($"Bod[{{{Points[i].X},{Points[i].Y}}}]");
+			}
+
+
 			Polynom<double> p = Polynom<double>.Aproximate(Points, 2);
 			Console.WriteLine(p.DefVector);
 			Assert.IsTrue(true, p.DefVector.ToString());
