@@ -11,12 +11,27 @@ namespace Mianen.DataStructures
 		private DequeMemo<T> Data;
 		private int LeftMemo = 16;
 		private int RightMemo = 16;
-		public Direction Dir { get; private set; }
+		private Direction Dir;
+
+		/// <summary>
+		/// Size of allocated memory for struct or pointer to class in Deque
+		/// </summary>
 		public int Capacity { get => LeftMemo + RightMemo; }
 
+		/// <summary>
+		/// First item in Deque
+		/// </summary>
 		public T First { get => this[0]; }
+
+		/// <summary>
+		/// Last item in Deque
+		/// </summary>
 		public T Last { get => this.Data[Data.Right - 1]; }
 
+		/// <summary>
+		/// Data structure double ended queue (Deque) provides item insertion, deleting on the top and end in O(1) time (Amortized).
+		/// Also provides access to item via indexer in O(1) time.
+		/// </summary>
 		public Deque()
 		{
 			this.Data = new DequeMemo<T>();
@@ -25,17 +40,27 @@ namespace Mianen.DataStructures
 			this.Dir = Direction.Standard;
 		}
 
-		public Deque(int capacity)
+		/// <summary>
+		/// Create Deque of specified size
+		/// </summary>
+		/// <param name="Capacity">Start size</param>
+		public Deque(int Capacity)
 		{
 			this.Data = new DequeMemo<T>();
-			this.LeftMemo = capacity / 2;
-			this.RightMemo = capacity - LeftMemo;
+			this.LeftMemo = Capacity / 2;
+			this.RightMemo = Capacity - LeftMemo;
 			this.Data.Left = LeftMemo;
 			this.Data.Right = RightMemo;
 			this.Dir = Direction.Standard;
 		}
 
-		//Done
+		/// <summary>
+		/// Allows access to intem on specified index
+		/// </summary>
+		/// <param name="index">Possition in Deque counted from 0. Item on 0 position is item on the Top of Deque</param>
+		/// <exception cref="ArgumentOutOfRangeException">index is not in range of Deque</exception>
+		/// <remarks>O(1) time</remarks>
+		/// <returns></returns>
 		public T this[int index]
 		{
 			get
@@ -60,13 +85,19 @@ namespace Mianen.DataStructures
 			}
 		}
 
-		//done
+		/// <summary>
+		/// Count of stored items
+		/// </summary>
+		/// <remarks>O(1)</remarks>
 		public int Count => Data.Right - Data.Left;
 
-		//Done
 		public bool IsReadOnly => Data.IsReadOnly;
 
-		//Done
+		/// <summary>
+		/// Add item on the end of Deque
+		/// </summary>
+		/// <param name="item">Item to Add</param>
+		/// <remarks>O(1)</remarks>
 		public void Add(T item)
 		{
 			if (this.Dir == Direction.Standard)
@@ -75,7 +106,11 @@ namespace Mianen.DataStructures
 				AddLeft(item);
 		}
 
-		//Done
+		/// <summary>
+		/// Add item on the begging of Deque
+		/// </summary>
+		/// <param name="item">Item to Add</param>
+		/// <remarks>O(1)</remarks>
 		public void AddBegin(T item)
 		{
 			if (this.Dir == Direction.Standard)
@@ -84,7 +119,12 @@ namespace Mianen.DataStructures
 				AddRight(item);
 		}
 
-		//Done
+		/// <summary>
+		/// Remove item in Deque by reference item. Removes first occurence in Deque.
+		/// </summary>
+		/// <param name="item">Reference item to choose target.</param>
+		/// <returns>True if item was succesfully removed</returns>
+		/// <remarks>O(n)</remarks>
 		public bool Remove(T item)
 		{
 			if (this.Count == 0)
@@ -126,59 +166,21 @@ namespace Mianen.DataStructures
 			return false;
 		}
 
-		//Done
-		private void AddLeft(T item)
+		/// <summary>
+		/// Find first occurence of item in Deque
+		/// </summary>
+		/// <param name="item">Reference item</param>
+		/// <returns>True if item is in Deque</returns>
+		/// <remarks>O(n)</remarks>
+		public bool Contains(T item)
 		{
-			this.Data.Left -= 1;
-			this.Data[Data.Left] = item;
-			ExpandLeft();
-
-
+			return Data.Contains(item);
 		}
 
-		//Done
-		private void AddRight(T item)
-		{
-			this.Data[Data.Right] = item;
-			this.Data.Right += 1;
-
-
-			ExpandRight();
-		}
-
-		private void ExpandLeft()
-		{
-			if (Data.Left == 0)
-				Data.Expand();
-		}
-
-		private void ExpandRight()
-		{
-			if (Data.Right == this.Data.Length)
-				Data.Expand();
-		}
-
-		//Done
-		private void RemoveLeft()
-		{
-			if (this.Count <= 0)
-				throw new ArgumentOutOfRangeException();
-			this.Data[this.Data.Left] = default(T);
-			Data.Left++;
-			Press();
-		}
-
-		//Done
-		private void RemoveRight()
-		{
-			if (this.Count <= 0)
-				throw new ArgumentOutOfRangeException();
-			this.Data[this.Data.Right - 1] = default(T);
-			Data.Right--;
-			Press();
-		}
-
-		//Done
+		/// <summary>
+		/// Remove all items from Deque. No change in capacity
+		/// </summary>
+		/// <remarks>O(n)</remarks>
 		public void Clear()
 		{
 			for (int i = this.Data.Left; i < this.Data.Right; i++)
@@ -190,28 +192,30 @@ namespace Mianen.DataStructures
 			Press();
 		}
 
-		//Done
-		public bool Contains(T item)
-		{
-			return Data.Contains(item);
-		}
-
-		//Done
+		/// <summary>
+		/// Copy contend of Deque to array
+		/// </summary>
+		/// <param name="array">Target array</param>
+		/// <param name="arrayIndex">Start index in array</param>
+		/// <exception cref="ArgumentNullException">Target array is null</exception>
+		/// <exception cref="IndexOutOfRangeException">Target array is not big enought</exception>
+		/// <remarks>O(n)</remarks>
 		public void CopyTo(T[] array, int arrayIndex)
 		{
+			if(array == null)
+				throw new ArgumentNullException();
 			for (int i = 0; i < this.Count; i++)
 			{
 				array[arrayIndex + i] = this[i];
 			}
 		}
 
-		//Done
-		public IEnumerator<T> GetEnumerator()
-		{
-			return new DequeEnumerator<T>(this);
-		}
-
-		//Check return value if item is not in Deque
+		/// <summary>
+		/// Find first occurence of item in Deque
+		/// </summary>
+		/// <param name="item">Refence item</param>
+		/// <returns>Index of item in Deque</returns>
+		/// <remarks>O(n)</remarks>
 		public int IndexOf(T item)
 		{
 			if (item == null)
@@ -237,6 +241,13 @@ namespace Mianen.DataStructures
 			return -1;
 		}
 
+		/// <summary>
+		/// Insert item on specified index in Deque
+		/// </summary>
+		/// <param name="index">index of new item</param>
+		/// <param name="item">item to add</param>
+		/// <exception cref="ArgumentOutOfRangeException">index is not in range of Deque</exception>
+		/// <remarks>O(n)</remarks>
 		public void Insert(int index, T item)
 		{
 			if (index < 0 || index > this.Count)
@@ -288,6 +299,12 @@ namespace Mianen.DataStructures
 			}
 		}
 
+		/// <summary>
+		/// Remove item on specified index
+		/// </summary>
+		/// <param name="index">item index</param>
+		/// <exception cref="ArgumentOutOfRangeException">Index is not in range of Deque</exception>
+		/// <remarks>O(n)</remarks>
 		public void RemoveAt(int index)
 		{
 			if (index < 0 || index >= this.Count)
@@ -340,6 +357,65 @@ namespace Mianen.DataStructures
 
 			Press();
 		}
+
+		//Done
+		public IEnumerator<T> GetEnumerator()
+		{
+			return new DequeEnumerator<T>(this);
+		}
+
+
+		private void AddLeft(T item)
+		{
+			this.Data.Left -= 1;
+			this.Data[Data.Left] = item;
+			ExpandLeft();
+
+
+		}
+
+		//Done
+		private void AddRight(T item)
+		{
+			this.Data[Data.Right] = item;
+			this.Data.Right += 1;
+
+
+			ExpandRight();
+		}
+
+		private void ExpandLeft()
+		{
+			if (Data.Left == 0)
+				Data.Expand();
+		}
+
+		private void ExpandRight()
+		{
+			if (Data.Right == this.Data.Length)
+				Data.Expand();
+		}
+
+		//Done
+		private void RemoveLeft()
+		{
+			if (this.Count <= 0)
+				throw new ArgumentOutOfRangeException();
+			this.Data[this.Data.Left] = default(T);
+			Data.Left++;
+			Press();
+		}
+
+		//Done
+		private void RemoveRight()
+		{
+			if (this.Count <= 0)
+				throw new ArgumentOutOfRangeException();
+			this.Data[this.Data.Right - 1] = default(T);
+			Data.Right--;
+			Press();
+		}
+		
 
 		//Done
 		IEnumerator IEnumerable.GetEnumerator()
