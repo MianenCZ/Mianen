@@ -7,6 +7,9 @@ namespace Mianen.DataStructures
 {
 	public class Deque<T> : IList<T>
 	{
+		public delegate void ChangeEcho();
+
+		public event ChangeEcho reportChange = delegate { };
 
 		private DequeMemo<T> Data;
 		private int LeftMemo = 16;
@@ -78,6 +81,7 @@ namespace Mianen.DataStructures
 				if (index < 0 || index >= this.Count)
 					throw new ArgumentOutOfRangeException();
 
+				reportChange();
 				if (this.Dir == Direction.Standard)
 					this.Data[Data.Left + index] = value;
 				else
@@ -183,6 +187,7 @@ namespace Mianen.DataStructures
 		/// <remarks>O(n)</remarks>
 		public void Clear()
 		{
+			reportChange();
 			for (int i = this.Data.Left; i < this.Data.Right; i++)
 			{
 				this.Data[i] = default(T);
@@ -252,6 +257,8 @@ namespace Mianen.DataStructures
 		{
 			if (index < 0 || index > this.Count)
 				throw new ArgumentOutOfRangeException();
+
+			reportChange();
 			if (index == 0)
 			{
 				if (this.Dir == Direction.Standard)
@@ -309,6 +316,8 @@ namespace Mianen.DataStructures
 		{
 			if (index < 0 || index >= this.Count)
 				throw new ArgumentOutOfRangeException();
+
+			reportChange();
 
 			if (index == 0)
 			{
@@ -369,8 +378,9 @@ namespace Mianen.DataStructures
 		{
 			this.Data.Left -= 1;
 			this.Data[Data.Left] = item;
-			ExpandLeft();
+			reportChange();
 
+			ExpandLeft();
 
 		}
 
@@ -379,7 +389,7 @@ namespace Mianen.DataStructures
 		{
 			this.Data[Data.Right] = item;
 			this.Data.Right += 1;
-
+			reportChange();
 
 			ExpandRight();
 		}
@@ -402,6 +412,7 @@ namespace Mianen.DataStructures
 			if (this.Count <= 0)
 				throw new ArgumentOutOfRangeException();
 			this.Data[this.Data.Left] = default(T);
+			reportChange();
 			Data.Left++;
 			Press();
 		}
@@ -412,23 +423,36 @@ namespace Mianen.DataStructures
 			if (this.Count <= 0)
 				throw new ArgumentOutOfRangeException();
 			this.Data[this.Data.Right - 1] = default(T);
+			reportChange();
 			Data.Right--;
 			Press();
 		}
 		
 
-		//Done
+		/*
 		IEnumerator IEnumerable.GetEnumerator()
 		{
+			return (IEnumerator) new DequeEnumerator<T>(this);
 			for (int i = 0; i < this.Count; i++)
 			{
 				yield return this[i];
 			}
+		}*/
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return (IEnumerator)GetEnumerator(this);
+		}
+
+		public DequeEnumerator<T> GetEnumerator(Deque<T> Vals)
+		{
+			return new DequeEnumerator<T>(Vals);
 		}
 
 		//Done
 		public void Reverse()
 		{
+			reportChange();
 			if (this.Dir == Direction.Standard)
 				this.Dir = Direction.Reverse;
 			else
@@ -516,6 +540,12 @@ namespace Mianen.DataStructures
 		{
 			this.Input = Input;
 			this.index = -1;
+			Input.reportChange += Input_reportChange;
+		}
+
+		private void Input_reportChange()
+		{
+			throw new InvalidOperationException();
 		}
 
 		public T Current => Input[index];
@@ -524,6 +554,7 @@ namespace Mianen.DataStructures
 
 		public void Dispose()
 		{
+			Input.reportChange -= Input_reportChange;
 			this.Input = null;
 		}
 

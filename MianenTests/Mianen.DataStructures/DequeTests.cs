@@ -412,6 +412,330 @@ namespace Mianen.DataStructures.Tests
 			Assert.IsTrue(ForEachEqual(d, new List<int> { -2, -1, 2 }));
 		}
 
+		[TestMethod()]
+		public void EnumChange01_Add()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in someNames)
+				{
+					if (s.StartsWith("A"))
+						someNames.Clear();
+				}
+			});
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange02_AddBegin()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in someNames)
+				{
+					if (s.StartsWith("A"))
+						someNames.AddBegin("");
+				}
+			});
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange03_Contains()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			foreach (string s in someNames)
+			{
+				if (s.StartsWith("A"))
+					someNames.Contains("A");
+			}
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange04_CopyTo()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			foreach (string s in someNames)
+			{
+				if (s.StartsWith("A"))
+					someNames.CopyTo(new string[100], 2);
+			}
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange05_Clear()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in someNames)
+				{
+					if (s.StartsWith("A"))
+						someNames.Clear();
+				}
+			});
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange07_Count()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			int a = 0;
+			foreach (string s in someNames)
+			{
+				if (s.StartsWith("A"))
+					a = someNames.Count;
+			}
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange08_Capacity()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			int a = 0;
+			foreach (string s in someNames)
+			{
+				if (s.StartsWith("A"))
+					a = someNames.Capacity;
+			}
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange08_First()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			foreach (string s in someNames)
+			{
+				string a;
+				if (s.StartsWith("A"))
+					a = someNames.First;
+			}
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange09_Insert()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in someNames)
+				{
+					if (s.StartsWith("A"))
+						someNames.Insert(1,"");
+				}
+			});
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange10_IndexOf()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			foreach (string s in someNames)
+			{
+				if (s.StartsWith("A"))
+					someNames.IndexOf(s);
+			}
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange11_Last()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			foreach (string s in someNames)
+			{
+				string a;
+				if (s.StartsWith("A"))
+					a = someNames.Last;
+			}
+
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange12_Remove()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in someNames)
+				{
+					if (s.StartsWith("A"))
+						someNames.Remove(s);
+				}
+			});
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange13_RemoveAt()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in someNames)
+				{
+					if (s.StartsWith("A"))
+						someNames.RemoveAt(0);
+				}
+			});
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange14_Reverse()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			someNames.Reverse();
+			someNames.Reverse();
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in someNames)
+				{
+					if (s.StartsWith("A"))
+						someNames.Reverse();
+				}
+			});
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange15_GetReverse()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			IList<string> a;
+			foreach (string s in someNames)
+			{
+				if (s.StartsWith("A"))
+					a = DequeTest.GetReverseView(someNames);
+			}
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange16_IndexerGet()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			string a;
+			foreach (string s in someNames)
+			{
+				if (s.StartsWith("A"))
+					a = someNames[0];
+			}
+			someNames.Add("Help");
+		}
+
+		[TestMethod()]
+		public void EnumChange17_IndexSet()
+		{
+			Deque<string> someNames = new Deque<string>();
+			someNames.Add("Bill");
+			someNames.Add("Mike");
+			someNames.Add("Alice");
+			someNames.Add("Trevor");
+			someNames.Add("Scott");
+			someNames.Reverse();
+			someNames.Reverse();
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in someNames)
+				{
+					if (s.StartsWith("A"))
+						someNames[0] = "a";
+				}
+			});
+			someNames.Add("Help");
+		}
+
 
 		bool ForEachEqual(Deque<int> d, List<int> to)
 		{
@@ -499,5 +823,6 @@ namespace Mianen.DataStructures.Tests
 			Assert.AreEqual(-1, D.IndexOf(100));
 
 		}
+
 	}
 }
