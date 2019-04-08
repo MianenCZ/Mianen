@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Mianen.DataStructures;
 
 namespace Mianen.DataStructures.Tests
@@ -415,267 +416,281 @@ namespace Mianen.DataStructures.Tests
 		[TestMethod()]
 		public void EnumChange01_Add()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
+			GetToCompare(out List<string> L, out Deque<string> D);
 			Assert.ThrowsException<InvalidOperationException>(() =>
 			{
-				foreach (string s in someNames)
+				foreach (string s in L)
 				{
 					if (s.StartsWith("A"))
-						someNames.Clear();
+						L.Add("");
 				}
 			});
-			someNames.Add("Help");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in D)
+				{
+					if (s.StartsWith("A"))
+						D.Add("");
+				}
+			});
 		}
 
 		[TestMethod()]
 		public void EnumChange02_AddBegin()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
+			GetToCompare(out List<string> L, out Deque<string> D);
 			Assert.ThrowsException<InvalidOperationException>(() =>
 			{
-				foreach (string s in someNames)
+				foreach (string s in L)
 				{
 					if (s.StartsWith("A"))
-						someNames.AddBegin("");
+						L.Add("");
 				}
 			});
-			someNames.Add("Help");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in D)
+				{
+					if (s.StartsWith("A"))
+						D.AddBegin("A");
+				}
+			});
 		}
 
 		[TestMethod()]
 		public void EnumChange03_Contains()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
-			foreach (string s in someNames)
+			GetToCompare(out List<string> L, out Deque<string> D);
+			int val;
+			foreach (string s in L)
 			{
 				if (s.StartsWith("A"))
-					someNames.Contains("A");
+					L.Contains("A");
 			}
-			someNames.Add("Help");
+
+			foreach (string s in D)
+			{
+				if (s.StartsWith("A"))
+					D.Contains("A");
+			}
 		}
 
 		[TestMethod()]
 		public void EnumChange04_CopyTo()
 		{
 			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
-			foreach (string s in someNames)
+			GetToCompare(out List<string> L, out Deque<string> D);
+			int val;
+			foreach (string s in L)
 			{
 				if (s.StartsWith("A"))
-					someNames.CopyTo(new string[100], 2);
+					L.CopyTo(new string[100],0);
 			}
-			someNames.Add("Help");
+
+			foreach (string s in D)
+			{
+				if (s.StartsWith("A"))
+					D.CopyTo(new string[100], 0);
+			}
 		}
 
 		[TestMethod()]
 		public void EnumChange05_Clear()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
+			GetToCompare(out List<string> L, out Deque<string> D);
 			Assert.ThrowsException<InvalidOperationException>(() =>
 			{
-				foreach (string s in someNames)
+				foreach (string s in L)
 				{
 					if (s.StartsWith("A"))
-						someNames.Clear();
+						L.Clear();
 				}
 			});
-			someNames.Add("Help");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in D)
+				{
+					if (s.StartsWith("A"))
+						D.Clear();
+				}
+			});
 		}
 
 		[TestMethod()]
 		public void EnumChange07_Count()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
-			int a = 0;
-			foreach (string s in someNames)
+			GetToCompare(out List<string> L, out Deque<string> D);
+			int val;
+			foreach (string s in L)
 			{
 				if (s.StartsWith("A"))
-					a = someNames.Count;
+					val = L.Count;
 			}
-			someNames.Add("Help");
+
+			foreach (string s in D)
+			{
+				if (s.StartsWith("A"))
+					val = D.Count;
+			}
 		}
 
 		[TestMethod()]
 		public void EnumChange08_Capacity()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
-			int a = 0;
-			foreach (string s in someNames)
+			GetToCompare(out List<string> L, out Deque<string> D);
+			int val;
+			foreach (string s in L)
 			{
 				if (s.StartsWith("A"))
-					a = someNames.Capacity;
+					val = L.Capacity;
 			}
-			someNames.Add("Help");
+
+			foreach (string s in D)
+			{
+				if (s.StartsWith("A"))
+					val = D.Capacity;
+			}
 		}
 
 		[TestMethod()]
 		public void EnumChange08_First()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
-			foreach (string s in someNames)
+			GetToCompare(out List<string> L, out Deque<string> D);
+			foreach (string s in L)
 			{
-				string a;
 				if (s.StartsWith("A"))
-					a = someNames.First;
+					L.First();
 			}
-			someNames.Add("Help");
+
+			string val;
+			foreach (string s in D)
+			{
+				if (s.StartsWith("A"))
+					val = D.First;
+			}
 		}
 
 		[TestMethod()]
 		public void EnumChange09_Insert()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
+			GetToCompare(out List<string> L, out Deque<string> D);
 			Assert.ThrowsException<InvalidOperationException>(() =>
 			{
-				foreach (string s in someNames)
+				foreach (string s in L)
 				{
 					if (s.StartsWith("A"))
-						someNames.Insert(1,"");
+						L.Insert(1,"");
 				}
 			});
-			someNames.Add("Help");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in D)
+				{
+					if (s.StartsWith("A"))
+						D.Insert(1,"");
+				}
+			});
 		}
 
 		[TestMethod()]
 		public void EnumChange10_IndexOf()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
-			foreach (string s in someNames)
+			GetToCompare(out List<string> L, out Deque<string> D);
+			foreach (string s in L)
 			{
 				if (s.StartsWith("A"))
-					someNames.IndexOf(s);
+					L.IndexOf(s);
 			}
-			someNames.Add("Help");
+
+			foreach (string s in D)
+			{
+				if (s.StartsWith("A"))
+					D.IndexOf(s);
+			}
 		}
 
 		[TestMethod()]
 		public void EnumChange11_Last()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
-			foreach (string s in someNames)
+			GetToCompare(out List<string> L, out Deque<string> D);
+			foreach (string s in L)
 			{
-				string a;
 				if (s.StartsWith("A"))
-					a = someNames.Last;
+					L.Last();
 			}
 
-			someNames.Add("Help");
+			string val;
+			foreach (string s in D)
+			{
+				if (s.StartsWith("A"))
+					val = D.Last;
+			}
 		}
 
 		[TestMethod()]
 		public void EnumChange12_Remove()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
+			GetToCompare(out List<string> L, out Deque<string> D);
 			Assert.ThrowsException<InvalidOperationException>(() =>
 			{
-				foreach (string s in someNames)
+				foreach (string s in L)
 				{
 					if (s.StartsWith("A"))
-						someNames.Remove(s);
+						L.Remove(s);
 				}
 			});
-			someNames.Add("Help");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in D)
+				{
+					if (s.StartsWith("A"))
+						D.Remove(s);
+				}
+			});
 		}
 
 		[TestMethod()]
 		public void EnumChange13_RemoveAt()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
+			GetToCompare(out List<string> L, out Deque<string> D);
 			Assert.ThrowsException<InvalidOperationException>(() =>
 			{
-				foreach (string s in someNames)
+				foreach (string s in L)
 				{
 					if (s.StartsWith("A"))
-						someNames.RemoveAt(0);
+						L.RemoveAt(1);
 				}
 			});
-			someNames.Add("Help");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in D)
+				{
+					if (s.StartsWith("A"))
+						D.RemoveAt(1);
+				}
+			});
 		}
 
 		[TestMethod()]
 		public void EnumChange14_Reverse()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
-			someNames.Reverse();
-			someNames.Reverse();
+			GetToCompare(out List<string> L, out Deque<string> D);
 			Assert.ThrowsException<InvalidOperationException>(() =>
 			{
-				foreach (string s in someNames)
+				foreach (string s in L)
 				{
 					if (s.StartsWith("A"))
-						someNames.Reverse();
+						L.Reverse();
 				}
 			});
-			someNames.Add("Help");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in D)
+				{
+					if (s.StartsWith("A"))
+						D.Reverse();
+				}
+			});
 		}
 
 		[TestMethod()]
@@ -717,23 +732,23 @@ namespace Mianen.DataStructures.Tests
 		[TestMethod()]
 		public void EnumChange17_IndexSet()
 		{
-			Deque<string> someNames = new Deque<string>();
-			someNames.Add("Bill");
-			someNames.Add("Mike");
-			someNames.Add("Alice");
-			someNames.Add("Trevor");
-			someNames.Add("Scott");
-			someNames.Reverse();
-			someNames.Reverse();
+			GetToCompare(out List<string> L, out Deque<string> D);
 			Assert.ThrowsException<InvalidOperationException>(() =>
 			{
-				foreach (string s in someNames)
+				foreach (string s in L)
 				{
 					if (s.StartsWith("A"))
-						someNames[0] = "a";
+						L[0] = "a";
 				}
 			});
-			someNames.Add("Help");
+			Assert.ThrowsException<InvalidOperationException>(() =>
+			{
+				foreach (string s in D)
+				{
+					if (s.StartsWith("A"))
+						D[0] = "a";
+				}
+			});
 		}
 
 
@@ -822,6 +837,23 @@ namespace Mianen.DataStructures.Tests
 
 			Assert.AreEqual(-1, D.IndexOf(100));
 
+		}
+
+		public void GetToCompare(out List<string> L, out Deque<string> D)
+		{
+			D = new Deque<string>();
+			L= new List<string>();
+			D.Add("Bill");
+			D.Add("Mike");
+			D.Add("Alice");
+			D.Add("Trevor");
+			D.Add("Scott");
+
+			L.Add("Bill");
+			L.Add("Mike");
+			L.Add("Alice");
+			L.Add("Trevor");
+			L.Add("Scott");
 		}
 
 	}
