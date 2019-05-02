@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,6 @@ namespace Mianen.DataStructures
 {
 	public class Deque<T> : IList<T>
 	{
-		public delegate void ChangeEcho();
-
-		public event ChangeEcho reportChange = delegate { };
 
 		private DequeMemo<T> Data;
 		private int LeftMemo = 16;
@@ -81,7 +79,9 @@ namespace Mianen.DataStructures
 				if (index < 0 || index >= this.Count)
 					throw new ArgumentOutOfRangeException();
 
-				reportChange();
+				if(this.IsReadOnly)
+					throw new InvalidOperationException();
+
 				if (this.Dir == Direction.Standard)
 					this.Data[Data.Left + index] = value;
 				else
@@ -95,7 +95,8 @@ namespace Mianen.DataStructures
 		/// <remarks>O(1)</remarks>
 		public int Count => Data.Right - Data.Left;
 
-		public bool IsReadOnly => Data.IsReadOnly;
+		public bool IsReadOnly { get; internal set; }
+	
 
 		/// <summary>
 		/// Add item on the end of Deque
@@ -187,7 +188,8 @@ namespace Mianen.DataStructures
 		/// <remarks>O(n)</remarks>
 		public void Clear()
 		{
-			reportChange();
+			if (this.IsReadOnly)
+				throw new InvalidOperationException();
 			for (int i = this.Data.Left; i < this.Data.Right; i++)
 			{
 				this.Data[i] = default(T);
@@ -258,7 +260,8 @@ namespace Mianen.DataStructures
 			if (index < 0 || index > this.Count)
 				throw new ArgumentOutOfRangeException();
 
-			reportChange();
+			if (this.IsReadOnly)
+				throw new InvalidOperationException();
 			if (index == 0)
 			{
 				if (this.Dir == Direction.Standard)
@@ -317,7 +320,8 @@ namespace Mianen.DataStructures
 			if (index < 0 || index >= this.Count)
 				throw new ArgumentOutOfRangeException();
 
-			reportChange();
+			if (this.IsReadOnly)
+				throw new InvalidOperationException();
 
 			if (index == 0)
 			{
@@ -378,7 +382,8 @@ namespace Mianen.DataStructures
 		{
 			this.Data.Left -= 1;
 			this.Data[Data.Left] = item;
-			reportChange();
+			if (this.IsReadOnly)
+				throw new InvalidOperationException();
 
 			ExpandLeft();
 
@@ -389,7 +394,8 @@ namespace Mianen.DataStructures
 		{
 			this.Data[Data.Right] = item;
 			this.Data.Right += 1;
-			reportChange();
+			if (this.IsReadOnly)
+				throw new InvalidOperationException();
 
 			ExpandRight();
 		}
@@ -412,7 +418,8 @@ namespace Mianen.DataStructures
 			if (this.Count <= 0)
 				throw new ArgumentOutOfRangeException();
 			this.Data[this.Data.Left] = default(T);
-			reportChange();
+			if (this.IsReadOnly)
+				throw new InvalidOperationException();
 			Data.Left++;
 			Press();
 		}
@@ -423,7 +430,8 @@ namespace Mianen.DataStructures
 			if (this.Count <= 0)
 				throw new ArgumentOutOfRangeException();
 			this.Data[this.Data.Right - 1] = default(T);
-			reportChange();
+			if (this.IsReadOnly)
+				throw new InvalidOperationException();
 			Data.Right--;
 			Press();
 		}
@@ -452,7 +460,8 @@ namespace Mianen.DataStructures
 		//Done
 		public void Reverse()
 		{
-			reportChange();
+			if (this.IsReadOnly)
+				throw new InvalidOperationException();
 			if (this.Dir == Direction.Standard)
 				this.Dir = Direction.Reverse;
 			else
@@ -540,12 +549,7 @@ namespace Mianen.DataStructures
 		{
 			this.Input = Input;
 			this.index = -1;
-			Input.reportChange += Input_reportChange;
-		}
-
-		private void Input_reportChange()
-		{
-			throw new InvalidOperationException();
+			this.Input.IsReadOnly = true;
 		}
 
 		public T Current => Input[index];
@@ -554,7 +558,7 @@ namespace Mianen.DataStructures
 
 		public void Dispose()
 		{
-			Input.reportChange -= Input_reportChange;
+			this.Input.IsReadOnly = false;
 			this.Input = null;
 		}
 

@@ -59,6 +59,7 @@
     <Compile Include="Matematics.Geometry2D\Circle2DTests.cs" />
     <Compile Include="Matematics.Geometry2D\PolynomTests.cs" />
     <Compile Include="Mianen.DataStructures\ArrayAmortizerTests.cs" />
+    <Compile Include="Mianen.DataStructures\BitDefinerTests.cs" />
     <Compile Include="Mianen.DataStructures\DequeTests.cs" />
     <Compile Include="Mianen.DataStructures\JsonReaderTests.cs" />
     <Compile Include="Mianen.DataStructures\MapTests.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Mianen.Matematics.LinearAlgebra\MatrixTests.cs" />
     <Compile Include="Mianen.Matematics.LinearAlgebra\VectorTests.cs" />
     <Compile Include="Mianen.Matematics.Numerics\BigIntegerTests.cs" />
+    <Compile Include="Mianen.Matematics.Numerics\FixedTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
