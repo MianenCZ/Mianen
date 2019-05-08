@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mianen.Matematics.Numerics
 {
-	struct NumberFloat : INumber<float>
+	struct NumberFloat : INumber
 	{
 		public float Value { get; set; }
 
@@ -15,13 +15,13 @@ namespace Mianen.Matematics.Numerics
 			this.Value = Value;
 		}
 
-		public INumber<float> Add(INumber<float> Number) => new NumberFloat(this.Value + Number.Value);
+		public INumber Add(INumber Number) => new NumberFloat(this.Value + Number.Value);
 
-		public int CompareTo(INumber<float> Number) => this.Value.CompareTo(Number.Value);
+		public int CompareTo(INumber Number) => this.Value.CompareTo(Number.Value);
 
-		public INumber<float> Divide(INumber<float> Number) => new NumberFloat(this.Value / Number.Value);
+		public INumber Divide(INumber Number) => new NumberFloat(this.Value / Number.Value);
 
-		public bool Equals(INumber<float> Number) => this.Value.Equals(Number.Value);
+		public bool Equals(INumber Number) => this.Value.Equals(Number.Value);
 
 		public bool IsEqual(INumber<float> Number) => this.Value == Number.Value;
 
