@@ -61,6 +61,12 @@
     <Compile Include="Matematics.LinearAlgebra\Vector.cs" />
     <Compile Include="Matematics.Numerics\Fixed.cs" />
     <Compile Include="Matematics.Numerics\FixedDefiner.cs" />
+    <Compile Include="Matematics.Numerics\INumber.cs" />
+    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NumberDecimal.cs" />
+    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NumberDouble.cs" />
+    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NumberFloat.cs" />
+    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NumberInt.cs" />
+    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NumberLong.cs" />
     <Compile Include="Matematics\Misc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataStructures\SerializableDictionary.cs" />

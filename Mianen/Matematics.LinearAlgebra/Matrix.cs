@@ -93,33 +93,33 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <summary>
 		/// Constructs a new matrix of specified aray uning specified vector
 		/// </summary>
-		/// <param name="Sourse">Input vector</param>
-		/// <exception cref="ArgumentNullException">Sourse is null</exception>  
+		/// <param name="Source">Input vector</param>
+		/// <exception cref="ArgumentNullException">Source is null</exception>  
 		/// <returns>New Matrix</returns>
-		public static Matrix<T> Create(Vector<T> Sourse)
+		public static Matrix<T> Create(Vector<T> Source)
 		{
-			Matrix<T> newMatrix = new Matrix<T>(Sourse.Dimension, 1);
-			for (int i = 0; i < Sourse.Dimension; i++)
+			Matrix<T> newMatrix = new Matrix<T>(Source.Dimension, 1);
+			for (int i = 0; i < Source.Dimension; i++)
 			{
-				newMatrix[i, 0] = Sourse[i];
+				newMatrix[i, 0] = Source[i];
 			}
 			return newMatrix;
 		}
 
-		public static Matrix<T> Create(ICollection<Vector<T>> Sourse, MatrixElementOrder ElementOrder)
+		public static Matrix<T> Create(ICollection<Vector<T>> Source, MatrixElementOrder ElementOrder)
 		{
-			if (Sourse == null)
+			if (Source == null)
 				throw new ArgumentNullException();
-			if (Sourse.Count == 0)
+			if (Source.Count == 0)
 				throw new ArgumentException();
 
-			int rCount = (ElementOrder == MatrixElementOrder.ColumnMajor) ? Sourse.First().Dimension : Sourse.Count;
-			int cCount = (ElementOrder != MatrixElementOrder.ColumnMajor) ? Sourse.First().Dimension : Sourse.Count;
+			int rCount = (ElementOrder == MatrixElementOrder.ColumnMajor) ? Source.First().Dimension : Source.Count;
+			int cCount = (ElementOrder != MatrixElementOrder.ColumnMajor) ? Source.First().Dimension : Source.Count;
 
 			Matrix<T> newMatrix = new Matrix<T>(rCount, cCount);
 
 			int i = 0;
-			foreach (var item in Sourse)
+			foreach (var item in Source)
 			{
 				for (int q = 0; q < item.Dimension; q++)
 				{
@@ -137,66 +137,66 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <summary>
 		/// Create non-refence copy of Matrix
 		/// </summary>
-		/// <param name="Sourse">Sourse Matrix</param>
-		/// <exception cref="ArgumentNullException">Sourse is null</exception> 
+		/// <param name="Source">Source Matrix</param>
+		/// <exception cref="ArgumentNullException">Source is null</exception> 
 		/// <remarks>Time: O(nm)</remarks>
 		/// <returns>New DoubleMatrix</returns>
-		public static Matrix<T> GetCopy(Matrix<T> Sourse)
+		public static Matrix<T> GetCopy(Matrix<T> Source)
 		{
-			if (Sourse == null)
+			if (Source == null)
 				throw new ArgumentNullException();
-			Matrix<T> newMatrix = new Matrix<T>(Sourse.RowCount, Sourse.ColumnCount);
-			Array.Copy(Sourse.Data, newMatrix.Data, Sourse.ColumnCount * Sourse.RowCount);
+			Matrix<T> newMatrix = new Matrix<T>(Source.RowCount, Source.ColumnCount);
+			Array.Copy(Source.Data, newMatrix.Data, Source.ColumnCount * Source.RowCount);
 			return newMatrix;
 		}
 
 		/// <summary>
-		/// Create transposition of Sourse Matrix
+		/// Create transposition of Source Matrix
 		/// </summary>
-		/// <param name="Sourse">Sourse Matrix</param>
-		/// <exception cref="ArgumentNullException">Sourse is null</exception>
+		/// <param name="Source">Source Matrix</param>
+		/// <exception cref="ArgumentNullException">Source is null</exception>
 		/// <remarks>Time: O(nm)</remarks>
 		/// <returns>New Matrix</returns>
-		public static Matrix<T> GetTranspose(Matrix<T> Sourse)
+		public static Matrix<T> GetTranspose(Matrix<T> Source)
 		{
-			if (Sourse == null)
+			if (Source == null)
 				throw new ArgumentNullException();
 
-			Matrix<T> newMatrix = new Matrix<T>(Sourse.ColumnCount, Sourse.RowCount);
+			Matrix<T> newMatrix = new Matrix<T>(Source.ColumnCount, Source.RowCount);
 
-			for (int i = 0; i < Sourse.RowCount; i++)
+			for (int i = 0; i < Source.RowCount; i++)
 			{
-				for (int j = 0; j < Sourse.ColumnCount; j++)
+				for (int j = 0; j < Source.ColumnCount; j++)
 				{
-					newMatrix[j, i] = Sourse[i, j];
+					newMatrix[j, i] = Source[i, j];
 				}
 			}
 			return newMatrix;
 		}
 
 		/// <summary>
-		/// Swap two rows in Sourse Matrix
+		/// Swap two rows in Source Matrix
 		/// </summary>
-		/// <param name="Sourse">Sourse Matrix</param>
+		/// <param name="Source">Source Matrix</param>
 		/// <param name="Row1">Index of row to swap</param>
 		/// <param name="Row2">Index of row to swap</param>
 		/// <param name="IndexFromZero">Flag for specifying row indexing</param>
-		/// <exception cref="ArgumentNullException">Sourse is null</exception>
+		/// <exception cref="ArgumentNullException">Source is null</exception>
 		/// <exception cref="ArgumentException">Row1 or Row2 is not inside a Matrix</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> SwapRows(Matrix<T> Sourse, int Row1, int Row2, bool IndexFromZero = true)
+		public static Matrix<T> SwapRows(Matrix<T> Source, int Row1, int Row2, bool IndexFromZero = true)
 		{
 			int real1 = (IndexFromZero) ? Row1 : Row1 - 1;
 			int real2 = (IndexFromZero) ? Row2 : Row2 - 1;
 
-			if (Sourse == null)
+			if (Source == null)
 				throw new ArgumentNullException();
-			if (real1 > Sourse.RowCount || real2 > Sourse.RowCount)
+			if (real1 > Source.RowCount || real2 > Source.RowCount)
 				throw new IndexOutOfRangeException();
 			if (real1 == real2)
-				return Matrix<T>.GetCopy(Sourse);
+				return Matrix<T>.GetCopy(Source);
 
-			Matrix<T> newMatrix = Matrix<T>.GetCopy(Sourse);
+			Matrix<T> newMatrix = Matrix<T>.GetCopy(Source);
 
 			for (int i = 0; i < newMatrix.ColumnCount; i++)
 			{
@@ -211,8 +211,8 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <summary>
 		/// Concatenate two matrices horizontaly
 		/// </summary>
-		/// <param name="Left">Sourse Matrix on the left side</param>
-		/// <param name="Rigth">Sourse Matrix on the right side</param>
+		/// <param name="Left">Source Matrix on the left side</param>
+		/// <param name="Rigth">Source Matrix on the right side</param>
 		/// <exception cref="ArgumentNullException">Matrix Left or Right is null</exception>
 		/// <exception cref="ArgumentException">Matrices RowCount is not same</exception>
 		/// <returns>new Matrix</returns>
@@ -239,20 +239,20 @@ namespace Mianen.Matematics.LinearAlgebra
 		}
 
 		/// <summary>
-		/// Get part of matrix formed by taking a block of the entries from the Sourse Matrix
+		/// Get part of matrix formed by taking a block of the entries from the Source Matrix
 		/// </summary>
-		/// <param name="Sourse">Sourse Matrix</param>
-		/// <param name="FirstRow">Index of first row of submatrix in Sourse Matrix</param>
-		/// <param name="FirstColumn">Index of first Column of submatrix in Sourse Matrix</param>
+		/// <param name="Source">Source Matrix</param>
+		/// <param name="FirstRow">Index of first row of submatrix in Source Matrix</param>
+		/// <param name="FirstColumn">Index of first Column of submatrix in Source Matrix</param>
 		/// <param name="RowCount">Submatrix rowCount</param>
 		/// <param name="ColumnCount">Submatrix ColumnCount</param>
 		/// <param name="IndexFromZero">Flag for specifying row indexing</param>
-		/// <exception cref="ArgumentNullException">Sourse is null</exception>
-		/// <exception cref="ArgumentException">define block of submatrix is not fit into a Sourse Matrix</exception>
+		/// <exception cref="ArgumentNullException">Source is null</exception>
+		/// <exception cref="ArgumentException">define block of submatrix is not fit into a Source Matrix</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> GetSubMatrix(Matrix<T> Sourse, int FirstRow, int FirstColumn, int RowCount, int ColumnCount, bool IndexFromZero = true)
+		public static Matrix<T> GetSubMatrix(Matrix<T> Source, int FirstRow, int FirstColumn, int RowCount, int ColumnCount, bool IndexFromZero = true)
 		{
-			if (Sourse == null)
+			if (Source == null)
 				throw new ArgumentNullException();
 
 			if (!IndexFromZero)
@@ -262,7 +262,7 @@ namespace Mianen.Matematics.LinearAlgebra
 			}
 
 
-			if (FirstColumn + ColumnCount > Sourse.ColumnCount || FirstRow + RowCount > Sourse.RowCount)
+			if (FirstColumn + ColumnCount > Source.ColumnCount || FirstRow + RowCount > Source.RowCount)
 				throw new ArgumentException();
 
 
@@ -272,7 +272,7 @@ namespace Mianen.Matematics.LinearAlgebra
 			{
 				for (int j = 0; j < newMatrix.ColumnCount; j++)
 				{
-					newMatrix[i, j] = Sourse[i + FirstRow, j + FirstColumn];
+					newMatrix[i, j] = Source[i + FirstRow, j + FirstColumn];
 				}
 			}
 			return newMatrix;
@@ -281,23 +281,23 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <summary>
 		/// Get Row Echelon Form of a Matrix (REF)
 		/// </summary>
-		/// <param name="Sourse">Sourse Matrix</param>
+		/// <param name="Source">Source Matrix</param>
 		/// <param name="Zero">Identity element for addition</param>
-		/// <exception cref="ArgumentNullException">Sourse is null</exception>
+		/// <exception cref="ArgumentNullException">Source is null</exception>
 		/// <exception cref="NotAllowedOperationException">Operation +, -, * or /  is not defined for this object</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> GetREF(Matrix<T> Sourse)
+		public static Matrix<T> GetREF(Matrix<T> Source)
 		{
-			if (Sourse == null)
+			if (Source == null)
 				throw new ArgumentNullException();
-			Matrix<T> newMatrix = Matrix<T>.GetCopy(Sourse);
+			Matrix<T> newMatrix = Matrix<T>.GetCopy(Source);
 #if DEBUG
 			Console.WriteLine("Begin of REF:");
 			Console.WriteLine(newMatrix);
 			Console.WriteLine("...");
 #endif
 
-			dynamic z = Sourse[0, 0];
+			dynamic z = Source[0, 0];
 			T Zero = z - z;
 			try
 			{
@@ -371,23 +371,23 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <summary>
 		/// Get Reduced Row Echelon Form of a Matrix (REF)
 		/// </summary>
-		/// <param name="Sourse">Sourse Matrix</param>
+		/// <param name="Source">Source Matrix</param>
 		/// <param name="Zero">Identity element for addition</param>
-		/// <exception cref="ArgumentNullException">Sourse is null</exception>
+		/// <exception cref="ArgumentNullException">Source is null</exception>
 		/// <exception cref="NotAllowedOperationException">Operation +, -, * or /  is not defined for this object</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> GetRREF(Matrix<T> Sourse)
+		public static Matrix<T> GetRREF(Matrix<T> Source)
 		{
 #if DEBUG
 			Console.WriteLine("Begin of RREF:");
 #endif
-			if (Sourse == null)
+			if (Source == null)
 				throw new ArgumentNullException();
 
-			dynamic z = Sourse[0, 0];
+			dynamic z = Source[0, 0];
 			T Zero = z - z;
 
-			Matrix<T> newMatrix = Matrix<T>.GetREF(Sourse);
+			Matrix<T> newMatrix = Matrix<T>.GetREF(Source);
 #if DEBUG
 			Console.WriteLine(newMatrix);
 #endif
@@ -462,29 +462,29 @@ namespace Mianen.Matematics.LinearAlgebra
 		}
 
 		/// <summary>
-		/// Get inverse of Sourse Matrix
+		/// Get inverse of Source Matrix
 		/// </summary>
-		/// <param name="Sourse">Sourse MAtrix</param>
+		/// <param name="Source">Source MAtrix</param>
 		/// <param name="Zero">Identity element for addition</param>
 		/// <param name="One">Identity element for multyplication</param>
-		/// <exception cref="ArgumentNullException">Sourse is null</exception>
-		/// <exception cref="ArgumentException">Sourse is not regular</exception>
+		/// <exception cref="ArgumentNullException">Source is null</exception>
+		/// <exception cref="ArgumentException">Source is not regular</exception>
 		/// <exception cref="NotAllowedOperationException">Operation +, -, * or /  is not defined for this object</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> GetInvert(Matrix<T> Sourse)
+		public static Matrix<T> GetInvert(Matrix<T> Source)
 		{
-			if (Sourse == null)
+			if (Source == null)
 				throw new ArgumentNullException();
-			if (Sourse.ColumnCount != Sourse.RowCount)
+			if (Source.ColumnCount != Source.RowCount)
 				throw new ArgumentException();
 
-			dynamic z = Sourse[0, 0];
+			dynamic z = Source[0, 0];
 			T Zero = z - z;
 			T One = z / z;
 #if DEBUG
 			Console.WriteLine("Begin of Inverting");
 #endif
-			Matrix<T> In_k = new Matrix<T>(Sourse.RowCount, Sourse.ColumnCount);
+			Matrix<T> In_k = new Matrix<T>(Source.RowCount, Source.ColumnCount);
 			for (int i = 0; i < In_k.RowCount; i++)
 			{
 				for (int j = 0; j < In_k.ColumnCount; j++)
@@ -498,7 +498,7 @@ namespace Mianen.Matematics.LinearAlgebra
 #if DEBUG
 			Console.WriteLine(In_k);
 #endif
-			Matrix<T> newMatrix = Matrix<T>.JoinHorizontaly(Sourse, In_k);
+			Matrix<T> newMatrix = Matrix<T>.JoinHorizontaly(Source, In_k);
 #if DEBUG
 			Console.WriteLine(newMatrix);
 #endif
@@ -526,21 +526,21 @@ namespace Mianen.Matematics.LinearAlgebra
 				}
 			}
 
-			return Matrix<T>.GetSubMatrix(red, 0, Sourse.ColumnCount, Sourse.RowCount, Sourse.ColumnCount);
+			return Matrix<T>.GetSubMatrix(red, 0, Source.ColumnCount, Source.RowCount, Source.ColumnCount);
 		}
 
-		public static T GetDeterminant(Matrix<T> Sourse)
+		public static T GetDeterminant(Matrix<T> Source)
 		{
-			if (Sourse == null)
+			if (Source == null)
 				throw new ArgumentNullException();
-			Matrix<T> newMatrix = Matrix<T>.GetCopy(Sourse);
+			Matrix<T> newMatrix = Matrix<T>.GetCopy(Source);
 		#if DEBUG
 			Console.WriteLine("Begin of GetDeterminant:");
 			Console.WriteLine(newMatrix);
 			Console.WriteLine("...");
 		#endif
 			int One = 1;
-			dynamic z = Sourse[0, 0];
+			dynamic z = Source[0, 0];
 			T Zero = z - z;
 			try
 			{

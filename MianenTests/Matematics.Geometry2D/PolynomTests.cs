@@ -111,5 +111,60 @@ namespace Mianen.Matematics.Geometry2D.Tests
 			Console.WriteLine(p.DefVector);
 			Assert.IsTrue(true, p.DefVector.ToString());
 		}
+
+		[TestMethod()]
+		public void PolynomAprox03()
+		{
+			Point2D<double>[] Points = new Point2D<double>[38];
+			Points[0] = new Point2D<double>(160,60);
+			Points[1] = new Point2D<double>(168,60);
+			Points[2] = new Point2D<double>(168,58);
+			Points[3] = new Point2D<double>(169,96);
+			Points[4] = new Point2D<double>(170,70);
+			Points[5] = new Point2D<double>(170,62);
+			Points[6] = new Point2D<double>(172,61);
+			Points[7] = new Point2D<double>(172,79);
+			Points[8] = new Point2D<double>(175,72);
+			Points[9] = new Point2D<double>(177,62);
+			Points[10] = new Point2D<double>(180,86);
+			Points[11] = new Point2D<double>(180,60);
+			Points[12] = new Point2D<double>(180,75);
+			Points[13] = new Point2D<double>(180,70);
+			Points[14] = new Point2D<double>(181,76);
+			Points[15] = new Point2D<double>(183,65);
+			Points[16] = new Point2D<double>(183,77);
+			Points[17] = new Point2D<double>(183,87);
+			Points[18] = new Point2D<double>(183,76);
+			Points[19] = new Point2D<double>(184,65);
+			Points[20] = new Point2D<double>(185,90);
+			Points[21] = new Point2D<double>(185,65);
+			Points[22] = new Point2D<double>(185,80);
+			Points[23] = new Point2D<double>(185,72);
+			Points[24] = new Point2D<double>(185,85);
+			Points[25] = new Point2D<double>(189,85);
+			Points[26] = new Point2D<double>(190,75);
+			Points[27] = new Point2D<double>(190,70);
+			Points[28] = new Point2D<double>(191,70);
+			Points[29] = new Point2D<double>(193,71);
+			Points[30] = new Point2D<double>(194,87);
+			Points[31] = new Point2D<double>(195,95);
+			Points[32] = new Point2D<double>(178,73);
+			Points[33] = new Point2D<double>(187,85);
+			Points[34] = new Point2D<double>(195,88);
+			Points[35] = new Point2D<double>(167,63);
+			Points[36] = new Point2D<double>(195,79);
+			Points[37] = new Point2D<double>(177,80);
+
+
+			for (int i = 0; i < Points.Length; i++)
+			{
+				Console.WriteLine($"Bod[{{{Points[i].X},{Points[i].Y}}}]");
+			}
+
+
+			Polynom<double> p = Polynom<double>.Aproximate(Points, 2);
+			Console.WriteLine(p.DefVector);
+			Assert.IsTrue(true, p.DefVector.ToString());
+		}
 	}
 }

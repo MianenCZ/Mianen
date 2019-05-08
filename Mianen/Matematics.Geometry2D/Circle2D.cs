@@ -13,7 +13,7 @@ namespace Mianen.Matematics.Geometry2D
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <typeparam name="T">Number system to define precision</typeparam>
+	/// <typeparam name="T">NumberDef system to define precision</typeparam>
 	public struct Circle2D<T>
 	{
 		public Point2D<T> Center { get; set; }
