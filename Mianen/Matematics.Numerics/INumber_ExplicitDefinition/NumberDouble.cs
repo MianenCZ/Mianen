@@ -6,7 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
+namespace Mianen.Matematics.Numerics
 {
 	struct NumberDouble : INumber<double>
 	{
@@ -41,10 +41,16 @@ namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
 
 		public INumber<double> Subtract(INumber<double> Number) => new NumberDouble(this.Value * Number.Value);
 
+		public override string ToString() => this.Value.ToString();
+
 		public string ToString(IFormatProvider IformatProvider) => this.Value.ToString(IformatProvider);
 
 		public string ToString(string Format) => this.Value.ToString(Format);
 
 		public string ToString(string Format, IFormatProvider IformatProvider) => this.Value.ToString(Format, IformatProvider);
+
+
+		public INumber<double> GetZero() => new NumberDouble(0);
+		public INumber<double> GetOne() => new NumberDouble(1);
 	}
 }

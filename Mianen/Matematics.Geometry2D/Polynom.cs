@@ -5,7 +5,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Mianen.Matematics.LinearAlgebra;
-
+/*
 namespace Mianen.Matematics.Geometry2D
 {
 	public class Polynom<T>
@@ -98,3 +98,4 @@ namespace Mianen.Matematics.Geometry2D
 		}
 	}
 }
+//*/

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
+namespace Mianen.Matematics.Numerics
 {
 	struct NumberLong : INumber<long>
 	{
@@ -46,5 +46,8 @@ namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
 		public string ToString(string Format) => this.Value.ToString(Format);
 
 		public string ToString(string Format, IFormatProvider IformatProvider) => this.Value.ToString(Format, IformatProvider);
+
+		public INumber<long> GetZero() => new NumberLong(0);
+		public INumber<long> GetOne() => new NumberLong(1);
 	}
 }

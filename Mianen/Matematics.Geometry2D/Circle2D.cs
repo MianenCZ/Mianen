@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using Mianen.Matematics.LinearAlgebra;
 using Newtonsoft.Json.Serialization;
 using Mianen.Matematics;
-
+using Mianen.Matematics.Numerics;
+/*/
 namespace Mianen.Matematics.Geometry2D
 {
 	/// <summary>
@@ -35,7 +36,8 @@ namespace Mianen.Matematics.Geometry2D
 			Matrix<T> A = new Matrix<T>(Points.Length, 3);
 			Vector<T> Vector = new Vector<T>(Points.Length);
 
-			T one = default(T);
+			
+			INumber<T> one = default(T);
 			bool found = false;
 
 			for (int i = 0; i < Points.Length; i++)
@@ -80,3 +82,6 @@ namespace Mianen.Matematics.Geometry2D
 		}
 	}
 }
+//*/
+
+

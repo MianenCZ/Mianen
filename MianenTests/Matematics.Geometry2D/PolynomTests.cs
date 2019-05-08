@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Mianen.Matematics.LinearAlgebra;
-
+/*
 namespace Mianen.Matematics.Geometry2D.Tests
 {
 	[TestClass()]
@@ -168,3 +168,5 @@ namespace Mianen.Matematics.Geometry2D.Tests
 		}
 	}
 }
+
+//*/

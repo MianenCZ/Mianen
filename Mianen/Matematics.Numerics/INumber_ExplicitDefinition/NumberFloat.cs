@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
+namespace Mianen.Matematics.Numerics
 {
 	struct NumberFloat : INumber<float>
 	{
@@ -44,5 +44,9 @@ namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
 		public string ToString(string Format) => this.Value.ToString(Format);
 
 		public string ToString(string Format, IFormatProvider IformatProvider) => this.Value.ToString(Format, IformatProvider);
+
+
+		public INumber<float> GetZero() => new NumberFloat(0);
+		public INumber<float> GetOne() => new NumberFloat(1);
 	}
 }
