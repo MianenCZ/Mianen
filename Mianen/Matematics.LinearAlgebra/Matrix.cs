@@ -4,12 +4,13 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Mianen.Matematics;
+using Mianen.Matematics.Numerics;
 
 
 [assembly: InternalsVisibleTo("MianenTests")]
 namespace Mianen.Matematics.LinearAlgebra
 {
-	public class Matrix<T>
+	public class Matrix<T> where T: INumber
 	{
 		/// <summary>
 		/// Column count. Represents M in standart description
