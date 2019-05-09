@@ -30,8 +30,8 @@ namespace Mianen.Matematics.Numerics
 
 	}
 
-	public interface INumber<T> : IComparable<INumber<T>>, IEquatable<INumber<T>>
+	public interface INumber<T>
 	{
-
+		T Value { get; set; }
 	}
 }

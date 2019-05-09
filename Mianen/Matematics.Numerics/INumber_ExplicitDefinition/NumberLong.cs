@@ -8,46 +8,83 @@ using System.Threading.Tasks;
 
 namespace Mianen.Matematics.Numerics
 {
-	struct NumberLong : INumber<long>
+	struct NumberLong : INumber<long>, INumber
 	{
-		public long Value { get; set; }
+		public long Value { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-		public NumberLong(long Value)
+		public INumber Add(INumber Number)
 		{
-			this.Value = Value;
+			throw new NotImplementedException();
 		}
 
-		public INumber<long> Add(INumber<long> Number) => new NumberLong(this.Value + Number.Value);
+		public INumber Divide(INumber Number)
+		{
+			throw new NotImplementedException();
+		}
 
-		public int CompareTo(INumber<long> Number) => this.Value.CompareTo(Number.Value);
+		public INumber GetOne()
+		{
+			throw new NotImplementedException();
+		}
 
-		public INumber<long> Divide(INumber<long> Number) => new NumberLong(this.Value / Number.Value);
+		public INumber GetZero()
+		{
+			throw new NotImplementedException();
+		}
 
-		public bool Equals(INumber<long> Number) => this.Value.Equals(Number.Value);
+		public bool IsEqual(INumber Number)
+		{
+			throw new NotImplementedException();
+		}
 
-		public bool IsEqual(INumber<long> Number) => this.Value == Number.Value;
+		public bool IsGreaterOrEqualThan(INumber Number)
+		{
+			throw new NotImplementedException();
+		}
 
-		public bool IsGreaterOrEqualThan(INumber<long> Number) => this.Value >= Number.Value;
+		public bool IsGreaterThan(INumber Number)
+		{
+			throw new NotImplementedException();
+		}
 
-		public bool IsGreaterThan(INumber<long> Number) => this.Value > Number.Value;
+		public bool IsLowerOrEqualThan(INumber Number)
+		{
+			throw new NotImplementedException();
+		}
 
-		public bool IsLowerOrEqualThan(INumber<long> Number) => this.Value <= Number.Value;
+		public bool IsLowerThan(INumber Number)
+		{
+			throw new NotImplementedException();
+		}
 
-		public bool IsLowerThan(INumber<long> Number) => this.Value < Number.Value;
+		public bool IsNotEqual(INumber Number)
+		{
+			throw new NotImplementedException();
+		}
 
-		public bool IsNotEqual(INumber<long> Number) => this.Value != Number.Value;
+		public INumber Multiply(INumber Number)
+		{
+			throw new NotImplementedException();
+		}
 
-		public INumber<long> Multiply(INumber<long> Number) => new NumberLong(this.Value * Number.Value);
+		public INumber Subtract(INumber Number)
+		{
+			throw new NotImplementedException();
+		}
 
-		public INumber<long> Subtract(INumber<long> Number) => new NumberLong(this.Value * Number.Value);
+		public string ToString(IFormatProvider IformatProvider)
+		{
+			throw new NotImplementedException();
+		}
 
-		public string ToString(IFormatProvider IformatProvider) => this.Value.ToString(IformatProvider);
+		public string ToString(string Format)
+		{
+			throw new NotImplementedException();
+		}
 
-		public string ToString(string Format) => this.Value.ToString(Format);
-
-		public string ToString(string Format, IFormatProvider IformatProvider) => this.Value.ToString(Format, IformatProvider);
-
-		public INumber<long> GetZero() => new NumberLong(0);
-		public INumber<long> GetOne() => new NumberLong(1);
+		public string ToString(string Format, IFormatProvider IformatProvider)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
