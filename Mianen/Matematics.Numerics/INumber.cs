@@ -6,11 +6,6 @@ using System.Threading.Tasks;
 
 namespace Mianen.Matematics.Numerics
 {
-	public interface INumber
-	{
-
-	}
-
 	public interface INumber<T> : IComparable<INumber<T>>, IEquatable<INumber<T>>
 	{
 		T Value { get; set; }
@@ -18,6 +13,8 @@ namespace Mianen.Matematics.Numerics
 		INumber<T> Subtract(INumber<T> Number);
 		INumber<T> Multiply(INumber<T> Number);
 		INumber<T> Divide(INumber<T> Number);
+		INumber<T> Negative();
+		INumber<T> Power(INumber<T> Exponent);
 		bool IsGreaterThan(INumber<T> Number);
 		bool IsGreaterOrEqualThan(INumber<T> Number);
 		bool IsLowerThan(INumber<T> Number);
@@ -26,7 +23,7 @@ namespace Mianen.Matematics.Numerics
 		bool IsNotEqual(INumber<T> Number);
 
 		INumber<T> GetZero();
-		INumber<T> GetOne();
+		INumber<T> GetOne();	
 
 		string ToString(IFormatProvider IformatProvider);
 		string ToString(string Format);

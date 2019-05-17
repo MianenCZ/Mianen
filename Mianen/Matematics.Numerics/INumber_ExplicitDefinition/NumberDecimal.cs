@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
+namespace Mianen.Matematics.Numerics
 {
-	struct NumberDecimal : INumber<decimal>
+	class NumberDecimal : INumber<decimal>
 	{
 		public decimal Value { get; set; }
 
@@ -44,5 +44,22 @@ namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
 		public string ToString(string Format) => this.Value.ToString(Format);
 
 		public string ToString(string Format, IFormatProvider IformatProvider) => this.Value.ToString(Format, IformatProvider);
+
+		public INumber<decimal> GetZero() => new NumberDecimal(0);
+
+		public INumber<decimal> GetOne() => new NumberDecimal(0);
+
+		public INumber<decimal> Negative() => new NumberDecimal(-Value);
+
+		public INumber<decimal> Power(INumber<decimal> Exponent)
+		{
+			decimal val = (decimal)Math.Pow((double)Value, (double)Exponent.Value);
+			return new NumberDecimal(val);
+		}
+
+		public static implicit operator NumberDecimal(decimal Value)
+		{
+			return new NumberDecimal(Value);
+		}
 	}
 }

@@ -6,9 +6,9 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
+namespace Mianen.Matematics.Numerics
 {
-	struct NumberLong : INumber<long>
+	class NumberLong : INumber<long>
 	{
 		public long Value { get; set; }
 
@@ -46,5 +46,22 @@ namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
 		public string ToString(string Format) => this.Value.ToString(Format);
 
 		public string ToString(string Format, IFormatProvider IformatProvider) => this.Value.ToString(Format, IformatProvider);
+
+		public INumber<long> GetZero() => new NumberLong(0);
+
+		public INumber<long> GetOne() => new NumberLong(1);
+
+		public INumber<long> Negative() => new NumberLong(-Value);
+
+		public INumber<long> Power(INumber<long> Exponent)
+		{
+			long val = (long)Math.Pow((double)Value, (double)Exponent.Value);
+			return new NumberLong(val);
+		}
+
+		public static implicit operator NumberLong(long Value)
+		{
+			return new NumberLong(Value);
+		}
 	}
 }

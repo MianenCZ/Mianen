@@ -9,7 +9,7 @@ using Mianen.Matematics.Numerics;
 
 namespace Mianen.Matematics.Geometry2D
 {
-	public class Polynom<T> where T : INumber
+	public class Polynom<T>
 	{
 		public Vector<T> DefVector { get; set; }
 		public int Degree => this.DefVector.Dimension - 1;
@@ -26,11 +26,11 @@ namespace Mianen.Matematics.Geometry2D
 
 			bool first = true;
 
-			T Zero = (dynamic)DefVector[0] - (dynamic)DefVector[0];
+			INumber<T> zero = DefVector[0].GetZero();
 
 			for (int i = DefVector.Dimension - 1; i >= 0; i--)
 			{
-				if (first && (dynamic)DefVector[i] != Zero)
+				if (first && DefVector[i].IsNotEqual(zero))
 				{
 					first = false;
 					this.DefVector = new Vector<T>(i + 1);
@@ -47,16 +47,15 @@ namespace Mianen.Matematics.Geometry2D
 			}
 		}
 
-		public T Eval(T x)
+		public INumber<T> Eval(INumber<T> x)
 		{
-			T arg = (dynamic) this.DefVector[this.Degree - 1] / this.DefVector[this.Degree - 1];
-			T Sum = (dynamic)x - x;
+			INumber<T> arg = x.GetOne();
+			INumber<T> Sum = x.GetZero();
 			for (int i = 0; i < this.DefVector.Dimension; i++)
 			{
-				Sum += (dynamic)DefVector[i] * arg;
-				arg *= (dynamic)x;
+				Sum = Sum.Add(DefVector[i].Multiply(arg));
+				arg = arg.Multiply(x);
 			}
-
 			return Sum;
 		}
 
@@ -67,29 +66,15 @@ namespace Mianen.Matematics.Geometry2D
 
 			INumber<T> zero = Points[0].X.GetZero();
 			INumber<T> one = Points[0].X.GetOne();
-			bool found = false;
 
-			for (int i = 0; i < Points.Length; i++)
-			{
-				if (Points[i].X != (dynamic) zero)
-				{
-					one = (dynamic)Points[i].X / Points[i].X;
-					found = true;
-					break;
-				}
-			}
-
-			if (!found)
-				throw new ArgumentException("Object can not be aproximate to Circle2D");
 			for (int i = 0; i < Points.Length; i++)
 			{
 				INumber<T> val = one;
 				for (int j = TargetDegree; j >= 0; j--)
 				{
 					A[i, j] = val;
-					val *= (dynamic) Points[i].X;
+					val = val.Multiply(Points[i].X);
 				}
-
 				Vector[i] = Points[i].Y;
 			}
 

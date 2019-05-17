@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
+namespace Mianen.Matematics.Numerics
 {
-	struct NumberFloat : INumber
+	class NumberFloat : INumber<float>
 	{
 		public float Value { get; set; }
 
@@ -15,13 +15,13 @@ namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
 			this.Value = Value;
 		}
 
-		public INumber Add(INumber Number) => new NumberFloat(this.Value + Number.Value);
+		public INumber<float> Add(INumber<float> Number) => new NumberFloat(this.Value + Number.Value);
 
-		public int CompareTo(INumber Number) => this.Value.CompareTo(Number.Value);
+		public int CompareTo(INumber<float> Number) => this.Value.CompareTo(Number.Value);
 
-		public INumber Divide(INumber Number) => new NumberFloat(this.Value / Number.Value);
+		public INumber<float> Divide(INumber<float> Number) => new NumberFloat(this.Value / Number.Value);
 
-		public bool Equals(INumber Number) => this.Value.Equals(Number.Value);
+		public bool Equals(INumber<float> Number) => this.Value.Equals(Number.Value);
 
 		public bool IsEqual(INumber<float> Number) => this.Value == Number.Value;
 
@@ -44,5 +44,22 @@ namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
 		public string ToString(string Format) => this.Value.ToString(Format);
 
 		public string ToString(string Format, IFormatProvider IformatProvider) => this.Value.ToString(Format, IformatProvider);
+
+		public INumber<float> GetZero() => new NumberFloat(0);
+
+		public INumber<float> GetOne() => new NumberFloat(0);
+
+		public INumber<float> Negative() => new NumberFloat(-Value);
+
+		public INumber<float> Power(INumber<float> Exponent)
+		{
+			float val = (float)Math.Pow((double)Value, (double)Exponent.Value);
+			return new NumberFloat(val);
+		}
+
+		public static implicit operator NumberFloat(float Value)
+		{
+			return new NumberFloat(Value);
+		}
 	}
 }

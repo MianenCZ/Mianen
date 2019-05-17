@@ -10,7 +10,9 @@ namespace Mianen.Matematics.Numerics
 	{
 		byte[] Values;
 		bool signum;
-		public int Signum { get { return (signum) ? 1 : -1; } }
+		public int Signum { get { return (signum) ? 1 : -1; }
+			private set { ; }
+		}
 
 		public BigInteger()
 		{

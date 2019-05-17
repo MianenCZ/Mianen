@@ -20,7 +20,7 @@ namespace Mianen.Matematics.LinearAlgebra.Tests
 		[TestMethod()]
 		public void GetDeterminantTest01()
 		{
-			¨/*
+			/*
 			Matrix<double> mat = Matrix<double>.Create(4, 4, new double[] {1,1,1,0,1,1,0,1,1,0,1,1,0,1,1,1 }, MatrixElementOrder.RowMajor);
 			double det = Matrix<double>.GetDeterminant(mat);
 			Assert.AreEqual(-3, det);

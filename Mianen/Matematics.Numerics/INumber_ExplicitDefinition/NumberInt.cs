@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
+namespace Mianen.Matematics.Numerics
 {
-	struct NumberInt : INumber<int>
+	class NumberInt : INumber<int>
 	{
 		public int Value { get; set; }
 
@@ -45,5 +45,22 @@ namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
 
 		public string ToString(string Format, IFormatProvider IformatProvider) =>
 			this.Value.ToString(Format, IformatProvider);
+
+		public INumber<int> GetZero() => new NumberInt(0);
+
+		public INumber<int> GetOne() => new NumberInt(1);
+
+		public INumber<int> Negative() => new NumberInt(-Value);
+
+		public INumber<int> Power(INumber<int> Exponent)
+		{
+			int val = (int)Math.Pow((double)Value, (double)Exponent.Value);
+			return new NumberInt(val);
+		}
+
+		public static implicit operator NumberInt(int Value)
+		{
+			return new NumberInt(Value);
+		}
 	}
 }

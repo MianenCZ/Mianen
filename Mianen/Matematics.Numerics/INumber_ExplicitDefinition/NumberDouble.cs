@@ -6,9 +6,9 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
+namespace Mianen.Matematics.Numerics
 {
-	struct NumberDouble : INumber<double>
+	class NumberDouble : INumber<double>
 	{
 		public double Value { get; set; }
 
@@ -46,5 +46,23 @@ namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
 		public string ToString(string Format) => this.Value.ToString(Format);
 
 		public string ToString(string Format, IFormatProvider IformatProvider) => this.Value.ToString(Format, IformatProvider);
+
+		public INumber<double> GetZero() => new NumberDouble(0);
+
+		public INumber<double> GetOne() => new NumberDouble(0);
+
+		public INumber<double> Negative() => new NumberDouble(-Value);
+
+		public INumber<double> Power(INumber<double> Exponent)
+		{
+			double val = Math.Pow((double)Value, (double)Exponent.Value);
+			return new NumberDouble(val);
+		}
+
+		public static implicit operator NumberDouble(double Value)
+		{
+			return new NumberDouble(Value);
+		}
+
 	}
 }

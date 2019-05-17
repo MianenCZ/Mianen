@@ -7,7 +7,7 @@ using Mianen.Matematics.Numerics;
 
 namespace Mianen.Matematics.LinearAlgebra
 {
-	public class Vector<T> where  T: INumber
+	public class Vector<T>
 	{
 		public int Dimension { get; private set; }
 
@@ -22,7 +22,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		public Vector(int Dimension)
 		{
 			this.Dimension = Dimension;
-			this.Data = new T[Dimension];
+			this.Data = new INumber<T>[Dimension];
 		}
 
 		public static Vector<T> Create(T[] Values)
@@ -43,17 +43,12 @@ namespace Mianen.Matematics.LinearAlgebra
 
 			for (int i = 0; i < A.RowCount; i++)
 			{
-				dynamic a = A[i, 0];
-				dynamic b = B[0];
-				dynamic Sum = a * b;
+				INumber<T> Sum = A[i, 0].Multiply(B[0]);
 
 				for (int k = 1; k < B.Dimension; k++)
 				{
-					dynamic a1 = A[i, k];
-					dynamic b1 = B[k];
-					Sum += a1 * b1;
+					Sum = Sum.Add(A[i, k].Multiply(B[k]));
 				}
-
 				newVector[i] = Sum;
 			}
 
@@ -71,9 +66,7 @@ namespace Mianen.Matematics.LinearAlgebra
 
 			for (int i = 0; i < newVector.Dimension; i++)
 			{
-				dynamic a = A[i];
-				dynamic b = B[i];
-				newVector[i] = a + b;
+				newVector[i] = A[i].Add(B[i]);
 			}
 
 			return newVector;
@@ -100,20 +93,13 @@ namespace Mianen.Matematics.LinearAlgebra
 
 		public static INumber<T> GetNorm(Vector<T> Input)
 		{
-			try
+			INumber<T> Norm = Input[0];
+			for (int i = 1; i < Input.Dimension; i++)
 			{
-				INumber<T> Norm = Input[0];
-				for (int i = 1; i < Input.Dimension; i++)
-				{
-					Norm *= (dynamic) Input[i];
-				}
+				Norm = Norm.Multiply(Input[i]);
+			}
 
-				return Norm;
-			}
-			catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException ex)
-			{
-				throw new NotAllowedOperationException($"Operation * is not define on {typeof(T)}", ex);
-			}
+			return Norm;
 		}
 
 		public static Vector<T> GetReverse(Vector<T> Input)

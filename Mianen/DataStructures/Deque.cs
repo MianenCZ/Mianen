@@ -9,7 +9,7 @@ namespace Mianen.DataStructures
 	public class Deque<T> : IList<T>
 	{
 
-		private DequeMemo<T> Data;
+		private DequeMemo Data;
 		private int LeftMemo = 16;
 		private int RightMemo = 16;
 		private Direction Dir;
@@ -35,7 +35,7 @@ namespace Mianen.DataStructures
 		/// </summary>
 		public Deque()
 		{
-			this.Data = new DequeMemo<T>();
+			this.Data = new DequeMemo();
 			this.Data.Left = LeftMemo;
 			this.Data.Right = RightMemo;
 			this.Dir = Direction.Standard;
@@ -47,7 +47,7 @@ namespace Mianen.DataStructures
 		/// <param name="Capacity">Start size</param>
 		public Deque(int Capacity)
 		{
-			this.Data = new DequeMemo<T>();
+			this.Data = new DequeMemo();
 			this.LeftMemo = Capacity / 2;
 			this.RightMemo = Capacity - LeftMemo;
 			this.Data.Left = LeftMemo;
@@ -504,7 +504,7 @@ namespace Mianen.DataStructures
 			return newDeque;
 		}
 
-		public class DequeMemo<T> : ArrayAmortizer<T>
+		public class DequeMemo : ArrayAmortizer<T>
 		{
 			public int Left { get; set; }
 			public int Right { get; set; }

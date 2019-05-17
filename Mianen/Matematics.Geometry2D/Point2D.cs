@@ -8,7 +8,7 @@ using Mianen.Matematics.Numerics;
 
 namespace Mianen.Matematics.Geometry2D
 {
-	public struct Point2D<T> where T : INumber
+	public struct Point2D<T>
 	{
 		public INumber<T> X { get; private set; }
 		public INumber<T> Y { get; private set; }
@@ -38,16 +38,14 @@ namespace Mianen.Matematics.Geometry2D
 
 		public static INumber<T> GetDistance(Point2D<T> A, Point2D<T> B)
 		{
-			try
-			{
-				//TODO: Math
-				return (INumber<T>)(dynamic)(Math.Pow( ((A.X - (dynamic)B.X)*(A.X - (dynamic)B.X) + (A.Y - (dynamic)B.Y) * (A.Y - (dynamic)B.Y)), 0.5d));
-			}
-			catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException ex)
-			{
-				throw new NotAllowedOperationException($"Operation != is not define for {typeof(T)} class", ex);
-			}
-
+			//TODO: Math
+			INumber<T> X = (A.X).Subtract(B.X);
+			INumber<T> Xsq = X.Multiply(X);
+			INumber<T> Y = (A.Y).Subtract(B.Y);
+			INumber<T> Ysq = Y.Multiply(Y);
+			INumber<T> one = A.X.GetOne();
+			INumber<T> half = one.Divide(one.Add(one));
+			return (Xsq.Add(Ysq)).Power(half);
 		}
 	}
 }
