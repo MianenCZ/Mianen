@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/*/
 namespace Mianen.Matematics.LinearAlgebra.Tests
 {
 	[TestClass()]
@@ -70,4 +69,3 @@ namespace Mianen.Matematics.LinearAlgebra.Tests
 		}
 	}
 }
-//*/

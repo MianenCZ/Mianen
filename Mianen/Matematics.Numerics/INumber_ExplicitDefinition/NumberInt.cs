@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mianen.Matematics.Numerics
+namespace Mianen.Matematics.Numerics.INumber_ExplicitDefinition
 {
 	struct NumberInt : INumber<int>
 	{
@@ -45,9 +45,5 @@ namespace Mianen.Matematics.Numerics
 
 		public string ToString(string Format, IFormatProvider IformatProvider) =>
 			this.Value.ToString(Format, IformatProvider);
-
-
-		public INumber<int> GetZero() => new NumberInt(0);
-		public INumber<int> GetOne() => new NumberInt(1);
-}
+	}
 }

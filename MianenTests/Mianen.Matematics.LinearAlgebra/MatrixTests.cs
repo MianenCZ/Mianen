@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Mianen.Matematics.Numerics;
 
 namespace Mianen.Matematics.LinearAlgebra.Tests
 {
@@ -15,14 +14,7 @@ namespace Mianen.Matematics.LinearAlgebra.Tests
 		[TestMethod()]
 		public void MatrixTest()
 		{
-			Matrix<NumberDouble> a = new Matrix<NumberDouble>(2, 2);
-
-			
-			Console.WriteLine(a);
-
-			//Matrix<byte> b = new Matrix<byte>(5, 45);
-			//Matrix<string> s = new Matrix<string>(5, 45);
-
+			Assert.Fail();
 		}
 
 		[TestMethod()]

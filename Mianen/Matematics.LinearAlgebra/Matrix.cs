@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,7 +10,7 @@ using Mianen.Matematics.Numerics;
 [assembly: InternalsVisibleTo("MianenTests")]
 namespace Mianen.Matematics.LinearAlgebra
 {
-	public class Matrix<T> where  T: INumber
+	public class Matrix<T> where T: INumber
 	{
 		/// <summary>
 		/// Column count. Represents M in standart description
@@ -21,8 +20,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// Row count. Represents N in standart description
 		/// </summary>
 		public int ColumnCount { get; private set; }
-		private INumber<T>[,] Data;
-		
+		private T[,] Data;
 		
 
 		/// <summary>
@@ -33,7 +31,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <param name="IndexFromZero">define index base True - 0, False - 1</param>
 		/// <exception cref="ArgumentOutOfRangeException">i or j is not inside Matrix</exception>
 		/// <returns></returns>
-		public INumber<T> this[int i, int j, bool IndexFromZero = true]
+		public T this[int i, int j, bool IndexFromZero = true]
 		{
 			get => Data[(IndexFromZero) ? i : i - 1, (IndexFromZero) ? j : j - 1];
 			set => Data[(IndexFromZero) ? i : i - 1, (IndexFromZero) ? j : j - 1] = value;
@@ -52,7 +50,7 @@ namespace Mianen.Matematics.LinearAlgebra
 
 			this.RowCount = RowCount;
 			this.ColumnCount = ColumnCount;
-			this.Data = new INumber<T>[RowCount,ColumnCount];
+			this.Data = new T[RowCount,ColumnCount];
 		}
 
 		/// <summary>
@@ -67,7 +65,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <exception cref="ArgumentException">values does not presize fit into a Matrix.</exception> 
 		/// <remarks>O(nm)</remarks>
 		/// <returns>A Matrix</returns>
-		public static Matrix<T> Create(int RowCount, int ColumnCount, INumber<T>[] Values, MatrixElementOrder ElementOrder)
+		public static Matrix<T> Create(int RowCount, int ColumnCount, T[] Values, MatrixElementOrder ElementOrder)
 		{
 			if (Values == null)
 				throw new NullReferenceException();
@@ -92,7 +90,7 @@ namespace Mianen.Matematics.LinearAlgebra
 
 			return newMatrix;
 		}
-		/*
+
 		/// <summary>
 		/// Constructs a new matrix of specified aray uning specified vector
 		/// </summary>
@@ -108,8 +106,7 @@ namespace Mianen.Matematics.LinearAlgebra
 			}
 			return newMatrix;
 		}
-		//*/
-		/*
+
 		public static Matrix<T> Create(ICollection<Vector<T>> Source, MatrixElementOrder ElementOrder)
 		{
 			if (Source == null)
@@ -137,7 +134,6 @@ namespace Mianen.Matematics.LinearAlgebra
 			return newMatrix;
 
 		}
-		//*/
 
 		/// <summary>
 		/// Create non-refence copy of Matrix
@@ -205,7 +201,7 @@ namespace Mianen.Matematics.LinearAlgebra
 
 			for (int i = 0; i < newMatrix.ColumnCount; i++)
 			{
-				INumber<T> tmp = newMatrix[real1, i];
+				T tmp = newMatrix[real1, i];
 				newMatrix[real1, i] = newMatrix[real2, i];
 				newMatrix[real2, i] = tmp;
 			}
@@ -301,7 +297,9 @@ namespace Mianen.Matematics.LinearAlgebra
 			Console.WriteLine(newMatrix);
 			Console.WriteLine("...");
 #endif
-			INumber<T> Zero = Source[0, 0];
+
+			dynamic z = Source[0, 0];
+			T Zero = z - z;
 			try
 			{
 
@@ -388,7 +386,7 @@ namespace Mianen.Matematics.LinearAlgebra
 				throw new ArgumentNullException();
 
 			dynamic z = Source[0, 0];
-			INumber<T> Zero = Source[0, 0].GetZero();
+			T Zero = z - z;
 
 			Matrix<T> newMatrix = Matrix<T>.GetREF(Source);
 #if DEBUG
@@ -482,8 +480,8 @@ namespace Mianen.Matematics.LinearAlgebra
 				throw new ArgumentException();
 
 			dynamic z = Source[0, 0];
-			INumber<T> Zero = Source[0, 0].GetZero();
-			INumber<T> One = Source[0, 0].GetOne();
+			T Zero = z - z;
+			T One = z / z;
 #if DEBUG
 			Console.WriteLine("Begin of Inverting");
 #endif
@@ -543,7 +541,8 @@ namespace Mianen.Matematics.LinearAlgebra
 			Console.WriteLine("...");
 		#endif
 			int One = 1;
-			INumber<T> Zero = Source[0, 0].GetZero();
+			dynamic z = Source[0, 0];
+			T Zero = z - z;
 			try
 			{
 
@@ -789,14 +788,13 @@ namespace Mianen.Matematics.LinearAlgebra
 			return newMatrix;
 		}
 
-		/*
 		public static Matrix<T> operator *(Vector<T> A, Matrix<T> B)
 		{
 			Matrix<T> A_ = Matrix<T>.Create(A);
 			return A_ * B;
 		}
-		//*/
 		#endregion
+
 		public override string ToString()
 		{
 			int[] MaxLenghts = new int[this.ColumnCount];
