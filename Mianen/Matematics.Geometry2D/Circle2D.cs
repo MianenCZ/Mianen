@@ -29,13 +29,13 @@ namespace Mianen.Matematics.Geometry2D
 		{
 			return $"Circle2D([{Center.X};{Center.Y}], r = {Radius})";
 		}
-
+		/*
 		public static Circle2D<T> Aproximate(Point2D<T>[] Points)
 		{	
 			Matrix<T> A = new Matrix<T>(Points.Length, 3);
 			Vector<T> Vector = new Vector<T>(Points.Length);
 
-			T one = default(T);
+			INumber<T> one = default(T);
 			bool found = false;
 
 			for (int i = 0; i < Points.Length; i++)
@@ -78,5 +78,6 @@ namespace Mianen.Matematics.Geometry2D
 
 			return res;
 		}
+		//*/
 	}
 }

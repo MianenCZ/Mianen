@@ -10,7 +10,7 @@ using Mianen.Matematics.Numerics;
 [assembly: InternalsVisibleTo("MianenTests")]
 namespace Mianen.Matematics.LinearAlgebra
 {
-	public class Matrix<T> where T: INumber
+	public class Matrix<T>
 	{
 		/// <summary>
 		/// Column count. Represents M in standart description
@@ -20,7 +20,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// Row count. Represents N in standart description
 		/// </summary>
 		public int ColumnCount { get; private set; }
-		private T[,] Data;
+		private INumber<T>[,] Data;
 		
 
 		/// <summary>
@@ -31,7 +31,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <param name="IndexFromZero">define index base True - 0, False - 1</param>
 		/// <exception cref="ArgumentOutOfRangeException">i or j is not inside Matrix</exception>
 		/// <returns></returns>
-		public T this[int i, int j, bool IndexFromZero = true]
+		public INumber<T> this[int i, int j, bool IndexFromZero = true]
 		{
 			get => Data[(IndexFromZero) ? i : i - 1, (IndexFromZero) ? j : j - 1];
 			set => Data[(IndexFromZero) ? i : i - 1, (IndexFromZero) ? j : j - 1] = value;
@@ -50,7 +50,7 @@ namespace Mianen.Matematics.LinearAlgebra
 
 			this.RowCount = RowCount;
 			this.ColumnCount = ColumnCount;
-			this.Data = new T[RowCount,ColumnCount];
+			this.Data = new INumber<T>[RowCount,ColumnCount];
 		}
 
 		/// <summary>
@@ -65,7 +65,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <exception cref="ArgumentException">values does not presize fit into a Matrix.</exception> 
 		/// <remarks>O(nm)</remarks>
 		/// <returns>A Matrix</returns>
-		public static Matrix<T> Create(int RowCount, int ColumnCount, T[] Values, MatrixElementOrder ElementOrder)
+		public static Matrix<T> Create(int RowCount, int ColumnCount, INumber<T>[] Values, MatrixElementOrder ElementOrder)
 		{
 			if (Values == null)
 				throw new NullReferenceException();
@@ -201,7 +201,7 @@ namespace Mianen.Matematics.LinearAlgebra
 
 			for (int i = 0; i < newMatrix.ColumnCount; i++)
 			{
-				T tmp = newMatrix[real1, i];
+				INumber<T> tmp = newMatrix[real1, i];
 				newMatrix[real1, i] = newMatrix[real2, i];
 				newMatrix[real2, i] = tmp;
 			}
@@ -298,8 +298,7 @@ namespace Mianen.Matematics.LinearAlgebra
 			Console.WriteLine("...");
 #endif
 
-			dynamic z = Source[0, 0];
-			T Zero = z - z;
+			INumber<T> Zero = Source[0, 0].GetZero();
 			try
 			{
 
@@ -479,9 +478,8 @@ namespace Mianen.Matematics.LinearAlgebra
 			if (Source.ColumnCount != Source.RowCount)
 				throw new ArgumentException();
 
-			dynamic z = Source[0, 0];
-			T Zero = z - z;
-			T One = z / z;
+			INumber<T> Zero = Source[0, 0].GetZero();
+			INumber<T> One = Source[0, 0].GetOne();
 #if DEBUG
 			Console.WriteLine("Begin of Inverting");
 #endif
@@ -542,7 +540,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		#endif
 			int One = 1;
 			dynamic z = Source[0, 0];
-			T Zero = z - z;
+			INumber<T> Zero = Source[0, 0].GetZero();
 			try
 			{
 
@@ -552,8 +550,8 @@ namespace Mianen.Matematics.LinearAlgebra
 					//Find first nonzero value in j-column and swith that row on RankRef level (pivot level)
 					for (int i = RankREF; i < newMatrix.RowCount; i++)
 					{
-						dynamic a = newMatrix[i, j];
-						dynamic b = Zero;
+						INumber<T> a = newMatrix[i, j];
+						INumber<T> b = newMatrix[i, j].GetZero();
 						if (a != b)
 						{
 						#if DEBUG

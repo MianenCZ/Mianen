@@ -5,15 +5,16 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Mianen.Matematics.LinearAlgebra;
+using Mianen.Matematics.Numerics;
 
 namespace Mianen.Matematics.Geometry2D
 {
-	public class Polynom<T>
+	public class Polynom<T> where T : INumber
 	{
 		public Vector<T> DefVector { get; set; }
 		public int Degree => this.DefVector.Dimension - 1;
 
-		public T this[int Index]
+		public INumber<T> this[int Index]
 		{
 			get => DefVector[Index];
 		}
@@ -64,8 +65,8 @@ namespace Mianen.Matematics.Geometry2D
 			Matrix<T> A = new Matrix<T>(Points.Length, TargetDegree + 1);
 			Vector<T> Vector = new Vector<T>(Points.Length);
 
-			T zero = (dynamic)Points[0].X - Points[0].X;
-			T one = default(T);
+			INumber<T> zero = Points[0].X.GetZero();
+			INumber<T> one = Points[0].X.GetOne();
 			bool found = false;
 
 			for (int i = 0; i < Points.Length; i++)
@@ -82,7 +83,7 @@ namespace Mianen.Matematics.Geometry2D
 				throw new ArgumentException("Object can not be aproximate to Circle2D");
 			for (int i = 0; i < Points.Length; i++)
 			{
-				T val = one;
+				INumber<T> val = one;
 				for (int j = TargetDegree; j >= 0; j--)
 				{
 					A[i, j] = val;

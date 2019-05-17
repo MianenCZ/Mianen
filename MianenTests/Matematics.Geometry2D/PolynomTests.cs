@@ -11,6 +11,7 @@ using Mianen.Matematics.LinearAlgebra;
 
 namespace Mianen.Matematics.Geometry2D.Tests
 {
+	/*
 	[TestClass()]
 	public class PolynomTests
 	{
@@ -167,4 +168,5 @@ namespace Mianen.Matematics.Geometry2D.Tests
 			Assert.IsTrue(true, p.DefVector.ToString());
 		}
 	}
+	//*/
 }

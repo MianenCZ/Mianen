@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mianen.Matematics.Numerics;
 
 namespace Mianen.Matematics.LinearAlgebra
 {
-	public class Vector<T>
+	public class Vector<T> where  T: INumber
 	{
 		public int Dimension { get; private set; }
 
-		private T[] Data;
+		private INumber<T>[] Data;
 
-		public T this[int i, bool IndexFromZero = true]
+		public INumber<T> this[int i, bool IndexFromZero = true]
 		{
 			get => Data[(IndexFromZero) ? i : i - 1];
 			set => Data[(IndexFromZero) ? i : i - 1] = value;
@@ -97,11 +98,11 @@ namespace Mianen.Matematics.LinearAlgebra
 			return newVector;
 		}
 
-		public static T GetNorm(Vector<T> Input)
+		public static INumber<T> GetNorm(Vector<T> Input)
 		{
 			try
 			{
-				T Norm = Input[0];
+				INumber<T> Norm = Input[0];
 				for (int i = 1; i < Input.Dimension; i++)
 				{
 					Norm *= (dynamic) Input[i];
