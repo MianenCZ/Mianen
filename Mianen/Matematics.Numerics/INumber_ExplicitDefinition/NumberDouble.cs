@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Mianen.Matematics.Numerics
 {
-	class NumberDouble : INumber<double>
+	public class NumberDouble : INumber<double>
 	{
 		public double Value { get; set; }
 

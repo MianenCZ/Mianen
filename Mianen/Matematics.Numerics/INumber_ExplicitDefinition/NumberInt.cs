@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mianen.Matematics.Numerics
 {
-	class NumberInt : INumber<int>
+	public class NumberInt : INumber<int>
 	{
 		public int Value { get; set; }
 

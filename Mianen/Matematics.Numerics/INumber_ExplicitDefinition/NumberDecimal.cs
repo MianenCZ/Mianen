@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mianen.Matematics.Numerics
 {
-	class NumberDecimal : INumber<decimal>
+	public class NumberDecimal : INumber<decimal>
 	{
 		public decimal Value { get; set; }
 

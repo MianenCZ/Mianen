@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Mianen.Matematics.Numerics
 {
-	class NumberLong : INumber<long>
+	public class NumberLong : INumber<long>
 	{
 		public long Value { get; set; }
 

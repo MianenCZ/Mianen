@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mianen.Matematics.LinearAlgebra
 {
-	public static class LinerarMath<T>
+	public static class LinearMath<T>
 	{
 		public static Vector<T> LeastSquers(Matrix<T> A, Vector<T> y)
 		{

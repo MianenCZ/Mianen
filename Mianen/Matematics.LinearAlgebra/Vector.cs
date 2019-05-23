@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Mianen.Matematics.Numerics;
@@ -25,11 +26,22 @@ namespace Mianen.Matematics.LinearAlgebra
 			this.Data = new INumber<T>[Dimension];
 		}
 
-		public static Vector<T> Create(T[] Values)
+		public static Vector<T> Create(INumber<T>[] Values)
 		{
 			Vector<T> newVector = new Vector<T>(Values.Length);
 			Array.Copy(Values, newVector.Data, Values.Length);
 			return newVector;
+		}
+
+		public static Vector<T> operator *(INumber<T> Alpha, Vector<T> Input)
+		{
+			Vector<T> res = new Vector<T>(Input.Dimension);
+			for (int i = 0; i < res.Dimension; i++)
+			{
+				res[i] = Input[i].Multiply(Alpha);
+			}
+
+			return res;
 		}
 
 		public static Vector<T> operator *(Matrix<T> A, Vector<T> B)
@@ -94,12 +106,36 @@ namespace Mianen.Matematics.LinearAlgebra
 		public static INumber<T> GetNorm(Vector<T> Input)
 		{
 			INumber<T> Norm = Input[0];
+			INumber<T> One = Input[0].GetOne();
+			INumber<T> half = One.Divide(One.Add(One));
 			for (int i = 1; i < Input.Dimension; i++)
 			{
 				Norm = Norm.Multiply(Input[i]);
 			}
 
-			return Norm;
+			INumber<T> Result = Norm.Power(half);
+			return Result;
+		}
+
+		public void Normalize()
+		{
+			INumber<T> Norm = Vector<T>.GetNorm(this);
+			for (int i = 0; i <this.Dimension; i++)
+			{
+				this[i] = this[i].Divide(Norm);
+			}
+		}
+
+		public Vector<T> GetNormalized()
+		{
+			INumber<T> Norm = Vector<T>.GetNorm(this);
+			Vector<T> res = new Vector<T>(this.Dimension);
+			for (int i = 0; i < res.Dimension; i++)
+			{
+				res[i] = this[i].Divide(Norm);
+			}
+
+			return res;
 		}
 
 		public static Vector<T> GetReverse(Vector<T> Input)
@@ -111,6 +147,32 @@ namespace Mianen.Matematics.LinearAlgebra
 			}
 
 			return newVector;
+		}
+
+		public static INumber<T> GetDotProduct(Vector<T> VectorA, Vector<T> VectorB)
+		{
+			if(object.Equals(VectorA, null) || object.Equals(VectorB, null))
+				throw new ArgumentNullException();
+			if(VectorA.Dimension != VectorB.Dimension)
+				throw new ArgumentException();
+			INumber<T> TotalSum = VectorA[0].GetZero();
+
+			for (int i = 0; i < VectorA.Dimension; i++)
+			{
+				TotalSum = TotalSum.Add(VectorA[i].Multiply(VectorB[i]));
+			}
+
+			return TotalSum;
+		}
+
+		public static INumber<T> Angle(Vector<T> VectorA, Vector<T> VectorB)
+		{
+			INumber<T> NormA = Vector<T>.GetNorm(VectorA);
+			INumber<T> NormB = Vector<T>.GetNorm(VectorB);
+			INumber<T> DotProduct = Vector<T>.GetDotProduct(VectorA, VectorB);
+
+			INumber<T> CosFi = DotProduct.Divide(NormA.Multiply(NormB));
+			return CosFi;
 		}
 
 		public override string ToString()

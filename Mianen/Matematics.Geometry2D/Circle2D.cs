@@ -50,7 +50,7 @@ namespace Mianen.Matematics.Geometry2D
 			}
 
 
-			Vector<T> Res = LinerarMath<T>.LeastSquers(A, Vector);
+			Vector<T> Res = LinearMath<T>.LeastSquers(A, Vector);
 			INumber<T> half = zero.Divide(zero.Add(zero));
 			INumber<T> Rsq = Res[2].Add(Res[1].Multiply(Res[1])).Add(Res[0].Multiply(Res[0]));
 			Circle2D<T> res = new Circle2D<T>
