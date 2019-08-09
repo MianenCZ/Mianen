@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using System.Dynamic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,97 +13,15 @@ using Mianen.Matematics.Numerics;
 
 namespace Mianen.Matematics.LinearAlgebra
 {
-	public class Matrix<T>
+	public static class Matrix
 	{
-		/// <summary>
-		/// Column count. Represents M in standart description
-		/// </summary>
-		public int RowCount { get; private set; }
-
-		/// <summary>
-		/// Row count. Represents N in standart description
-		/// </summary>
-		public int ColumnCount { get; private set; }
-
-		private INumber<T>[,] Data;
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="i">represents row in Matrix default from 0</param>
-		/// <param name="j">represents column in Matrix default form 0</param>
-		/// <param name="IndexFromZero">define index base True - 0, False - 1</param>
-		/// <exception cref="ArgumentOutOfRangeException">i or j is not inside Matrix</exception>
-		/// <returns></returns>
-		public INumber<T> this[int i, int j, bool IndexFromZero = true]
-		{
-			get => Data[(IndexFromZero) ? i : i - 1, (IndexFromZero) ? j : j - 1];
-			set => Data[(IndexFromZero) ? i : i - 1, (IndexFromZero) ? j : j - 1] = value;
-		}
-
-		/// <summary>
-		/// Constructs a new matrix of the specified dimensions.
-		/// </summary>
-		/// <param name="RowCount">The number of rows.</param>
-		/// <param name="ColumnCount">The number of columns.</param>
-		/// <exception cref="IndexOutOfRangeException">RowCount is less than one. OR ColumnCount is less than one.</exception>
-		public Matrix(int RowCount, int ColumnCount)
-		{
-			if (RowCount < 1 || ColumnCount < 1)
-				throw new IndexOutOfRangeException();
-
-			this.RowCount = RowCount;
-			this.ColumnCount = ColumnCount;
-			this.Data = new INumber<T>[RowCount, ColumnCount];
-		}
-
-		/// <summary>
-		/// Constructs a new matrix of the specified dimensions and using the specified values array.
-		/// </summary>
-		/// <param name="RowCount">The number of rows.</param>
-		/// <param name="ColumnCount">The number of columns.</param>
-		/// <param name="Values">An array of values that contain the elements of the matrix in the order specified by elementOrder</param>
-		/// <param name="ElementOrder">A MatrixElementOrder value that specifies the order in which the matrix components are stored in the storage array values.</param>
-		/// <exception cref="ArgumentNullException">value is null</exception>  
-		/// <exception cref="ArgumentOutOfRangeException">rowCount is less than one. OR columnCount is less than one.</exception>  
-		/// <exception cref="ArgumentException">values does not presize fit into a Matrix.</exception> 
-		/// <remarks>O(nm)</remarks>
-		/// <returns>A Matrix</returns>
-		public static Matrix<T> Create(int RowCount, int ColumnCount, INumber<T>[] Values,
-									   MatrixElementOrder ElementOrder)
-		{
-			if (Values == null)
-				throw new NullReferenceException();
-			if (RowCount < 1 || ColumnCount < 1)
-				throw new ArgumentOutOfRangeException();
-			if (RowCount * ColumnCount != Values.Length)
-				throw new ArgumentException();
-
-			Matrix<T> newMatrix = new Matrix<T>(RowCount, ColumnCount);
-
-
-			for (int i = 0; i < RowCount; i++)
-			{
-				for (int j = 0; j < ColumnCount; j++)
-				{
-					if (ElementOrder == MatrixElementOrder.RowMajor)
-						newMatrix[i, j] = Values[i * ColumnCount + j];
-					else if (ElementOrder == MatrixElementOrder.ColumnMajor)
-						newMatrix[i, j] = Values[j * RowCount + i];
-				}
-			}
-
-			return newMatrix;
-		}
-
 		/// <summary>
 		/// Constructs a new matrix of specified aray uning specified vector
 		/// </summary>
 		/// <param name="Source">Input vector</param>
 		/// <exception cref="ArgumentNullException">Source is null</exception>  
 		/// <returns>New Matrix</returns>
-		public static Matrix<T> Create(Vector<T> Source)
+		public static Matrix<T> Create<T>(Vector<T> Source)
 		{
 			Matrix<T> newMatrix = new Matrix<T>(Source.Dimension, 1);
 			for (int i = 0; i < Source.Dimension; i++)
@@ -112,7 +32,7 @@ namespace Mianen.Matematics.LinearAlgebra
 			return newMatrix;
 		}
 
-		public static Matrix<T> Create(ICollection<Vector<T>> Source, MatrixElementOrder ElementOrder)
+		public static Matrix<T> Create<T>(ICollection<Vector<T>> Source, MatrixElementOrder ElementOrder)
 		{
 			if (Source == null)
 				throw new ArgumentNullException();
@@ -143,13 +63,53 @@ namespace Mianen.Matematics.LinearAlgebra
 		}
 
 		/// <summary>
+		/// Constructs a new matrix of the specified dimensions and using the specified values array.
+		/// </summary>
+		/// <param name="RowCount">The number of rows.</param>
+		/// <param name="ColumnCount">The number of columns.</param>
+		/// <param name="Values">An array of values that contain the elements of the matrix in the order specified by elementOrder</param>
+		/// <param name="ElementOrder">A MatrixElementOrder value that specifies the order in which the matrix components are stored in the storage array values.</param>
+		/// <exception cref="ArgumentNullException">value is null</exception>  
+		/// <exception cref="ArgumentOutOfRangeException">rowCount is less than one. OR columnCount is less than one.</exception>  
+		/// <exception cref="ArgumentException">values does not presize fit into a Matrix.</exception> 
+		/// <remarks>O(nm)</remarks>
+		/// <returns>A Matrix</returns>
+		public static Matrix<T> Create<T>(int RowCount, int ColumnCount, INumber<T>[] Values,
+										  MatrixElementOrder ElementOrder)
+		{
+			if (Values == null)
+				throw new NullReferenceException();
+			if (RowCount < 1 || ColumnCount < 1)
+				throw new ArgumentOutOfRangeException();
+			if (RowCount * ColumnCount != Values.Length)
+				throw new ArgumentException();
+
+			Matrix<T> newMatrix = new Matrix<T>(RowCount, ColumnCount);
+
+
+			for (int i = 0; i < RowCount; i++)
+			{
+				for (int j = 0; j < ColumnCount; j++)
+				{
+					if (ElementOrder == MatrixElementOrder.RowMajor)
+						newMatrix[i, j] = Values[i * ColumnCount + j];
+					else if (ElementOrder == MatrixElementOrder.ColumnMajor)
+						newMatrix[i, j] = Values[j * RowCount + i];
+				}
+			}
+
+			return newMatrix;
+		}
+
+		/// <summary>
 		/// Create non-refence copy of Matrix
 		/// </summary>
+		/// <typeparam name="T">Precision</typeparam>
 		/// <param name="Source">Source Matrix</param>
 		/// <exception cref="ArgumentNullException">Source is null</exception> 
 		/// <remarks>Time: O(nm)</remarks>
 		/// <returns>New DoubleMatrix</returns>
-		public static Matrix<T> GetCopy(Matrix<T> Source)
+		public static Matrix<T> GetCopy<T>(Matrix<T> Source)
 		{
 			if (Source == null)
 				throw new ArgumentNullException();
@@ -158,14 +118,102 @@ namespace Mianen.Matematics.LinearAlgebra
 			return newMatrix;
 		}
 
+		//TODO: Description
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="Source"></param>
+		/// <returns></returns>
+		public static INumber<T> GetDeterminant<T>(Matrix<T> Source)
+		{
+			if (Source == null)
+				throw new ArgumentNullException();
+			Matrix<T> newMatrix = Matrix.GetCopy(Source);
+#if TRACE
+			Console.WriteLine("Begin of GetDeterminant:");
+			Console.WriteLine(newMatrix);
+			Console.WriteLine("...");
+#endif
+			int One = 1;
+			INumber<T> Zero = Source[0, 0].GetZero();
+
+
+			int RankREF = 0;
+			for (int j = 0; j < newMatrix.ColumnCount; j++)
+			{
+				//Find first nonzero value in j-column and swith that row on RankRef level (pivot level)
+				for (int i = RankREF; i < newMatrix.RowCount; i++)
+				{
+					INumber<T> a = newMatrix[i, j];
+					INumber<T> b = newMatrix[i, j].GetZero();
+					if (a != b)
+					{
+#if TRACE
+						Console.WriteLine("Pivot Found: {0}:{1} - {2}", i, j, newMatrix[i, j]);
+#endif
+						//We find nonzero value
+						if (i != RankREF)
+						{
+							//RankREF row in zero in column
+							//Swap two rows to get nonzero value to RankREF level
+#if TRACE
+							One *= -1;
+							Console.WriteLine("Swaping");
+#endif
+							newMatrix = Matrix.SwapRows(newMatrix, i, RankREF);
+#if TRACE
+							Console.WriteLine(newMatrix);
+#endif
+						}
+						//Now we have pivot in RankREF row in column
+
+						//Subtraction from below to get pivot column
+#if TRACE
+						Console.WriteLine("Subtraction");
+#endif
+						for (int sub = RankREF + 1; sub < newMatrix.RowCount; sub++)
+						{
+							INumber<T> constant = newMatrix[sub, j].Divide(newMatrix[RankREF, j]);
+
+							//* Change
+							newMatrix[sub, j] = Zero;
+							for (int q = j + 1; q < newMatrix.ColumnCount; q++)
+							{
+								INumber<T> e = newMatrix[sub, q];
+								INumber<T> f = newMatrix[RankREF, q];
+								newMatrix[sub, q] = e.Subtract(f.Multiply(constant));
+							}
+						}
+#if TRACE
+						Console.WriteLine("After Subtraction");
+						Console.WriteLine(newMatrix);
+#endif
+						RankREF++;
+						break;
+					}
+				}
+			}
+
+			//ToDo
+			INumber<T> det = (One == -1) ? newMatrix[0, 0].Negative() : newMatrix[0, 0];
+			for (int i = 0; i < newMatrix.ColumnCount; i++)
+			{
+				det = det.Multiply(newMatrix[i, i]);
+			}
+
+			return det;
+		}
+
 		/// <summary>
 		/// Create transposition of Source Matrix
 		/// </summary>
+		/// <typeparam name="T">Precision</typeparam>
 		/// <param name="Source">Source Matrix</param>
 		/// <exception cref="ArgumentNullException">Source is null</exception>
 		/// <remarks>Time: O(nm)</remarks>
 		/// <returns>New Matrix</returns>
-		public static Matrix<T> GetTranspose(Matrix<T> Source)
+		public static Matrix<T> GetTranspose<T>(Matrix<T> Source)
 		{
 			if (Source == null)
 				throw new ArgumentNullException();
@@ -186,6 +234,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <summary>
 		/// Swap two rows in Source Matrix
 		/// </summary>
+		/// <typeparam name="T">Precision</typeparam>
 		/// <param name="Source">Source Matrix</param>
 		/// <param name="Row1">Index of row to swap</param>
 		/// <param name="Row2">Index of row to swap</param>
@@ -193,7 +242,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <exception cref="ArgumentNullException">Source is null</exception>
 		/// <exception cref="ArgumentException">Row1 or Row2 is not inside a Matrix</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> SwapRows(Matrix<T> Source, int Row1, int Row2, bool IndexFromZero = true)
+		public static Matrix<T> SwapRows<T>(Matrix<T> Source, int Row1, int Row2, bool IndexFromZero = true)
 		{
 			int real1 = (IndexFromZero) ? Row1 : Row1 - 1;
 			int real2 = (IndexFromZero) ? Row2 : Row2 - 1;
@@ -203,9 +252,9 @@ namespace Mianen.Matematics.LinearAlgebra
 			if (real1 > Source.RowCount || real2 > Source.RowCount)
 				throw new IndexOutOfRangeException();
 			if (real1 == real2)
-				return Matrix<T>.GetCopy(Source);
+				return Matrix.GetCopy(Source);
 
-			Matrix<T> newMatrix = Matrix<T>.GetCopy(Source);
+			Matrix<T> newMatrix = Matrix.GetCopy(Source);
 
 			for (int i = 0; i < newMatrix.ColumnCount; i++)
 			{
@@ -220,12 +269,13 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <summary>
 		/// Concatenate two matrices horizontaly
 		/// </summary>
+		/// <typeparam name="T">Precision</typeparam>
 		/// <param name="Left">Source Matrix on the left side</param>
 		/// <param name="Rigth">Source Matrix on the right side</param>
 		/// <exception cref="ArgumentNullException">Matrix Left or Right is null</exception>
 		/// <exception cref="ArgumentException">Matrices RowCount is not same</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> JoinHorizontaly(Matrix<T> Left, Matrix<T> Rigth)
+		public static Matrix<T> JoinHorizontaly<T>(Matrix<T> Left, Matrix<T> Rigth)
 		{
 			if (Left == null || Rigth == null)
 				throw new ArgumentNullException();
@@ -252,6 +302,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <summary>
 		/// Get part of matrix formed by taking a block of the entries from the Source Matrix
 		/// </summary>
+		/// <typeparam name="T">Precision</typeparam>
 		/// <param name="Source">Source Matrix</param>
 		/// <param name="FirstRow">Index of first row of submatrix in Source Matrix</param>
 		/// <param name="FirstColumn">Index of first Column of submatrix in Source Matrix</param>
@@ -261,7 +312,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <exception cref="ArgumentNullException">Source is null</exception>
 		/// <exception cref="ArgumentException">define block of submatrix is not fit into a Source Matrix</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> GetSubMatrix(Matrix<T> Source, int FirstRow, int FirstColumn, int RowCount,
+		public static Matrix<T> GetSubMatrix<T>(Matrix<T> Source, int FirstRow, int FirstColumn, int RowCount,
 											 int ColumnCount, bool IndexFromZero = true)
 		{
 			if (Source == null)
@@ -290,24 +341,24 @@ namespace Mianen.Matematics.LinearAlgebra
 
 			return newMatrix;
 		}
-
 		/// <summary>
 		/// Get Row Echelon Form of a Matrix (REF)
 		/// </summary>
+		/// <typeparam name="T">Precision</typeparam>
 		/// <param name="Source">Source Matrix</param>
 		/// <param name="Zero">Identity element for addition</param>
 		/// <exception cref="ArgumentNullException">Source is null</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> GetREF(Matrix<T> Source)
+		public static Matrix<T> GetREF<T>(Matrix<T> Source)
 		{
 			if (Source == null)
 				throw new ArgumentNullException();
-			Matrix<T> newMatrix = Matrix<T>.GetCopy(Source);
-		#if DEBUG
+			Matrix<T> newMatrix = Matrix.GetCopy(Source);
+#if TRACE
 			Console.WriteLine("Begin of REF:");
 			Console.WriteLine(newMatrix);
 			Console.WriteLine("...");
-		#endif
+#endif
 
 			INumber<T> Zero = Source[0, 0].GetZero();
 
@@ -320,28 +371,28 @@ namespace Mianen.Matematics.LinearAlgebra
 				{
 					if (newMatrix[i, j].IsNotEqual(newMatrix[0, 0].GetZero()))
 					{
-					#if DEBUG
+#if TRACE
 						Console.WriteLine("Pivot Found: {0}:{1} - {2}", i, j, newMatrix[i, j]);
-					#endif
+#endif
 						//We find nonzero value
 						if (i != RankREF)
 						{
 							//RankREF row in zero in column
 							//Swap two rows to get nonzero value to RankREF level
-						#if DEBUG
+#if TRACE
 							Console.WriteLine("Swaping");
-						#endif
-							newMatrix = Matrix<T>.SwapRows(newMatrix, i, RankREF);
-						#if DEBUG
+#endif
+							newMatrix = Matrix.SwapRows(newMatrix, i, RankREF);
+#if TRACE
 							Console.WriteLine(newMatrix);
-						#endif
+#endif
 						}
 						//Now we have pivot in RankREF row in column
 
 						//Subtraction from below to get pivot column
-					#if DEBUG
+#if TRACE
 						Console.WriteLine("Subtraction");
-					#endif
+#endif
 						for (int sub = RankREF + 1; sub < newMatrix.RowCount; sub++)
 						{
 							INumber<T> constant = newMatrix[sub, j].Divide(newMatrix[RankREF, j]);
@@ -354,10 +405,10 @@ namespace Mianen.Matematics.LinearAlgebra
 									newMatrix[sub, q].Subtract(constant.Multiply(newMatrix[RankREF, q]));
 							}
 						}
-					#if DEBUG
+#if TRACE
 						Console.WriteLine("After Subtraction");
 						Console.WriteLine(newMatrix);
-					#endif
+#endif
 						RankREF++;
 						break;
 					}
@@ -371,24 +422,25 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <summary>
 		/// Get Reduced Row Echelon Form of a Matrix (REF)
 		/// </summary>
+		/// <typeparam name="T">Precision</typeparam>
 		/// <param name="Source">Source Matrix</param>
 		/// <param name="Zero">Identity element for addition</param>
 		/// <exception cref="ArgumentNullException">Source is null</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> GetRREF(Matrix<T> Source)
+		public static Matrix<T> GetRREF<T>(Matrix<T> Source)
 		{
-		#if DEBUG
+#if TRACE
 			Console.WriteLine("Begin of RREF:");
-		#endif
+#endif
 			if (Source == null)
 				throw new ArgumentNullException();
 
 			INumber<T> Zero = Source[0, 0].GetZero();
 
-			Matrix<T> newMatrix = Matrix<T>.GetREF(Source);
-		#if DEBUG
+			Matrix<T> newMatrix = Matrix.GetREF(Source);
+#if TRACE
 			Console.WriteLine(newMatrix);
-		#endif
+#endif
 
 			for (int i = newMatrix.RowCount - 1; i >= 0; i--)
 			{
@@ -396,20 +448,20 @@ namespace Mianen.Matematics.LinearAlgebra
 				{
 					if (newMatrix[i, j].IsNotEqual(newMatrix[0, 0].GetZero()))
 					{
-					#if DEBUG
+#if TRACE
 						Console.WriteLine("Pivo found {0}:{1} - {2}", i, j, newMatrix[i, j]);
 						Console.WriteLine(newMatrix);
-					#endif
+#endif
 						//Pivot found
 						INumber<T> pivot = newMatrix[i, j];
 						for (int q = j; q < newMatrix.ColumnCount; q++)
 						{
 							newMatrix[i, q] = newMatrix[i, q].Divide(pivot);
 						}
-					#if DEBUG
+#if TRACE
 						Console.WriteLine("Norm line");
 						Console.WriteLine(newMatrix);
-					#endif
+#endif
 						//Pivot is 1 (multyplication inert item)
 						//Subtract upper rows
 
@@ -426,10 +478,10 @@ namespace Mianen.Matematics.LinearAlgebra
 								}
 							}
 						}
-					#if DEBUG
+#if TRACE
 						Console.WriteLine("Sub upper");
 						Console.WriteLine(newMatrix);
-					#endif
+#endif
 						break;
 
 
@@ -445,13 +497,14 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <summary>
 		/// Get inverse of Source Matrix
 		/// </summary>
+		/// <typeparam name="T">Precision</typeparam>
 		/// <param name="Source">Source MAtrix</param>
 		/// <param name="Zero">Identity element for addition</param>
-		/// <param name="One">Identity element for multyplication</param>
+		/// <param name="One">Identity element for multiplication</param>
 		/// <exception cref="ArgumentNullException">Source is null</exception>
 		/// <exception cref="ArgumentException">Source is not regular</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> GetInvert(Matrix<T> Source)
+		public static Matrix<T> GetInvert<T>(Matrix<T> Source)
 		{
 			if (Source == null)
 				throw new ArgumentNullException();
@@ -460,9 +513,9 @@ namespace Mianen.Matematics.LinearAlgebra
 
 			INumber<T> Zero = Source[0, 0].GetZero();
 			INumber<T> One = Source[0, 0].GetOne();
-		#if DEBUG
+#if TRACE
 			Console.WriteLine("Begin of Inverting");
-		#endif
+#endif
 			Matrix<T> In_k = new Matrix<T>(Source.RowCount, Source.ColumnCount);
 			for (int i = 0; i < In_k.RowCount; i++)
 			{
@@ -474,17 +527,17 @@ namespace Mianen.Matematics.LinearAlgebra
 						In_k[i, j] = Zero;
 				}
 			}
-		#if DEBUG
+#if TRACE
 			Console.WriteLine(In_k);
-		#endif
-			Matrix<T> newMatrix = Matrix<T>.JoinHorizontaly(Source, In_k);
-		#if DEBUG
+#endif
+			Matrix<T> newMatrix = Matrix.JoinHorizontaly(Source, In_k);
+#if TRACE
 			Console.WriteLine(newMatrix);
-		#endif
-			Matrix<T> red = Matrix<T>.GetRREF(newMatrix);
-		#if DEBUG
+#endif
+			Matrix<T> red = Matrix.GetRREF(newMatrix);
+#if TRACE
 			Console.WriteLine(red);
-		#endif
+#endif
 			for (int i = 0; i < red.RowCount; i++)
 			{
 				for (int j = 0; j < red.RowCount; j++)
@@ -502,56 +555,92 @@ namespace Mianen.Matematics.LinearAlgebra
 				}
 			}
 
-			return Matrix<T>.GetSubMatrix(red, 0, Source.ColumnCount, Source.RowCount, Source.ColumnCount);
+			return Matrix.GetSubMatrix(red, 0, Source.ColumnCount, Source.RowCount, Source.ColumnCount);
+		}
+		
+		/// <summary>
+		/// Multyply matrix using pattern A*(A^T)
+		/// </summary>
+		/// <param name="A">Martix to multyply</param>
+		/// <exception cref="ArgumentNullException">Source is null</exception>
+		/// <returns>New Matrix</returns>
+		public static Matrix<T> MultyplyAAT<T>(Matrix<T> A)
+		{
+			if (A == null)
+				throw new ArgumentNullException();
+			
+			Matrix<T> NewMatrix = new Matrix<T>(A.RowCount, A.RowCount);
+
+			for (int i = 0; i < NewMatrix.RowCount; i++)
+			{
+				for (int j = 0; j < NewMatrix.ColumnCount; j++)
+				{
+					INumber<T> Sum = A[i, 0].Multiply(A[j, 0]);
+					for (int q = 0; q < A.ColumnCount; q++)
+					{
+						INumber<T> tmp = A[i, q].Multiply(A[j, q]);
+						Sum = Sum.Add(tmp);
+					}
+				}
+			}
+
+			return NewMatrix;
 		}
 
-		public static INumber<T> GetDeterminant(Matrix<T> Source)
+		/// <summary>
+		/// Multyply matrix using pattern (A^T)*A
+		/// </summary>
+		/// <param name="A">Martix to multyply</param>
+		/// <exception cref="ArgumentNullException">Source is null</exception>
+		/// <returns>New Matrix</returns>
+		public static Matrix<T> MultyplyATA<T>(Matrix<T> A)
 		{
-			if (Source == null)
+			if (A == null)
 				throw new ArgumentNullException();
-			Matrix<T> newMatrix = Matrix<T>.GetCopy(Source);
-		#if DEBUG
-			Console.WriteLine("Begin of GetDeterminant:");
-			Console.WriteLine(newMatrix);
-			Console.WriteLine("...");
-		#endif
-			int One = 1;
+
+			Matrix<T> NewMatrix = new Matrix<T>(A.ColumnCount, A.ColumnCount);
+			for (int i = 0; i < NewMatrix.RowCount; i++)
+			{
+				for (int j = 0; j < NewMatrix.ColumnCount; j++)
+				{
+					INumber<T> Sum = A[0,i].Multiply(A[0,j]);
+					for (int q = 0; q < A.ColumnCount; q++)
+					{
+						INumber<T> tmp = A[q,i].Multiply(A[q,j]);
+						Sum = Sum.Add(tmp);
+					}
+				}
+			}
+
+			return NewMatrix;
+		}
+
+		internal static Matrix<T> InternalREF<T>(Matrix<T> Source, out INumber<T> DeterminantCoef, out int Rank)
+		{
+			int DetCoef = 1;
+			Matrix<T> newMatrix = Matrix.GetCopy(Source);
 			INumber<T> Zero = Source[0, 0].GetZero();
 
 
 			int RankREF = 0;
 			for (int j = 0; j < newMatrix.ColumnCount; j++)
 			{
-				//Find first nonzero value in j-column and swith that row on RankRef level (pivot level)
+				//Find first nonzero value in j-column and swap that row on RankRef level (pivot level)
 				for (int i = RankREF; i < newMatrix.RowCount; i++)
 				{
-					INumber<T> a = newMatrix[i, j];
-					INumber<T> b = newMatrix[i, j].GetZero();
-					if (a != b)
+					if (newMatrix[i, j].IsNotEqual(newMatrix[0, 0].GetZero()))
 					{
-					#if DEBUG
-						Console.WriteLine("Pivot Found: {0}:{1} - {2}", i, j, newMatrix[i, j]);
-					#endif
 						//We find nonzero value
 						if (i != RankREF)
 						{
 							//RankREF row in zero in column
 							//Swap two rows to get nonzero value to RankREF level
-						#if DEBUG
-							One *= -1;
-							Console.WriteLine("Swaping");
-						#endif
-							newMatrix = Matrix<T>.SwapRows(newMatrix, i, RankREF);
-						#if DEBUG
-							Console.WriteLine(newMatrix);
-						#endif
+							DetCoef *= -1;
+							newMatrix = Matrix.SwapRows(newMatrix, i, RankREF);
 						}
 						//Now we have pivot in RankREF row in column
 
 						//Subtraction from below to get pivot column
-					#if DEBUG
-						Console.WriteLine("Subtraction");
-					#endif
 						for (int sub = RankREF + 1; sub < newMatrix.RowCount; sub++)
 						{
 							INumber<T> constant = newMatrix[sub, j].Divide(newMatrix[RankREF, j]);
@@ -560,202 +649,21 @@ namespace Mianen.Matematics.LinearAlgebra
 							newMatrix[sub, j] = Zero;
 							for (int q = j + 1; q < newMatrix.ColumnCount; q++)
 							{
-								INumber<T> e = newMatrix[sub, q];
-								INumber<T> f = newMatrix[RankREF, q];
-								newMatrix[sub, q] = e.Subtract(f.Multiply(constant));
+								newMatrix[sub, q] =
+									newMatrix[sub, q].Subtract(constant.Multiply(newMatrix[RankREF, q]));
 							}
 						}
-					#if DEBUG
-						Console.WriteLine("After Subtraction");
-						Console.WriteLine(newMatrix);
-					#endif
 						RankREF++;
 						break;
 					}
 				}
 			}
 
-			//ToDo
-			INumber<T> det = (One == -1) ? newMatrix[0, 0].Negative() : newMatrix[0, 0];
-			for (int i = 0; i < newMatrix.ColumnCount; i++)
-			{
-				det = det.Multiply(newMatrix[i, i]);
-			}
-
-			return det;
-		}
-
-		#region Aritmetic operations
-
-		/// <summary>
-		/// Make addition of two Matrices
-		/// </summary>
-		/// <param name="A">Left Matrix</param>
-		/// <param name="B">Right Matrix</param>
-		/// <exception cref="ArgumentNullException">A or B is null</exception>
-		/// <exception cref="ArgumentException">Size of Matrices is not same</exception>
-		/// <remarks>Time: O(nm)</remarks>
-		/// <returns>New Matrix</returns>
-		public static Matrix<T> operator +(Matrix<T> A, Matrix<T> B)
-		{
-			if (A == null || B == null)
-				throw new ArgumentNullException();
-			if (A.RowCount != B.RowCount || A.ColumnCount != B.ColumnCount)
-				throw new ArgumentException();
-
-			Matrix<T> newMatrix = new Matrix<T>(A.RowCount, B.RowCount);
-			for (int i = 0; i < newMatrix.RowCount; i++)
-			{
-				for (int j = 0; j < newMatrix.ColumnCount; j++)
-				{
-					newMatrix[i, j] = A[i, j].Add(B[i, j]);
-				}
-			}
-
+			Rank = RankREF;
+			DeterminantCoef = (DetCoef == 1) ? Source[0, 0].GetOne() : Source[0, 0].GetOne().Negative();
 			return newMatrix;
 		}
-
-		/// <summary>
-		/// Make subtraction of two Matrices
-		/// </summary>
-		/// <param name="A">Left Matrix</param>
-		/// <param name="B">Right Matrix</param>
-		/// <exception cref="ArgumentNullException">A or B is null</exception>
-		/// <exception cref="ArgumentException">Size of Matrices is not same</exception>
-		/// <remarks>Time: O(nm)</remarks>
-		/// <returns>New Matrix</returns>
-		public static Matrix<T> operator -(Matrix<T> A, Matrix<T> B)
-		{
-			if (A == null || B == null)
-				throw new ArgumentNullException();
-			if (A.RowCount != B.RowCount || A.ColumnCount != B.ColumnCount)
-				throw new ArgumentException();
-
-			Matrix<T> newMatrix = new Matrix<T>(A.RowCount, B.RowCount);
-			for (int i = 0; i < newMatrix.RowCount; i++)
-			{
-				for (int j = 0; j < newMatrix.ColumnCount; j++)
-				{
-					newMatrix[i, j] = A[i, j].Subtract(B[i, j]);
-				}
-			}
-
-			return newMatrix;
-		}
-
-		/// <summary>
-		/// Make scalar multyplying of Matrix and constant
-		/// </summary>
-		/// <param name="A">Constant</param>
-		/// <param name="B">Matrix</param>
-		/// <exception cref="ArgumentNullException">A or B is null</exception>
-		/// <remarks>Time: O(nm)</remarks>
-		/// <returns>New Matrix</returns>
-		public static Matrix<T> operator *(INumber<T> A, Matrix<T> B)
-		{
-			if (A == null || B == null)
-				throw new ArgumentNullException();
-
-			Matrix<T> newMatrix = Matrix<T>.GetCopy(B);
-			for (int i = 0; i < newMatrix.RowCount; i++)
-			{
-				for (int j = 0; j < newMatrix.ColumnCount; j++)
-				{
-					newMatrix[i, j] = A.Multiply(B[i, j]);
-				}
-			}
-
-			return newMatrix;
-		}
-
-		/// <summary>
-		/// Make scalar multyplying of Matrix and constant
-		/// </summary>
-		/// <param name="A">Matrix</param>
-		/// <param name="B">Constant</param>
-		/// <exception cref="ArgumentNullException">A or B is null</exception>
-		/// <remarks>Time: O(nm)</remarks>
-		/// <returns>New Matrix</returns>
-		public static Matrix<T> operator *(Matrix<T> A, INumber<T> B)
-		{
-			return B * A;
-		}
-
-		/// <summary>
-		/// Make matrix multyplying
-		/// </summary>
-		/// <param name="A">Left Martix</param>
-		/// <param name="B">Right Matrix</param>
-		/// <exception cref="ArgumentNullException">A or B is null</exception>
-		/// <exception cref="ArgumentException">Column count of left matrix and row count of right has to be equal</exception>
-		/// <returns>New Matrix</returns>
-		public static Matrix<T> operator *(Matrix<T> A, Matrix<T> B)
-		{
-			if (A == null || B == null)
-				throw new ArgumentNullException();
-			if (A.ColumnCount != B.RowCount)
-				throw new ArgumentException();
-
-			Matrix<T> newMatrix = new Matrix<T>(A.RowCount, B.ColumnCount);
-
-			for (int i = 0; i < newMatrix.RowCount; i++)
-			{
-				for (int j = 0; j < newMatrix.ColumnCount; j++)
-				{
-					INumber<T> Sum = A[i, 0].Multiply(B[0, j]);
-
-					for (int k = 1; k < A.ColumnCount; k++)
-					{
-						Sum = Sum.Add(A[i, k].Multiply(B[k, j]));
-					}
-
-					newMatrix[i, j] = Sum;
-				}
-			}
-
-			return newMatrix;
-		}
-
-		public static Matrix<T> operator *(Vector<T> A, Matrix<T> B)
-		{
-			Matrix<T> A_ = Matrix<T>.Create(A);
-			return A_ * B;
-		}
-
-		#endregion
-
-		public override string ToString()
-		{
-			int[] MaxLenghts = new int[this.ColumnCount];
-
-			for (int i = 0; i < this.RowCount; i++)
-			{
-				for (int j = 0; j < this.ColumnCount; j++)
-				{
-					if (this[i, j].ToString().Length > MaxLenghts[j])
-						MaxLenghts[j] = this[i, j].ToString().Length;
-				}
-			}
-
-			StringBuilder bld = new StringBuilder();
-
-			for (int i = 0; i < this.RowCount; i++)
-			{
-				for (int j = 0; j < this.ColumnCount; j++)
-				{
-					bld.Append("   ");
-
-					for (int q = 0; q < MaxLenghts[j] - this[i, j].ToString().Length; q++)
-						bld.Append(" ");
-					bld.Append(this[i, j]);
-				}
-
-				bld.AppendLine();
-			}
-
-			return bld.ToString();
-		}
-
+			   
 	}
 
 	/// <summary>

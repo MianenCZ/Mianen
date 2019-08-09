@@ -24,10 +24,10 @@ namespace Mianen.Matematics.Geometry2D.Tests
 		public void Circle2DAprox()
 		{
 			Point2D<double>[] vals = new Point2D<double>[4];
-			vals[0] = new Point2D<double>(new NumberDouble(1), new NumberDouble(0));
-			vals[1] = new Point2D<double>(new NumberDouble(-1), new NumberDouble(0));
-			vals[2] = new Point2D<double>(new NumberDouble(0), new NumberDouble(-1));
-			vals[3] = new Point2D<double>(new NumberDouble(0), new NumberDouble(-1));
+			vals[0] = new Point2D<double>(new NDouble(1), new NDouble(0));
+			vals[1] = new Point2D<double>(new NDouble(-1), new NDouble(0));
+			vals[2] = new Point2D<double>(new NDouble(0), new NDouble(-1));
+			vals[3] = new Point2D<double>(new NDouble(0), new NDouble(-1));
 			//TODO: Uncomment
 			/*
 			Circle2D<double> res = new Circle2D<double>(new Point2D<double>(0, 0), 1);

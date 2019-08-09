@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace Mianen.Matematics.Numerics
 {
-	public class NumberDouble : INumber<double>
+	public class NDouble : INumber<double>
 	{
 		public double Value { get; set; }
 
-		public NumberDouble(double Value)
+		public NDouble(double Value)
 		{
 			this.Value = Value;
 		}
 
-		public INumber<double> Add(INumber<double> Number) => new NumberDouble(this.Value + Number.Value);
+		public INumber<double> Add(INumber<double> Number) => new NDouble(this.Value + Number.Value);
 
 		public int CompareTo(INumber<double> Number) => this.Value.CompareTo(Number.Value);
 
-		public INumber<double> Divide(INumber<double> Number) => new NumberDouble(this.Value / Number.Value);
+		public INumber<double> Divide(INumber<double> Number) => new NDouble(this.Value / Number.Value);
 
-		public bool Equals(INumber<double> Number) => this.Value.Equals(Number.Value);
+		public bool Equals(INumber<double> Number) => this.Value == Number.Value;
 
 		public bool IsEqual(INumber<double> Number) => this.Value == Number.Value;
 
@@ -37,9 +37,11 @@ namespace Mianen.Matematics.Numerics
 
 		public bool IsNotEqual(INumber<double> Number) => this.Value != Number.Value;
 
-		public INumber<double> Multiply(INumber<double> Number) => new NumberDouble(this.Value * Number.Value);
+		public INumber<double> Multiply(INumber<double> Number) => new NDouble(this.Value * Number.Value);
 
-		public INumber<double> Subtract(INumber<double> Number) => new NumberDouble(this.Value * Number.Value);
+		public INumber<double> Subtract(INumber<double> Number) => new NDouble(this.Value * Number.Value);
+
+		public override string ToString() => this.Value.ToString();
 
 		public string ToString(IFormatProvider IformatProvider) => this.Value.ToString(IformatProvider);
 
@@ -47,21 +49,21 @@ namespace Mianen.Matematics.Numerics
 
 		public string ToString(string Format, IFormatProvider IformatProvider) => this.Value.ToString(Format, IformatProvider);
 
-		public INumber<double> GetZero() => new NumberDouble(0);
+		public INumber<double> GetZero() => new NDouble(0);
 
-		public INumber<double> GetOne() => new NumberDouble(0);
+		public INumber<double> GetOne() => new NDouble(0);
 
-		public INumber<double> Negative() => new NumberDouble(-Value);
+		public INumber<double> Negative() => new NDouble(-Value);
 
 		public INumber<double> Power(INumber<double> Exponent)
 		{
 			double val = Math.Pow((double)Value, (double)Exponent.Value);
-			return new NumberDouble(val);
+			return new NDouble(val);
 		}
 
-		public static implicit operator NumberDouble(double Value)
+		public static implicit operator NDouble(double Value)
 		{
-			return new NumberDouble(Value);
+			return new NDouble(Value);
 		}
 
 	}

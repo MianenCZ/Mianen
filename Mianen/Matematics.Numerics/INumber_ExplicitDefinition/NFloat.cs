@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace Mianen.Matematics.Numerics
 {
-	public class NumberFloat : INumber<float>
+	public class NFloat : INumber<float>
 	{
 		public float Value { get; set; }
 
-		public NumberFloat(float Value)
+		public NFloat(float Value)
 		{
 			this.Value = Value;
 		}
 
-		public INumber<float> Add(INumber<float> Number) => new NumberFloat(this.Value + Number.Value);
+		public INumber<float> Add(INumber<float> Number) => new NFloat(this.Value + Number.Value);
 
 		public int CompareTo(INumber<float> Number) => this.Value.CompareTo(Number.Value);
 
-		public INumber<float> Divide(INumber<float> Number) => new NumberFloat(this.Value / Number.Value);
+		public INumber<float> Divide(INumber<float> Number) => new NFloat(this.Value / Number.Value);
 
-		public bool Equals(INumber<float> Number) => this.Value.Equals(Number.Value);
+		public bool Equals(INumber<float> Number) => this.Value == Number.Value;
 
 		public bool IsEqual(INumber<float> Number) => this.Value == Number.Value;
 
@@ -35,9 +35,11 @@ namespace Mianen.Matematics.Numerics
 
 		public bool IsNotEqual(INumber<float> Number) => this.Value != Number.Value;
 
-		public INumber<float> Multiply(INumber<float> Number) => new NumberFloat(this.Value * Number.Value);
+		public INumber<float> Multiply(INumber<float> Number) => new NFloat(this.Value * Number.Value);
 
-		public INumber<float> Subtract(INumber<float> Number) => new NumberFloat(this.Value * Number.Value);
+		public INumber<float> Subtract(INumber<float> Number) => new NFloat(this.Value * Number.Value);
+
+		public override string ToString() => this.Value.ToString();
 
 		public string ToString(IFormatProvider IformatProvider) => this.Value.ToString(IformatProvider);
 
@@ -45,21 +47,21 @@ namespace Mianen.Matematics.Numerics
 
 		public string ToString(string Format, IFormatProvider IformatProvider) => this.Value.ToString(Format, IformatProvider);
 
-		public INumber<float> GetZero() => new NumberFloat(0);
+		public INumber<float> GetZero() => new NFloat(0);
 
-		public INumber<float> GetOne() => new NumberFloat(0);
+		public INumber<float> GetOne() => new NFloat(0);
 
-		public INumber<float> Negative() => new NumberFloat(-Value);
+		public INumber<float> Negative() => new NFloat(-Value);
 
 		public INumber<float> Power(INumber<float> Exponent)
 		{
 			float val = (float)Math.Pow((double)Value, (double)Exponent.Value);
-			return new NumberFloat(val);
+			return new NFloat(val);
 		}
 
-		public static implicit operator NumberFloat(float Value)
+		public static implicit operator NFloat(float Value)
 		{
-			return new NumberFloat(Value);
+			return new NFloat(Value);
 		}
 	}
 }

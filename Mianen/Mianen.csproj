@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -29,6 +29,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Trace|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug-Trace\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -52,6 +61,9 @@
     <Compile Include="Matematics.Geometry2D\Point2D.cs" />
     <Compile Include="Matematics.Geometry2D\Polynom.cs" />
     <Compile Include="Matematics.Geometry3D\Point3D.cs" />
+    <Compile Include="Matematics.LinearAlgebra\MatrixMT.cs" />
+    <Compile Include="Matematics.LinearAlgebra\MatrixT.cs" />
+    <Compile Include="Matematics.LinearAlgebra\VirtualSubMatrix.cs" />
     <Compile Include="Matematics.Numerics\BigInteger.cs" />
     <Compile Include="DataStructures\ArrayAmortizer.cs" />
     <Compile Include="DataStructures\Deque.cs" />
@@ -63,11 +75,12 @@
     <Compile Include="Matematics.Numerics\Fixed.cs" />
     <Compile Include="Matematics.Numerics\FixedDefiner.cs" />
     <Compile Include="Matematics.Numerics\INumber.cs" />
-    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NumberDecimal.cs" />
-    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NumberDouble.cs" />
-    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NumberFloat.cs" />
-    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NumberInt.cs" />
-    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NumberLong.cs" />
+    <Compile Include="Matematics.Numerics\INumberExtensions.cs" />
+    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NDecimal.cs" />
+    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NDouble.cs" />
+    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NFloat.cs" />
+    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NInt.cs" />
+    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NLong.cs" />
     <Compile Include="Matematics\Misc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataStructures\SerializableDictionary.cs" />

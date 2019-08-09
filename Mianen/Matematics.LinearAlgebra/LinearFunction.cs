@@ -10,32 +10,32 @@ namespace Mianen.Matematics.LinearAlgebra
 	{
 		public static Vector<T> LeastSquers(Matrix<T> A, Vector<T> y)
 		{
-#if DEBUG
+#if TRACE
 				Console.WriteLine("A");
 				Console.WriteLine(A);
 #endif
 			Matrix<T> A_t = Matrix<T>.GetTranspose(A);
-#if DEBUG
+#if TRACE
 				Console.WriteLine("A^T");
 				Console.WriteLine(A_t);
 #endif
 			Matrix<T> A_tA = A_t * A;
-#if DEBUG
+#if TRACE
 				Console.WriteLine("A^T * A");
 				Console.WriteLine(A_tA);
 #endif
 			Matrix<T> I__A_tA__ = Matrix<T>.GetInvert(A_tA);
-#if DEBUG
+#if TRACE
 				Console.WriteLine("I__A_tA__");
 				Console.WriteLine(I__A_tA__);
 #endif
 			Vector<T> A_ty = A_t * y;
-#if DEBUG
+#if TRACE
 				Console.WriteLine("A_ty");
 				Console.WriteLine(A_ty);
 #endif
 			Vector<T> res = I__A_tA__ * A_ty;
-#if DEBUG
+#if TRACE
 				Console.WriteLine("res:");
 				Console.WriteLine(res);
 #endif

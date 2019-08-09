@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace Mianen.Matematics.Numerics
 {
-	public class NumberDecimal : INumber<decimal>
+	public class NDecimal : INumber<decimal>
 	{
 		public decimal Value { get; set; }
 
-		public NumberDecimal(decimal Value)
+		public NDecimal(decimal Value)
 		{
 			this.Value = Value;
 		}
 
-		public INumber<decimal> Add(INumber<decimal> Number) => new NumberDecimal(this.Value + Number.Value);
+		public INumber<decimal> Add(INumber<decimal> Number) => new NDecimal(this.Value + Number.Value);
 
 		public int CompareTo(INumber<decimal> Number) => this.Value.CompareTo(Number.Value);
 
-		public INumber<decimal> Divide(INumber<decimal> Number) => new NumberDecimal(this.Value / Number.Value);
+		public INumber<decimal> Divide(INumber<decimal> Number) => new NDecimal(this.Value / Number.Value);
 
-		public bool Equals(INumber<decimal> Number) => this.Value.Equals(Number.Value);
+		public bool Equals(INumber<decimal> Number) => this.Value == Number.Value;
 
 		public bool IsEqual(INumber<decimal> Number) => this.Value == Number.Value;
 
@@ -35,9 +35,11 @@ namespace Mianen.Matematics.Numerics
 
 		public bool IsNotEqual(INumber<decimal> Number) => this.Value != Number.Value;
 
-		public INumber<decimal> Multiply(INumber<decimal> Number) => new NumberDecimal(this.Value * Number.Value);
+		public INumber<decimal> Multiply(INumber<decimal> Number) => new NDecimal(this.Value * Number.Value);
 
-		public INumber<decimal> Subtract(INumber<decimal> Number) => new NumberDecimal(this.Value * Number.Value);
+		public INumber<decimal> Subtract(INumber<decimal> Number) => new NDecimal(this.Value * Number.Value);
+	
+		public override string ToString() => this.Value.ToString();
 
 		public string ToString(IFormatProvider IformatProvider) => this.Value.ToString(IformatProvider);
 
@@ -45,21 +47,22 @@ namespace Mianen.Matematics.Numerics
 
 		public string ToString(string Format, IFormatProvider IformatProvider) => this.Value.ToString(Format, IformatProvider);
 
-		public INumber<decimal> GetZero() => new NumberDecimal(0);
+		public INumber<decimal> GetZero() => new NDecimal(0);
 
-		public INumber<decimal> GetOne() => new NumberDecimal(0);
+		public INumber<decimal> GetOne() => new NDecimal(0);
 
-		public INumber<decimal> Negative() => new NumberDecimal(-Value);
+		public INumber<decimal> Negative() => new NDecimal(-Value);
 
 		public INumber<decimal> Power(INumber<decimal> Exponent)
 		{
 			decimal val = (decimal)Math.Pow((double)Value, (double)Exponent.Value);
-			return new NumberDecimal(val);
+			return new NDecimal(val);
 		}
 
-		public static implicit operator NumberDecimal(decimal Value)
+		public static implicit operator NDecimal(decimal Value)
 		{
-			return new NumberDecimal(Value);
+			return new NDecimal(Value);
 		}
+
 	}
 }
