@@ -15,12 +15,12 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <summary>
 		/// Column count. Represents M in standart description
 		/// </summary>
-		public int RowCount { get; private set; }
+		public int RowCount { get; internal set; }
 
 		/// <summary>
 		/// Row count. Represents N in standart description
 		/// </summary>
-		public int ColumnCount { get; private set; }
+		public int ColumnCount { get; internal set; }
 
 		internal INumber<T>[,] Data;
 		
@@ -186,11 +186,14 @@ namespace Mianen.Matematics.LinearAlgebra
 			return newMatrix;
 		}
 
+		//TODO: check math
+		/*
 		public static Matrix<T> operator *(Matrix<T> A, Vector<T> x)
 		{
 			var x_ = Matrix.Create(x);
 			return A * x_;
 		}
+		*/
 
 		#endregion
 

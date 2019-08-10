@@ -14,7 +14,7 @@ namespace Mianen.Matematics.LinearAlgebra
 				Console.WriteLine("A");
 				Console.WriteLine(A);
 #endif
-			Matrix<T> A_t = Matrix<T>.GetTranspose(A);
+			Matrix<T> A_t = Matrix.GetTranspose(A);
 #if TRACE
 				Console.WriteLine("A^T");
 				Console.WriteLine(A_t);
@@ -24,7 +24,7 @@ namespace Mianen.Matematics.LinearAlgebra
 				Console.WriteLine("A^T * A");
 				Console.WriteLine(A_tA);
 #endif
-			Matrix<T> I__A_tA__ = Matrix<T>.GetInvert(A_tA);
+			Matrix<T> I__A_tA__ = Matrix.GetInvert(A_tA);
 #if TRACE
 				Console.WriteLine("I__A_tA__");
 				Console.WriteLine(I__A_tA__);

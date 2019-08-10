@@ -78,6 +78,7 @@
     <Compile Include="Mianen.Matematics.LinearAlgebra\FunctionLibTests.cs" />
     <Compile Include="Mianen.Matematics.LinearAlgebra\MatrixTests.cs" />
     <Compile Include="Mianen.Matematics.LinearAlgebra\VectorTests.cs" />
+    <Compile Include="Mianen.Matematics.LinearAlgebra\VirtualMatrixTests.cs" />
     <Compile Include="Mianen.Matematics.Numerics\BigIntegerTests.cs" />
     <Compile Include="Mianen.Matematics.Numerics\FixedTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
