@@ -31,9 +31,8 @@ namespace Mianen.Matematics.LinearAlgebra.Tests
 			var res = vA * vB;
 
 			Console.WriteLine(res);
-
-
 		}
+
 
 
 	}
