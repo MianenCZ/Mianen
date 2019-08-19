@@ -121,13 +121,13 @@ public class NDouble : INumber<double>
   }
 ```
 
-## Generické maticové počítání
+# Generické maticové počítání
 
 Za použití implementace `INumber` implementuje knihovna [Mianen.Matematics.LinearAlgebra](https://github.com/MianenCZ/Mianen/tree/Credit/Mianen/Matematics.LinearAlgebra "GitHub - Mianen[Credit]") základní maticové počítání a některé pokročilé funkce a operace
 
 >Pro použití této knihovny je třeba dodržovat pravidla knihovny `INumber<T>`
 
-Knihovna se skládá z několika základních tříd:
+## Implementace
 ```cs
 namespace Mianen.Matematics.LinearAlgebra
 {
@@ -135,7 +135,7 @@ namespace Mianen.Matematics.LinearAlgebra
     public static class Matrix {...}
     public static class MatrixMT {...}
     public class VirtualSubMatrix<T> : Matrix<T> {...}
-    
+
     public class Vector<T> {...}
     public static class Vector {...}
 
@@ -143,4 +143,37 @@ namespace Mianen.Matematics.LinearAlgebra
 }
 ```
 
-## Implementace
+Implementace je dělena na třídu `Matrix<T>`, která implementuje samotnou instanci Matice a metody instanci vlastní. Dále statická třída `Matrix` implementuje statické generické metody maticových operací.
+>Implementace pomocí statické metody `Matrix` umožňuje využít syntaktické zkratky implicitního definování generiky pomocí argumentů metody
+
+Třída `VirtualSubMatrix<T>` je "virtuální rozhraní" umožňující podhled na matici jako na její submatici. Na této virtuální matici lze provádět jakékoliv operace, jako na základní matici. Pomocí virtuální podmatice statická třída `MatrixMT` implementuje některé metody v multivláknové podobě.
+
+### Bližší pohled na generickou matici
+```cs
+public class Matrix<T>
+{
+    public int RowCount { get; internal set; }
+    public int ColumnCount { get; internal set; }
+    internal INumber<T>[,] Data;
+
+    public virtual INumber<T> this[int i, int j, bool IndexFromZero = true]
+		{
+			get => Data[(IndexFromZero) ? i : i - 1, (IndexFromZero) ? j : j - 1];
+			set => Data[(IndexFromZero) ? i : i - 1, (IndexFromZero) ? j : j - 1] = value;
+		}
+    ...
+}
+```
+Věnujme pozornost tomu, že `<T>` je bez jakékoliv restrikce
+>Tady by se dost hodilo říct: "`Matrix<T>` existuje právě tehdy pokud existuje`INumber<T>` a právě tato konkterétní implementace `INumber<T>` bude použita v `Matrix<T>`.
+
+#### Matice lze pak použít následovně:
+Mějme třídy `NumDouble1` a `NumDouble2` implementující `INumber<double>`. Pak může dojít i k následujcímu podivnému použití:
+```cs
+  Matrix<double> t = new Matrix<double>(2,2);
+  NumDouble1 a = new NumDouble1(1);
+  NumDouble2 b = new NumDouble2(1);
+  t[1, 1] = a;
+  t[2, 2] = b;
+```
+>Přestože obě třídy mohou implementovat zcela jiné chování. Obě imlementují `INumber<double>` a tedy existují mezi nimi operace. Programově je takovýto kód v pořádku. Významově pak záleží čistě na uživateli/programátorovi, který knihovnu používá.
