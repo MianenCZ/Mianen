@@ -12,6 +12,7 @@ namespace Mianen.Matematics.LinearAlgebra
 {
 	public class Matrix<T>
 	{
+		
 		/// <summary>
 		/// Column count. Represents M in standart description
 		/// </summary>
@@ -33,7 +34,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <param name="IndexFromZero">define index base True - 0, False - 1</param>
 		/// <exception cref="ArgumentOutOfRangeException">i or j is not inside Matrix</exception>
 		/// <returns></returns>
-		public INumber<T> this[int i, int j, bool IndexFromZero = true]
+		public virtual INumber<T> this[int i, int j, bool IndexFromZero = true]
 		{
 			get => Data[(IndexFromZero) ? i : i - 1, (IndexFromZero) ? j : j - 1];
 			set => Data[(IndexFromZero) ? i : i - 1, (IndexFromZero) ? j : j - 1] = value;
@@ -68,12 +69,12 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <returns>New Matrix</returns>
 		public static Matrix<T> operator +(Matrix<T> A, Matrix<T> B)
 		{
-			if (A == null || B == null)
+			if (object.Equals(A, null) || object.Equals(B, null))
 				throw new ArgumentNullException();
 			if (A.RowCount != B.RowCount || A.ColumnCount != B.ColumnCount)
 				throw new ArgumentException();
 
-			Matrix<T> newMatrix = new Matrix<T>(A.RowCount, B.RowCount);
+			Matrix<T> newMatrix = new Matrix<T>(A.RowCount, A.ColumnCount);
 			for (int i = 0; i < newMatrix.RowCount; i++)
 			{
 				for (int j = 0; j < newMatrix.ColumnCount; j++)
@@ -96,12 +97,12 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <returns>New Matrix</returns>
 		public static Matrix<T> operator -(Matrix<T> A, Matrix<T> B)
 		{
-			if (A == null || B == null)
+			if (object.Equals(A, null) || object.Equals(B, null))
 				throw new ArgumentNullException();
 			if (A.RowCount != B.RowCount || A.ColumnCount != B.ColumnCount)
 				throw new ArgumentException();
 
-			Matrix<T> newMatrix = new Matrix<T>(A.RowCount, B.RowCount);
+			Matrix<T> newMatrix = new Matrix<T>(A.RowCount, A.ColumnCount);
 			for (int i = 0; i < newMatrix.RowCount; i++)
 			{
 				for (int j = 0; j < newMatrix.ColumnCount; j++)
@@ -123,7 +124,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <returns>New Matrix</returns>
 		public static Matrix<T> operator *(INumber<T> A, Matrix<T> B)
 		{
-			if (A == null || B == null)
+			if (object.Equals(A, null) || object.Equals(B, null))
 				throw new ArgumentNullException();
 
 			Matrix<T> newMatrix = Matrix.GetCopy(B);
@@ -161,7 +162,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <returns>New Matrix</returns>
 		public static Matrix<T> operator *(Matrix<T> A, Matrix<T> B)
 		{
-			if (A == null || B == null)
+			if (object.Equals(A, null) || object.Equals(B, null))
 				throw new ArgumentNullException();
 			if (A.ColumnCount != B.RowCount)
 				throw new ArgumentException();
@@ -184,6 +185,29 @@ namespace Mianen.Matematics.LinearAlgebra
 			}
 
 			return newMatrix;
+		}
+
+		public static bool operator ==(Matrix<T> A, Matrix<T> B)
+		{
+			if (object.Equals(A, null) || object.Equals(B, null))
+				throw new ArgumentNullException();
+			if (A.RowCount != B.RowCount || A.ColumnCount != B.ColumnCount)
+				return false;
+
+			for (int i = 0; i < A.RowCount; i++)
+			{
+				for (int j = 0; j < A.ColumnCount; j++)
+				{
+					if (A[i, j].IsNotEqual(B[i, j]))
+						return false;
+				}
+			}
+			return true;
+		}
+
+		public static bool operator !=(Matrix<T> A, Matrix<T> B)
+		{
+			return !(A == B);
 		}
 
 		//TODO: check math

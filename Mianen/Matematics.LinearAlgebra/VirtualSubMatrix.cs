@@ -22,7 +22,7 @@ namespace Mianen.Matematics.LinearAlgebra
 
 		Matrix<T> MotherMatrix;
 
-		public new INumber<T> this[int i, int j, bool IndexFromZero = true]
+		public override INumber<T> this[int i, int j, bool IndexFromZero = true]
 		{
 			get
 			{
@@ -30,16 +30,30 @@ namespace Mianen.Matematics.LinearAlgebra
 				{
 					if (i < 0 || j < 0 || i >= RowCount || j >= ColumnCount)
 						throw new IndexOutOfRangeException();
-					return MotherMatrix[FirstRow - i, FirstColumn - j];
+					return MotherMatrix[FirstRow + i, FirstColumn + j];
 				}
 				else
 				{
 					if (i < 1 || j < 1 || i > RowCount || j > ColumnCount)
 						throw new IndexOutOfRangeException();
-					return MotherMatrix[FirstRow - 1 - i, FirstColumn - 1 - j];
+					return MotherMatrix[FirstRow - 1 + i, FirstColumn - 1 + j];
 				}
 			}
-			//set => Data[(IndexFromZero) ? i : i - 1, (IndexFromZero) ? j : j - 1] = value;
+			set 
+			{
+				if (IndexFromZero)
+				{
+					if (i < 0 || j < 0 || i >= RowCount || j >= ColumnCount)
+						throw new IndexOutOfRangeException();
+					MotherMatrix[FirstRow + i, FirstColumn + j] = value;
+				}
+				else
+				{
+					if (i < 1 || j < 1 || i > RowCount || j > ColumnCount)
+						throw new IndexOutOfRangeException();
+					MotherMatrix[FirstRow - 1 + i, FirstColumn - 1 + j] = value;
+				}
+			}
 		}
 
 		public VirtualSubMatrix(Matrix<T> MotherMatrix, int FirstRow, int FirstColumn, int RowCount, int ColumnCount) : base(1,1)

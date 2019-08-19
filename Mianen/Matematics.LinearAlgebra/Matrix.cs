@@ -34,7 +34,7 @@ namespace Mianen.Matematics.LinearAlgebra
 
 		public static Matrix<T> Create<T>(ICollection<Vector<T>> Source, MatrixElementOrder ElementOrder)
 		{
-			if (Source == null)
+			if (object.Equals(Source, null))
 				throw new ArgumentNullException();
 			if (Source.Count == 0)
 				throw new ArgumentException();
@@ -111,10 +111,17 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <returns>New DoubleMatrix</returns>
 		public static Matrix<T> GetCopy<T>(Matrix<T> Source)
 		{
-			if (Source == null)
+			if (object.Equals(Source, null))
 				throw new ArgumentNullException();
 			Matrix<T> newMatrix = new Matrix<T>(Source.RowCount, Source.ColumnCount);
-			Array.Copy(Source.Data, newMatrix.Data, Source.ColumnCount * Source.RowCount);
+
+			for (int i = 0; i < Source.RowCount; i++)
+			{
+				for (int j = 0; j < Source.ColumnCount; j++)
+				{
+					newMatrix[i, j] = Source[i, j];
+				}
+			}
 			return newMatrix;
 		}
 
@@ -127,7 +134,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <returns></returns>
 		public static INumber<T> GetDeterminant<T>(Matrix<T> Source)
 		{
-			if (Source == null)
+			if (object.Equals(Source, null))
 				throw new ArgumentNullException();
 			Matrix<T> newMatrix = Matrix.GetCopy(Source);
 #if TRACE
@@ -215,7 +222,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <returns>New Matrix</returns>
 		public static Matrix<T> GetTranspose<T>(Matrix<T> Source)
 		{
-			if (Source == null)
+			if (object.Equals(Source, null))
 				throw new ArgumentNullException();
 
 			Matrix<T> newMatrix = new Matrix<T>(Source.ColumnCount, Source.RowCount);
@@ -247,7 +254,7 @@ namespace Mianen.Matematics.LinearAlgebra
 			int real1 = (IndexFromZero) ? Row1 : Row1 - 1;
 			int real2 = (IndexFromZero) ? Row2 : Row2 - 1;
 
-			if (Source == null)
+			if (object.Equals(Source, null))
 				throw new ArgumentNullException();
 			if (real1 > Source.RowCount || real2 > Source.RowCount)
 				throw new IndexOutOfRangeException();
@@ -271,17 +278,17 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// </summary>
 		/// <typeparam name="T">Precision</typeparam>
 		/// <param name="Left">Source Matrix on the left side</param>
-		/// <param name="Rigth">Source Matrix on the right side</param>
+		/// <param name="Right">Source Matrix on the right side</param>
 		/// <exception cref="ArgumentNullException">Matrix Left or Right is null</exception>
 		/// <exception cref="ArgumentException">Matrices RowCount is not same</exception>
 		/// <returns>new Matrix</returns>
-		public static Matrix<T> JoinHorizontaly<T>(Matrix<T> Left, Matrix<T> Rigth)
+		public static Matrix<T> JoinHorizontaly<T>(Matrix<T> Left, Matrix<T> Right)
 		{
-			if (Left == null || Rigth == null)
+			if (object.Equals(Left, null) || object.Equals(Right, null))
 				throw new ArgumentNullException();
-			if (Left.RowCount != Rigth.RowCount)
+			if (Left.RowCount != Right.RowCount)
 				throw new ArgumentException();
-			Matrix<T> newMatrix = new Matrix<T>(Left.RowCount, Left.ColumnCount + Rigth.ColumnCount);
+			Matrix<T> newMatrix = new Matrix<T>(Left.RowCount, Left.ColumnCount + Right.ColumnCount);
 
 			for (int i = 0; i < Left.RowCount; i++)
 			{
@@ -290,9 +297,9 @@ namespace Mianen.Matematics.LinearAlgebra
 					newMatrix[i, j] = Left[i, j];
 				}
 
-				for (int j = 0; j < Rigth.ColumnCount; j++)
+				for (int j = 0; j < Right.ColumnCount; j++)
 				{
-					newMatrix[i, j + Left.ColumnCount] = Rigth[i, j];
+					newMatrix[i, j + Left.ColumnCount] = Right[i, j];
 				}
 			}
 
@@ -315,7 +322,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		public static Matrix<T> GetSubMatrix<T>(Matrix<T> Source, int FirstRow, int FirstColumn, int RowCount,
 											 int ColumnCount, bool IndexFromZero = true)
 		{
-			if (Source == null)
+			if (object.Equals(Source, null))
 				throw new ArgumentNullException();
 
 			if (!IndexFromZero)
@@ -351,7 +358,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <returns>new Matrix</returns>
 		public static Matrix<T> GetREF<T>(Matrix<T> Source)
 		{
-			if (Source == null)
+			if (object.Equals(Source, null))
 				throw new ArgumentNullException();
 			Matrix<T> newMatrix = Matrix.GetCopy(Source);
 #if TRACE
@@ -432,7 +439,7 @@ namespace Mianen.Matematics.LinearAlgebra
 #if TRACE
 			Console.WriteLine("Begin of RREF:");
 #endif
-			if (Source == null)
+			if (object.Equals(Source, null))
 				throw new ArgumentNullException();
 
 			INumber<T> Zero = Source[0, 0].GetZero();
@@ -506,7 +513,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <returns>new Matrix</returns>
 		public static Matrix<T> GetInvert<T>(Matrix<T> Source)
 		{
-			if (Source == null)
+			if (object.Equals(Source, null))
 				throw new ArgumentNullException();
 			if (Source.ColumnCount != Source.RowCount)
 				throw new ArgumentException();
@@ -566,7 +573,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <returns>New Matrix</returns>
 		public static Matrix<T> MultyplyAAT<T>(Matrix<T> A)
 		{
-			if (A == null)
+			if (object.Equals(A, null))
 				throw new ArgumentNullException();
 			
 			Matrix<T> NewMatrix = new Matrix<T>(A.RowCount, A.RowCount);
@@ -595,7 +602,7 @@ namespace Mianen.Matematics.LinearAlgebra
 		/// <returns>New Matrix</returns>
 		public static Matrix<T> MultyplyATA<T>(Matrix<T> A)
 		{
-			if (A == null)
+			if (object.Equals(A, null))
 				throw new ArgumentNullException();
 
 			Matrix<T> NewMatrix = new Matrix<T>(A.ColumnCount, A.ColumnCount);

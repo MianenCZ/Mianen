@@ -8,6 +8,9 @@ namespace Mianen.Matematics.Numerics
 {
 	public interface INumber<T> : IComparable<INumber<T>>, IEquatable<INumber<T>>
 	{
+		/// <summary>
+		/// Vals
+		/// </summary>
 		T Value { get; set; }
 		INumber<T> Add(INumber<T> Number);
 		INumber<T> Subtract(INumber<T> Number);

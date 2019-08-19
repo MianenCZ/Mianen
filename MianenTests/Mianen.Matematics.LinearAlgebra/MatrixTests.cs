@@ -111,5 +111,26 @@ namespace Mianen.Matematics.LinearAlgebra.Tests
 		{
 			Assert.Fail();
 		}
+
+
+
+
+		public static Matrix<double> GetRandom(int RowCount, int ColumnCount)
+		{
+			Random rnd = new Random();
+
+			Matrix<double> res = new Matrix<double>(RowCount, ColumnCount);
+
+			for (int i = 0; i < RowCount; i++)
+			{
+				for (int j = 0; j < ColumnCount; j++)
+				{
+					res[i, j] = new NDouble(rnd.Next(-1000,1000));
+				}
+			}
+			return res;
+		}
+
+
 	}
 }

@@ -62,6 +62,7 @@
     <Compile Include="Matematics.Geometry2D\Polynom.cs" />
     <Compile Include="Matematics.Geometry3D\Point3D.cs" />
     <Compile Include="Matematics.LinearAlgebra\MatrixMT.cs" />
+    <Compile Include="Matematics.LinearAlgebra\MatrixMT.Quarter.cs" />
     <Compile Include="Matematics.LinearAlgebra\MatrixT.cs" />
     <Compile Include="Matematics.LinearAlgebra\VirtualSubMatrix.cs" />
     <Compile Include="Matematics.Numerics\BigInteger.cs" />
