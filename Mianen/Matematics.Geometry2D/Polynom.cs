@@ -78,7 +78,7 @@ namespace Mianen.Matematics.Geometry2D
 				Vector[i] = Points[i].Y;
 			}
 
-			Vector<T> Res = LinearMath<T>.LeastSquers(A, Vector);
+			Vector<T> Res = LinearMath.LeastSquers(A, Vector);
 
 			return new Polynom<T>(Vector<T>.GetReverse(Res));
 		}

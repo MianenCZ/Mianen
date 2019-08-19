@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mianen.Matematics.Numerics.Test
+namespace Mianen.Matematics.Numerics.Tests
 {
 	[TestClass()]
 	public class NDoubleTests
@@ -14,7 +14,7 @@ namespace Mianen.Matematics.Numerics.Test
 		[TestMethod()]
 		public void CollectionTest()
 		{
-			List<NDouble> l = new List<NDouble>() {.1, .2, .3};
+			List<NDouble> l = new List<NDouble>() { .1, .2, .3 };
 			NDouble sum = (NDouble)l.Sum();
 			Assert.AreEqual(sum.Value, .6);
 		}
@@ -22,127 +22,125 @@ namespace Mianen.Matematics.Numerics.Test
 		[TestMethod()]
 		public void NumberDoubleTest()
 		{
-			Assert.Fail();
-		}
-
-		[TestMethod()]
-		public void AddTest()
-		{
-			Assert.Fail();
+			NDouble d1 = new NDouble(4.13);
+			NDouble d2 = 4.13;
+			NDouble d3 = 4;
 		}
 
 		[TestMethod()]
 		public void CompareToTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void DivideTest()
 		{
-			Assert.Fail();
+			NDouble d1 = 1.618;
+			NDouble d2 = 2;
+			var res = d1.Divide(d2);
 		}
 
 		[TestMethod()]
 		public void EqualsTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void IsEqualTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void IsGreaterOrEqualThanTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void IsGreaterThanTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void IsLowerOrEqualThanTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void IsLowerThanTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void IsNotEqualTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void MultiplyTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void SubtractTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void ToStringTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void ToStringTest1()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void ToStringTest2()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void ToStringTest3()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void GetZeroTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void GetOneTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void NegativeTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 
 		[TestMethod()]
 		public void PowerTest()
 		{
-			Assert.Fail();
+			throw new NotImplementedException();
 		}
 	}
 }

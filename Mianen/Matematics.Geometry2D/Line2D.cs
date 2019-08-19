@@ -57,7 +57,7 @@ namespace Mianen.Matematics.Geometry2D
 				A[i, 0] = Points[i].X.Add(Points[i].X);
 				Vector[i] = Points[i].Y;
 			}
-			Vector<T> Res = LinearMath<T>.LeastSquers(A, Vector);
+			Vector<T> Res = LinearMath.LeastSquers(A, Vector);
 			return new Line2D<T>(Res[0], Res[1]);
 		}
 

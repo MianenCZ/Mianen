@@ -13,29 +13,29 @@ Matematické operace jsou proto vynuceny za pomoci instančních metod.
 
 ### Implementace
 ```cs
-  public interface INumber<T> : IComparable<INumber<T>>, IEquatable<INumber<T>>
-  {
-      T Value { get; set; }
-      INumber<T> Add(INumber<T> Number);
-      INumber<T> Subtract(INumber<T> Number);
-      INumber<T> Multiply(INumber<T> Number);
-      INumber<T> Divide(INumber<T> Number);
-      INumber<T> Negative();
-      INumber<T> Power(INumber<T> Exponent);
-      bool IsGreaterThan(INumber<T> Number);
-      bool IsGreaterOrEqualThan(INumber<T> Number);
-      bool IsLowerThan(INumber<T> Number);
-      bool IsLowerOrEqualThan(INumber<T> Number);
-      bool IsEqual(INumber<T> Number);
-      bool IsNotEqual(INumber<T> Number);
+public interface INumber<T> : IComparable<INumber<T>>, IEquatable<INumber<T>>
+{
+    T Value { get; set; }
+    INumber<T> Add(INumber<T> Number);
+    INumber<T> Subtract(INumber<T> Number);
+    INumber<T> Multiply(INumber<T> Number);
+    INumber<T> Divide(INumber<T> Number);
+    INumber<T> Negative();
+    INumber<T> Power(INumber<T> Exponent);
+    bool IsGreaterThan(INumber<T> Number);
+    bool IsGreaterOrEqualThan(INumber<T> Number);
+    bool IsLowerThan(INumber<T> Number);
+    bool IsLowerOrEqualThan(INumber<T> Number);
+    bool IsEqual(INumber<T> Number);
+    bool IsNotEqual(INumber<T> Number);
 
-      INumber<T> GetZero();
-      INumber<T> GetOne();
+    INumber<T> GetZero();
+    INumber<T> GetOne();
 
-      string ToString(IFormatProvider IformatProvider);
-      string ToString(string Format);
-      string ToString(string Format, IFormatProvider IformatProvider);
-  }
+    string ToString(IFormatProvider IformatProvider);
+    string ToString(string Format);
+    string ToString(string Format, IFormatProvider IformatProvider);
+}
 ```
 
 >Hlavní "nepřehledností" je získávání konstant z instance.
@@ -79,53 +79,61 @@ Implementace samotná je prostá a pouze přepisuje základní statické operát
 >K implementaci je vhodné doplnit základní konverze pro snadnější manipulaci se vstupy.
 
 ```cs
-  public class NDouble : INumber<double>
-  {
-        public double Value { get; set; }
-        public NDouble(double Value)
-        {
-            this.Value = Value;
-        }    
-        public bool Equals(INumber<double> Number) => this.Value == Number.Value;
-        public INumber<double> Add(INumber<double> Number) => new NDouble(this.Value + Number.Value);
-        public INumber<double> Multiply(INumber<double> Number) => new NDouble(this.Value * Number.Value);
-        public override string ToString() => this.Value.ToString();
-        public INumber<double> GetOne() => new NDouble(1);
-        public static implicit operator NDouble(double Value)
-        {
-            return new NDouble(Value);
-        }
-        ...
-  }
+public class NDouble : INumber<double>
+{
+      public double Value { get; set; }
+      public NDouble(double Value)
+      {
+          this.Value = Value;
+      }
+      public bool Equals(INumber<double> Number) => this.Value == Number.Value;
+      public INumber<double> Add(INumber<double> Number) => new NDouble(this.Value + Number.Value);
+      public INumber<double> Multiply(INumber<double> Number) => new NDouble(this.Value * Number.Value);
+      public override string ToString() => this.Value.ToString();
+      public INumber<double> GetOne() => new NDouble(1);
+      public static implicit operator NDouble(double Value)
+      {
+          return new NDouble(Value);
+      }
+      ...
+}
 ```
 
 #### Ukázka použití
 ```cs
-    NDouble d1 = new NDouble(4.13159);
-    NDouble d2 = new NDouble(4);
-    NDouble d3 = 4.13159;
-    NDouble d4 = 4;
+  NDouble d1 = new NDouble(4.13159);
+  NDouble d2 = new NDouble(4);
+  NDouble d3 = 4.13159;
+  NDouble d4 = 4;
 
-    var r1 = d1.Divide(d2);
-    var r2 = d3.Add(d4);
-    var r3 = d2.Subtract(d2);
-    bool b1 = d1.IsEqual(d4);
-    bool b3 = d3.IsLowerThan(d2);
+  var r1 = d1.Divide(d2);
+  var r2 = d3.Add(d4);
+  var r3 = d2.Subtract(d2);
+  bool b1 = d1.IsEqual(d4);
+  bool b3 = d3.IsLowerThan(d2);
 
-    List<NDouble> l1 = new List<NDouble>() {.1, .2, .3, .4};
+  List<NDouble> l1 = new List<NDouble>() {.1, .2, .3, .4};
 
-    NDouble Sum = l1[0];
-    for (int i = 1; i < 4; i++)
-    {
-        Sum.Add(l1[i]);
-    }
+  NDouble Sum = l1[0];
+  for (int i = 1; i < 4; i++)
+  {
+      Sum.Add(l1[i]);
+  }
 ```
 
-
-
-
-
-
-
-
 ## Generické maticové počítání
+
+Za použití implementace `INumber` implementuje knihovna [Mianen.Matematics.LinearAlgebra](https://github.com/MianenCZ/Mianen/tree/Credit/Mianen/Matematics.LinearAlgebra "GitHub - Mianen[Credit]") základní maticové počítání a některé pokročilé funkce a operace
+
+>Pro použití této knihovny je třeba dodržovat pravidla knihovny `INumber<T>`
+
+Knihovna se skládá z několika základních tříd:
+```cs
+namespace Mianen.Matematics.LinearAlgebra
+{
+    public static class Matrix {...}
+    public static class LinearMath<T> {...}
+}
+```
+
+## Implementace
