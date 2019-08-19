@@ -131,8 +131,15 @@ Knihovna se skládá z několika základních tříd:
 ```cs
 namespace Mianen.Matematics.LinearAlgebra
 {
+    public class Matrix<T> {...}
     public static class Matrix {...}
-    public static class LinearMath<T> {...}
+    public static class MatrixMT {...}
+    public class VirtualSubMatrix<T> : Matrix<T> {...}
+    
+    public class Vector<T> {...}
+    public static class Vector {...}
+
+    public static class LinearMath {...}
 }
 ```
 
