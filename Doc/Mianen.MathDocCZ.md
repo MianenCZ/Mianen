@@ -99,7 +99,7 @@ public class NDouble : INumber<double>
 }
 ```
 
-#### Ukázka použití
+### Ukázka použití operací
 ```cs
   NDouble d1 = new NDouble(4.13159);
   NDouble d2 = new NDouble(4);
@@ -120,6 +120,67 @@ public class NDouble : INumber<double>
       Sum.Add(l1[i]);
   }
 ```
+
+### Konstrukce nad netradičním objektem
+Uživatel může začít připravovat svojí matgematickou třídu od základu pomocí interfacu `INumber` a zajistit tak, že finální produkt může využívat stále rozsáhlejší matematickou knihovnu.
+
+>Konstukce nad stringem
+>```cs
+>   public class SNumber : INumber<string>
+>   {
+>       public string Value { get; set; }
+>
+>       public SNumber(string Value)
+>       {
+>           this.Value = Value;
+>       }
+>
+>       public INumber<string> Add(INumber<string> Number)
+>       {
+>           if (this.Value.Length != Number.Value.Length)
+>               throw new ArgumentException();
+>           StringBuilder bld = new StringBuilder();
+>
+>           for (int i = 0; i < this.Value.Length; i++)
+>           {
+>             bld.Append((char)((this.Value[i] + Number.Value[i]) % 256));
+>           }
+>           return new SNumber(bld.ToString());
+>       }
+>   ...
+>   }
+>```
+>Kód:
+>```cs
+>   SNumber s1 = new SNumber("ahoj");
+>   SNumber s2 = new SNumber("ahoj");
+>   var res = s1.Add(s2);
+>   Console.WriteLine(res.Value.ToString());
+>```
+>Vrátí výsledek: `BP^T`
+>|  | a | h | o | j |
+>|----|---|---|---|---|
+>|  ASCII  | 97  | 104  | 111  | 106  |
+>| s1 + s2 | 194 | 208 | 222 | 212 |
+>|  %126 ASCII  |  66 | 80  | 94  | 84  |
+>| Result:  |  B |  p | ^  |  T |
+
+
+
+
+### Konstrukce nad existujicími čísli
+
+Druhá možnost je za `<T>` zvolit již existující impmenetaci čísla. Knihovna sama obsahuje implementaci
+[Decimal - NDecimal](https://github.com/MianenCZ/Mianen/blob/Credit/Mianen/Matematics.Numerics/INumber_ExplicitDefinition/NDecimal.cs "GitHub - Mianen[Credit]"),
+[Double - NDouble](https://github.com/MianenCZ/Mianen/blob/Credit/Mianen/Matematics.Numerics/INumber_ExplicitDefinition/NDouble.cs "GitHub - Mianen[Credit]"),
+[Float - NFloat](https://github.com/MianenCZ/Mianen/blob/Credit/Mianen/Matematics.Numerics/INumber_ExplicitDefinition/NFloat.cs "GitHub - Mianen[Credit]"),
+[Int - NInt](https://github.com/MianenCZ/Mianen/blob/Credit/Mianen/Matematics.Numerics/INumber_ExplicitDefinition/NInt.cs "GitHub - Mianen[Credit]") a
+[Long - NLong](https://github.com/MianenCZ/Mianen/blob/Credit/Mianen/Matematics.Numerics/INumber_ExplicitDefinition/NLong.cs "GitHub - Mianen[Credit]").
+
+Zcela jednoduše lze vytvořit například nad [BigInteger](https://docs.microsoft.com/cs-cz/dotnet/api/system.numerics.biginteger?view=netframework-4.8 "Microsoft - .Net dokumentace"), nebo implmentací fixed point [Long - NLong](https://github.com/MianenCZ/Mianen/blob/Credit/Mianen/Matematics.Numerics/INumber_ExplicitDefinition/NLong.cs "GitHub - Mianen[Credit]")
+
+
+
 
 # Generické maticové počítání
 
@@ -170,10 +231,11 @@ Věnujme pozornost tomu, že `<T>` je bez jakékoliv restrikce
 #### Matice lze pak použít následovně:
 Mějme třídy `NumDouble1` a `NumDouble2` implementující `INumber<double>`. Pak může dojít i k následujcímu podivnému použití:
 ```cs
+                                //RowCount, ColumnCount
   Matrix<double> t = new Matrix<double>(2,2);
   NumDouble1 a = new NumDouble1(1);
   NumDouble2 b = new NumDouble2(1);
   t[1, 1] = a;
   t[2, 2] = b;
 ```
->Přestože obě třídy mohou implementovat zcela jiné chování. Obě imlementují `INumber<double>` a tedy existují mezi nimi operace. Programově je takovýto kód v pořádku. Významově pak záleží čistě na uživateli/programátorovi, který knihovnu používá.
+>Přestože obě třídy mohou implementovat zcela jiné chování, obě imlementují `INumber<double>` a tedy existují mezi nimi operace. Programově je takovýto kód v pořádku. Významově pak záleží čistě na uživateli/programátorovi, který knihovnu používá.
