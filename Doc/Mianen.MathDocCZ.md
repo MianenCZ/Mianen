@@ -157,14 +157,14 @@ Uživatel může začít připravovat svojí matgematickou třídu od základu p
 >   var res = s1.Add(s2);
 >   Console.WriteLine(res.Value.ToString());
 >```
-Vrátí výsledek: `BP^T`
-	
-|  | a | h | o | j |
-|----|---|---|---|---|
-|  ASCII  | 97  | 104  | 111  | 106  |
-| s1 + s2 | 194 | 208 | 222 | 212 |
-|  %126 ASCII  |  66 | 80  | 94  | 84  |
-| Result:  |  B |  p | ^  |  T |
+>Vrátí výsledek: `BP^T`
+>	
+>|  | a | h | o | j |
+>|----|---|---|---|---|
+>|  ASCII  | 97  | 104  | 111  | 106  |
+>| s1 + s2 | 194 | 208 | 222 | 212 |
+>|  %126 ASCII  |  66 | 80  | 94  | 84  |
+>| Result:  |  B |  p | ^  |  T |
 
 
 
