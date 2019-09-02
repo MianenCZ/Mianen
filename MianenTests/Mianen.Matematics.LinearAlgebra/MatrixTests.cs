@@ -112,6 +112,19 @@ namespace Mianen.Matematics.LinearAlgebra.Tests
 			Assert.Fail();
 		}
 
+		[TestMethod()]
+		public void CreateDualImpTest()
+		{
+			Matrix<double> t = new Matrix<double>(2,2);
+			NumDouble1 a = new NumDouble1(1);
+			NumDouble2 b = new NumDouble2(1);
+			t[1, 1] = a;
+			t[2, 2] = b;
+
+
+			var res = a.Add(b);
+		}
+
 
 
 
@@ -130,6 +143,211 @@ namespace Mianen.Matematics.LinearAlgebra.Tests
 			}
 			return res;
 		}
+
+
+		private class NumDouble1 : INumber<double>
+		{
+
+			public NumDouble1(double v) { this.Value = v; }
+			public double Value { get; set; }
+
+			public INumber<double> Add(INumber<double> Number)
+			{
+				return new NumDouble1(Number.Value + this.Value);
+			}
+
+			public int CompareTo(INumber<double> other)
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> Divide(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool Equals(INumber<double> other)
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> GetOne()
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> GetZero()
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool IsEqual(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool IsGreaterOrEqualThan(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool IsGreaterThan(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool IsLowerOrEqualThan(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool IsLowerThan(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool IsNotEqual(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> Multiply(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> Negative()
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> Power(INumber<double> Exponent)
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> Subtract(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public string ToString(IFormatProvider IformatProvider)
+			{
+				throw new NotImplementedException();
+			}
+
+			public string ToString(string Format)
+			{
+				throw new NotImplementedException();
+			}
+
+			public string ToString(string Format, IFormatProvider IformatProvider)
+			{
+				throw new NotImplementedException();
+			}
+		}
+
+		private class NumDouble2 : INumber<double>
+		{
+			public NumDouble2(double v) { this.Value = v; }
+			public double Value { get; set; }
+
+			public INumber<double> Add(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public int CompareTo(INumber<double> other)
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> Divide(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool Equals(INumber<double> other)
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> GetOne()
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> GetZero()
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool IsEqual(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool IsGreaterOrEqualThan(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool IsGreaterThan(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool IsLowerOrEqualThan(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool IsLowerThan(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool IsNotEqual(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> Multiply(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> Negative()
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> Power(INumber<double> Exponent)
+			{
+				throw new NotImplementedException();
+			}
+
+			public INumber<double> Subtract(INumber<double> Number)
+			{
+				throw new NotImplementedException();
+			}
+
+			public string ToString(IFormatProvider IformatProvider)
+			{
+				throw new NotImplementedException();
+			}
+
+			public string ToString(string Format)
+			{
+				throw new NotImplementedException();
+			}
+
+			public string ToString(string Format, IFormatProvider IformatProvider)
+			{
+				throw new NotImplementedException();
+			}
+		}
+
 
 
 	}

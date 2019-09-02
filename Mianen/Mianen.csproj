@@ -64,6 +64,7 @@
     <Compile Include="Matematics.LinearAlgebra\MatrixMT.cs" />
     <Compile Include="Matematics.LinearAlgebra\MatrixMT.Quarter.cs" />
     <Compile Include="Matematics.LinearAlgebra\MatrixT.cs" />
+    <Compile Include="Matematics.LinearAlgebra\Vector.cs" />
     <Compile Include="Matematics.LinearAlgebra\VirtualSubMatrix.cs" />
     <Compile Include="Matematics.Numerics\BigInteger.cs" />
     <Compile Include="DataStructures\ArrayAmortizer.cs" />
@@ -72,7 +73,7 @@
     <Compile Include="DataStructures\Map.cs" />
     <Compile Include="Matematics.LinearAlgebra\LinearFunction.cs" />
     <Compile Include="Matematics.LinearAlgebra\Matrix.cs" />
-    <Compile Include="Matematics.LinearAlgebra\Vector.cs" />
+    <Compile Include="Matematics.LinearAlgebra\VectorT.cs" />
     <Compile Include="Matematics.Numerics\Fixed.cs" />
     <Compile Include="Matematics.Numerics\FixedDefiner.cs" />
     <Compile Include="Matematics.Numerics\INumber.cs" />

@@ -62,7 +62,7 @@ namespace Mianen.Matematics.Geometry2D
 		public static Polynom<T> Aproximate(Point2D<T>[] Points, int TargetDegree)
 		{
 			Matrix<T> A = new Matrix<T>(Points.Length, TargetDegree + 1);
-			Vector<T> Vector = new Vector<T>(Points.Length);
+			Vector<T> vector = new Vector<T>(Points.Length);
 
 			INumber<T> zero = Points[0].X.GetZero();
 			INumber<T> one = Points[0].X.GetOne();
@@ -75,12 +75,12 @@ namespace Mianen.Matematics.Geometry2D
 					A[i, j] = val;
 					val = val.Multiply(Points[i].X);
 				}
-				Vector[i] = Points[i].Y;
+				vector[i] = Points[i].Y;
 			}
 
-			Vector<T> Res = LinearMath.LeastSquers(A, Vector);
+			Vector<T> Res = LinearMath.LeastSquers(A, vector);
 
-			return new Polynom<T>(Vector<T>.GetReverse(Res));
+			return new Polynom<T>(Vector.GetReverse(Res));
 		}
 	}
 }

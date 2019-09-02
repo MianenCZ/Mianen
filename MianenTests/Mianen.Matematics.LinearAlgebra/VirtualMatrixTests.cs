@@ -187,12 +187,35 @@ namespace Mianen.Matematics.LinearAlgebra.Tests
 
 
 			Matrix<double> res = Matrix.GetCopy(a);
-			Console.WriteLine(res);
+			//Console.WriteLine(res);
 
 			Matrix<double> tres = MatrixMT.GetCopy(a);
-			Console.WriteLine(tres);
+			//Console.WriteLine(tres);
 
 			Assert.IsTrue(res == tres);
+			Assert.IsTrue(res == a);
+			Assert.IsTrue(tres == a);
+		}
+
+		[TestMethod()]
+		public void GetCopyTest02()
+		{
+			Matrix<double> a = MatrixTests.GetRandom(153, 294);
+			var N = new NDouble(150);
+			a[1, 1] = N;
+
+			Matrix<double> res = Matrix.GetCopy(a);
+			//Console.WriteLine(res);
+
+			Matrix<double> tres = MatrixMT.GetCopy(a);
+			//Console.WriteLine(tres);
+			N.Value = 170;
+			//N = new NDouble(175);
+
+			Assert.IsTrue(res == tres);
+			Assert.IsTrue(res == a);
+			Assert.IsTrue(tres == a);
+			Assert.AreEqual(150, a[1,1].Value);
 		}
 
 		[TestMethod()]
@@ -217,6 +240,13 @@ namespace Mianen.Matematics.LinearAlgebra.Tests
 			//Console.WriteLine(tres);
 
 			Assert.IsTrue(res == tres);
+		}
+
+		[TestMethod()]
+		public void ToString()
+		{
+			Matrix<double> var = MatrixTests.GetRandom(10, 10);
+			Console.WriteLine(var);
 		}
 
 		[TestMethod()]

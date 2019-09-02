@@ -30,8 +30,8 @@ namespace Mianen.Matematics.Geometry2D
 		/// <param name="Q"></param>
 		public Line2D(INumber<T> P, INumber<T> Q)
 		{
-			Vector<T> A = Vector<T>.Create(new INumber<T>[2]{ P.GetZero(), Q });
-			Vector<T> B = Vector<T>.Create(new INumber<T>[2]{ P.GetOne(), P.Add(Q) });
+			Vector<T> A = Vector.Create(new INumber<T>[2]{ P.GetZero(), Q });
+			Vector<T> B = Vector.Create(new INumber<T>[2]{ P.GetOne(), P.Add(Q) });
 			Vector<T> Par = A - B;
 			this.ParametricVector = (A - B).GetNormalized();
 			this.Point = new Point2D<T>(P.GetZero(), Q);
@@ -40,7 +40,7 @@ namespace Mianen.Matematics.Geometry2D
 
 		public static INumber<T> Angle(Line2D<T> LineA, Line2D<T> LineB)
 		{
-			INumber<T> CosFi = Vector<T>.Angle(LineA.ParametricVector, LineB.ParametricVector);
+			INumber<T> CosFi = Vector.Angle(LineA.ParametricVector, LineB.ParametricVector);
 			return CosFi;
 		}
 

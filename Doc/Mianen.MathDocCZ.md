@@ -122,7 +122,7 @@ public class NDouble : INumber<double>
 ```
 
 ### Konstrukce nad netradičním objektem
-Uživatel může začít připravovat svojí matgematickou třídu od základu pomocí interfacu `INumber` a zajistit tak, že finální produkt může využívat stále rozsáhlejší matematickou knihovnu.
+Uživatel může začít připravovat svojí matematickou třídu od základu pomocí interface `INumber` a zajistit tak, že finální produkt může využívat stále rozsáhlejší matematickou knihovnu.
 
 >Konstukce nad stringem
 >```cs
@@ -168,7 +168,7 @@ Uživatel může začít připravovat svojí matgematickou třídu od základu p
 
 
 
-### Konstrukce nad existujicími čísli
+### Konstrukce nad existujicími čísly
 
 Druhá možnost je za `<T>` zvolit již existující impmenetaci čísla. Knihovna sama obsahuje implementaci
 [Decimal - NDecimal](https://github.com/MianenCZ/Mianen/blob/Credit/Mianen/Matematics.Numerics/INumber_ExplicitDefinition/NDecimal.cs "GitHub - Mianen[Credit]"),

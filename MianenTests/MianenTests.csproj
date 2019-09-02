@@ -68,6 +68,7 @@
     <Compile Include="Matematics.Geometry2D\Circle2DTests.cs" />
     <Compile Include="Matematics.Geometry2D\PolynomTests.cs" />
     <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\NDoubleTests.cs" />
+    <Compile Include="Matematics.Numerics\INumber_ExplicitDefinition\SNumber.cs" />
     <Compile Include="Mianen.DataStructures\ArrayAmortizerTests.cs" />
     <Compile Include="Mianen.DataStructures\BitDefinerTests.cs" />
     <Compile Include="Mianen.DataStructures\DequeTests.cs" />
