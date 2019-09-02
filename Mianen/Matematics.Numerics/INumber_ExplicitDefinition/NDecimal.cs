@@ -15,6 +15,8 @@ namespace Mianen.Matematics.Numerics
 			this.Value = Value;
 		}
 
+		public INumber<decimal> GetCopy() => new NDecimal(this.Value);
+
 		public INumber<decimal> Add(INumber<decimal> Number) => new NDecimal(this.Value + Number.Value);
 
 		public int CompareTo(INumber<decimal> Number) => this.Value.CompareTo(Number.Value);

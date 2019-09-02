@@ -29,6 +29,7 @@ namespace Mianen.Matematics.Numerics.Tests
 			{
 				this.Value = Value;
 			}
+			public INumber<string> GetCopy() => new SNumber(this.Value);
 
 			public INumber<string> Add(INumber<string> Number)
 			{

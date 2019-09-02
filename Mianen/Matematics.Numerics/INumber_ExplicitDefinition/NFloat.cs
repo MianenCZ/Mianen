@@ -15,6 +15,8 @@ namespace Mianen.Matematics.Numerics
 			this.Value = Value;
 		}
 
+		public INumber<float> GetCopy() => new NFloat(this.Value);
+
 		public INumber<float> Add(INumber<float> Number) => new NFloat(this.Value + Number.Value);
 
 		public int CompareTo(INumber<float> Number) => this.Value.CompareTo(Number.Value);

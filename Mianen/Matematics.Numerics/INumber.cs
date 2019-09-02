@@ -18,6 +18,7 @@ namespace Mianen.Matematics.Numerics
 		INumber<T> Divide(INumber<T> Number);
 		INumber<T> Negative();
 		INumber<T> Power(INumber<T> Exponent);
+		INumber<T> GetCopy();
 		bool IsGreaterThan(INumber<T> Number);
 		bool IsGreaterOrEqualThan(INumber<T> Number);
 		bool IsLowerThan(INumber<T> Number);

@@ -22,6 +22,7 @@ public interface INumber<T> : IComparable<INumber<T>>, IEquatable<INumber<T>>
     INumber<T> Divide(INumber<T> Number);
     INumber<T> Negative();
     INumber<T> Power(INumber<T> Exponent);
+    INumber<T> GetCopy(); 
     bool IsGreaterThan(INumber<T> Number);
     bool IsGreaterOrEqualThan(INumber<T> Number);
     bool IsLowerThan(INumber<T> Number);
@@ -158,7 +159,7 @@ Uživatel může začít připravovat svojí matematickou třídu od základu po
 >   Console.WriteLine(res.Value.ToString());
 >```
 >Vrátí výsledek: `BP^T`
->	
+>
 >|  | a | h | o | j |
 >|----|---|---|---|---|
 >|  ASCII  | 97  | 104  | 111  | 106  |

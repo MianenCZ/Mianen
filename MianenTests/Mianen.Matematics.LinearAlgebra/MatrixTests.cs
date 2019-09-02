@@ -148,6 +148,8 @@ namespace Mianen.Matematics.LinearAlgebra.Tests
 		private class NumDouble1 : INumber<double>
 		{
 
+			public INumber<double> GetCopy() => new NumDouble1(this.Value);
+
 			public NumDouble1(double v) { this.Value = v; }
 			public double Value { get; set; }
 
@@ -256,6 +258,7 @@ namespace Mianen.Matematics.LinearAlgebra.Tests
 			{
 				throw new NotImplementedException();
 			}
+			public INumber<double> GetCopy() => new NumDouble2(this.Value);
 
 			public int CompareTo(INumber<double> other)
 			{

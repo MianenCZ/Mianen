@@ -119,7 +119,7 @@ namespace Mianen.Matematics.LinearAlgebra
 			{
 				for (int j = 0; j < Source.ColumnCount; j++)
 				{
-					newMatrix[i, j] = Source[i, j];
+					newMatrix[i, j] = Source[i, j].GetCopy();
 				}
 			}
 			return newMatrix;
