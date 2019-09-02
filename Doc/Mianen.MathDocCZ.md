@@ -158,6 +158,7 @@ Uživatel může začít připravovat svojí matematickou třídu od základu po
 >   Console.WriteLine(res.Value.ToString());
 >```
 >Vrátí výsledek: `BP^T`
+>	
 >|  | a | h | o | j |
 >|----|---|---|---|---|
 >|  ASCII  | 97  | 104  | 111  | 106  |
