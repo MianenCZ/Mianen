@@ -51,7 +51,7 @@ namespace Mianen.Matematics.Numerics
 
 		public INumber<float> GetZero() => new NFloat(0);
 
-		public INumber<float> GetOne() => new NFloat(0);
+		public INumber<float> GetOne() => new NFloat(1);
 
 		public INumber<float> Negative() => new NFloat(-Value);
 

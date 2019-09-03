@@ -53,7 +53,7 @@ namespace Mianen.Matematics.Numerics
 
 		public INumber<double> GetZero() => new NDouble(0);
 
-		public INumber<double> GetOne() => new NDouble(0);
+		public INumber<double> GetOne() => new NDouble(1);
 
 		public INumber<double> Negative() => new NDouble(-Value);
 

@@ -51,7 +51,7 @@ namespace Mianen.Matematics.Numerics
 
 		public INumber<decimal> GetZero() => new NDecimal(0);
 
-		public INumber<decimal> GetOne() => new NDecimal(0);
+		public INumber<decimal> GetOne() => new NDecimal(1);
 
 		public INumber<decimal> Negative() => new NDecimal(-Value);
 
